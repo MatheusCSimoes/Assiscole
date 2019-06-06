@@ -17,7 +17,7 @@
 DROP TABLE IF EXISTS Estudante;
 
 CREATE TABLE Estudante (
-    Nome VARCHAR (40),
+    Nome VARCHAR (40) NOT NULL,
     RG VARCHAR (9) PRIMARY KEY
 );
 
@@ -25,20 +25,20 @@ DROP TABLE IF EXISTS Escola;
 
 CREATE TABLE Escola (
     fk_Filial_Filial_PK INT,
-    Nome VARCHAR (40),
+    Nome VARCHAR (40) NOT NULL,
     Id INT PRIMARY KEY,
-    Endereço VARCHAR (40),
-    Telefone VARCHAR (15)
+    Endereço VARCHAR (40) NOT NULL,
+    Telefone VARCHAR (15) NOT NULL
 );
 
 DROP TABLE IF EXISTS Contrato;
 
 CREATE TABLE Contrato (
     Id INT PRIMARY KEY,
-    Data_Final DATE,
-    Data_Inicial DATE,
+    Data_Final DATE NOT NULL,
+    Data_Inicial DATE NOT NULL,
     fk_Escola_Id INT,
-    Valor INT
+    Valor INT NOT NULL
 );
 
 DROP TABLE IF EXISTS Funcionarios;
@@ -57,14 +57,14 @@ DROP TABLE IF EXISTS Disciplina;
 
 CREATE TABLE Disciplina (
     Id INT PRIMARY KEY,
-    Nome VARCHAR (40)
+    Nome VARCHAR (40) NOT NULL
 );
 
 DROP TABLE IF EXISTS Curso;
 
 CREATE TABLE Curso (
     Id INT PRIMARY KEY,
-    Nome VARCHAR (40)
+    Nome VARCHAR (40) NOT NULL
 );
 
 DROP TABLE IF EXISTS Notificações;
@@ -86,10 +86,10 @@ DROP TABLE IF EXISTS Usuários;
 
 CREATE TABLE Usuários (
     RG VARCHAR (9) PRIMARY KEY,
-    Nome VARCHAR (40),
-    Telefone VARCHAR (15),
-    Usuário VARCHAR (40),
-    Senha VARCHAR (40),
+    Nome VARCHAR (40) NOT NULL,
+    Telefone VARCHAR (15) NOT NULL,
+    Usuário VARCHAR (40) NOT NULL,
+    Senha VARCHAR (40) NOT NULL,
     fk_Escola_Id INT
 );
 
@@ -97,7 +97,7 @@ DROP TABLE IF EXISTS Presença;
 
 CREATE TABLE Presença (
     Tipo VARCHAR (40),
-    Dia DATE,
+    Dia DATE NOT NULL,
     Id INT PRIMARY KEY,
     fk_Estudante_RG VARCHAR (9)
 );
@@ -106,32 +106,32 @@ DROP TABLE IF EXISTS Observações;
 
 CREATE TABLE Observações (
     Id INT PRIMARY KEY,
-    Observação VARCHAR (200),
-    Acordo VARCHAR (200)
+    Observação VARCHAR (200) NOT NULL,
+    Acordo VARCHAR (200) NOT NULL
 );
 
 DROP TABLE IF EXISTS Módulos;
 
 CREATE TABLE Módulos (
     Id INT PRIMARY KEY,
-    Nome VARCHAR (40)
+    Nome VARCHAR (40) NOT NULL
 );
 
 DROP TABLE IF EXISTS Responsáveis;
 
 CREATE TABLE Responsáveis (
-    Nome VARCHAR (40),
+    Nome VARCHAR (40) NOT NULL,
     RG VARCHAR (9) PRIMARY KEY,
-    Telefone VARCHAR (11)
+    Telefone VARCHAR (15) NOT NULL
 );
 
 DROP TABLE IF EXISTS Inscrição_inscrito;
 
 CREATE TABLE Inscrição_inscrito (
-    Nota DOUBLE,
-    Situação VARCHAR (40),
+    Nota DOUBLE NOT NULL,
+    Situação VARCHAR (40) NOT NULL,
     fk_Professores_fk_Usuários_RG VARCHAR (9),
-    fk_Estudante_RG VARCHAR (9),
+    fk_Estudante_RG VARCHAR (9) ,
     fk_Disciplina_Id INT
 );
 
@@ -139,7 +139,7 @@ DROP TABLE IF EXISTS Filial;
 
 CREATE TABLE Filial (
     Filial_PK INT NOT NULL PRIMARY KEY,
-    Filial Varchar (40)
+    Filial Varchar (40) NOT NULL
 );
 
 DROP TABLE IF EXISTS Lecionam;
@@ -161,7 +161,7 @@ DROP TABLE IF EXISTS Pertence;
 CREATE TABLE Pertence (
     fk_Curso_Id INT,
     fk_Estudante_RG VARCHAR (9),
-    Ano INT
+    Ano INT NOT NULL
 );
 
 DROP TABLE IF EXISTS Informa_Funcionarios_Notificações_Estudante;
