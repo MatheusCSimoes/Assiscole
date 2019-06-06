@@ -71,7 +71,8 @@ DROP TABLE IF EXISTS Notificações;
 
 CREATE TABLE Notificações (
     Mensagem VARCHAR (200),
-    Id INT PRIMARY KEY
+    Id INT PRIMARY KEY,
+    Data datetime NOT NULL,
 );
 
 DROP TABLE IF EXISTS Justificativas;
@@ -160,8 +161,8 @@ DROP TABLE IF EXISTS Pertence;
 
 CREATE TABLE Pertence (
     fk_Curso_Id INT,
-    fk_Estudante_RG VARCHAR (9),
-    Ano INT NOT NULL
+    fk_Estudante_RG VARCHAR (9) PRIMARY KEY, 
+    Ano INT PRIMARY KEY,
 );
 
 DROP TABLE IF EXISTS Informa_Funcionarios_Notificações_Estudante;
