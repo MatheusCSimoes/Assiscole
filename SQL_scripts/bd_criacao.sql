@@ -18,7 +18,8 @@ DROP TABLE IF EXISTS Estudante;
 
 CREATE TABLE Estudante (
     Nome VARCHAR (40) NOT NULL,
-    RG VARCHAR (9) PRIMARY KEY
+    RG VARCHAR (9) PRIMARY KEY,
+    Ativo INT (2) NOT NULL DEFAULT '1'
 );
 
 DROP TABLE IF EXISTS Escola;
@@ -72,7 +73,7 @@ DROP TABLE IF EXISTS Notificações;
 CREATE TABLE Notificações (
     Mensagem VARCHAR (200),
     Id INT PRIMARY KEY,
-    Data datetime NOT NULL,
+    Data datetime NOT NULL
 );
 
 DROP TABLE IF EXISTS Justificativas;
@@ -91,6 +92,7 @@ CREATE TABLE Usuários (
     Telefone VARCHAR (15) NOT NULL,
     Usuário VARCHAR (40) NOT NULL,
     Senha VARCHAR (40) NOT NULL,
+    Ativo INT(2) NOT NULL DEFAULT '1',    
     fk_Escola_Id INT
 );
 
@@ -115,7 +117,8 @@ DROP TABLE IF EXISTS Módulos;
 
 CREATE TABLE Módulos (
     Id INT PRIMARY KEY,
-    Nome VARCHAR (40) NOT NULL
+    Nome VARCHAR (40) NOT NULL,
+    Descrição VARCHAR (200)
 );
 
 DROP TABLE IF EXISTS Responsáveis;
@@ -161,8 +164,8 @@ DROP TABLE IF EXISTS Pertence;
 
 CREATE TABLE Pertence (
     fk_Curso_Id INT,
-    fk_Estudante_RG VARCHAR (9) PRIMARY KEY, 
-    Ano INT PRIMARY KEY,
+    fk_Estudante_RG VARCHAR (9), 
+    Ano INT
 );
 
 DROP TABLE IF EXISTS Informa_Funcionarios_Notificações_Estudante;
@@ -351,5 +354,3 @@ ALTER TABLE Possui ADD CONSTRAINT FK_Possui_2
     FOREIGN KEY (fk_Responsáveis_RG)
     REFERENCES Responsáveis (RG)
     ON DELETE RESTRICT;
-    
-
