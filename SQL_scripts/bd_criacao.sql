@@ -354,3 +354,13 @@ ALTER TABLE Possui ADD CONSTRAINT FK_Possui_2
     FOREIGN KEY (fk_Responsáveis_RG)
     REFERENCES Responsáveis (RG)
     ON DELETE RESTRICT;
+
+delimiter //
+create trigger contrato_unico after insert on Contrato
+for each row 
+begin
+    if NEW.Data_Inicial < (select Data_Final from Contrato where fk_Escola_Id = NEW.fk_Escola_Id) then
+        delete from Contrato where Id = NEW.Id;
+    end if;
+end;//
+delimiter ;
