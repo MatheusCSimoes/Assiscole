@@ -356,6 +356,16 @@ ALTER TABLE Possui ADD CONSTRAINT FK_Possui_2
     ON DELETE RESTRICT;
 
 delimiter //
+create trigger aluno_curso_unico after insert on Pertence
+for each row
+begin
+    if NEW.Ano < (select Ano from Pertence where fk_Curso_Id = NEW.fk_Curso_Id and fk_Estudante_RG = NEW.fk_Estudante_RG) then
+        delete from Pertence where fk_Estudante_RG = NEW.fk_Estudante_RG and fk_Curso_Id = NEW.fk_Curso_Id and Ano = NEW.Ano;
+    end if;
+end;//
+delimiter ;
+
+delimiter //
 create trigger contrato_unico after insert on Contrato
 for each row 
 begin
