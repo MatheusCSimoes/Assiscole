@@ -1,0 +1,101 @@
+<section id="content">
+        
+  <!--breadcrumbs start-->
+  <div id="breadcrumbs-wrapper">
+      <!-- Search for small screen -->
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m12 l12">
+          <!-- <h5 class="breadcrumbs-title">Contact Page</h5> -->
+          <ol class="breadcrumbs">
+              <li class="active">Soporte</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--breadcrumbs end-->
+  
+
+  <!--start container-->
+  <div class="container">
+    <div class="section">
+
+      <p class="caption">Algun Problema o Sugerencia?, no dudes en enviarla, nuestro equipo estara feliz de atenderla</p>
+
+      <div class="divider"></div>
+      
+      <div id="contact-page" class="card">
+          <div class="card-content">                    
+              <div class="row">
+                <div class="col s12 m6">
+                  <form class="contact-form formValidate" novalidate ng-submit="enviarSoporte()" id="formValidate">
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <i class="mdi-image-wb-incandescent prefix"></i>
+                        <select name="prioridadSoporte">
+                          <option value="Nada" disabled selected>Prioridad</option>
+                          <option value="Baja">Baja</option>
+                          <option value="Media">Media</option>
+                          <option value="Alta">Alta</option>
+                        </select>
+                        <label>Prioridad</label>
+                      </div>  
+                    </div> 
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <i class="mdi-social-notifications prefix"></i>
+                        <select name="tipoSoporte">
+                          <option value="Nada" disabled selected>Tipo</option>
+                          <option value="Problema">Problema</option>
+                          <option value="Sugerencia">Sugerencia</option>
+                        </select>
+                        <label>Tipo</label>
+                      </div>  
+                    </div> 
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input id="soporteEmail" name="soporteEmail" type="text" class="validate" data-error=".errorTxt1"> 
+                        <label for="email">Correo</label>
+                        <div class="errorTxt1"></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <textarea id="soporteMensaje" name="soporteMensaje" class="materialize-textarea" class="validate" data-error=".errorTxt2"></textarea>
+                        <label for="message">Mensaje</label>
+                        <div class="errorTxt2"></div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <button id="botonSoporte" class="waves-effect waves-light red accent-2 btn right" type="submit" name="action">Enviar
+                            <i class="mdi-content-send right"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>                      
+                <div class="col s12 m6">
+                  <div id="profile-card" class="card">
+                      <div class="card-image waves-effect waves-block waves-light">
+                          <img class="activator" src="images/140.jpg" alt="user background">
+                      </div>
+                      <div class="card-content">
+                          <!-- <img src="images/avatar.jpg" alt="" class="circle responsive-img activator card-profile-image"> -->
+                          <span class="card-title activator grey-text text-darken-4">Luis Fernando Jimenez</span>
+                          <p><i class="mdi-action-perm-identity cyan-text text-darken-2"></i> Soporte</p>
+                          <p><i class="mdi-action-perm-phone-msg cyan-text text-darken-2"></i> +57 300 651 3170</p>
+                          <p><i class="mdi-communication-email cyan-text text-darken-2"></i> soporte@sipaf.aplicando.com.co</p>
+
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+      </div>            
+    </div>
+  </div>
+  <!--end container-->
+</section>

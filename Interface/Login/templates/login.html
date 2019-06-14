@@ -1,0 +1,29 @@
+<form class="login-form" novalidate>
+  <div class="row">
+    <div class="input-field col s12 center">
+      <h4>ASSISCOLE</h4>
+    </div>
+  </div>
+  <div class="row margin">
+    <div class="input-field col s12">
+      <i class="mdi-social-person-outline prefix"></i>
+      <input ng-model="formLogin.User" name="User" id="User" type="text" class="validate" data-rule-required="true" data-msg-required="Campo requerido" autocomplete="false">
+      <label for="User" class="center-align active">Username</label>
+    </div>
+  </div>
+  <div class="row margin">
+    <div class="input-field col s12">
+      <i class="mdi-action-lock-outline prefix"></i>
+      <input ng-model="formLogin.Pass" name="Pass" id="Pass" type="password" class="validate" data-rule-required="true" data-msg-required="Campo requerido" autocomplete="false">
+      <label for="Pass" class="center-align active">Password</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <button type='button' ng-click="login()" class="btn waves-effect waves-light col s12 red accent-2" ng-disabled="cargando">Login</button>
+      <div class="progress" ng-class="{'cargando': !cargando}">
+        <div class="indeterminate"></div>
+      </div>
+    </div>
+  </div>
+</form>

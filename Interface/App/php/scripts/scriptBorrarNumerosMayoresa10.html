@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+
+    <title>chat</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        console.log('listo');
+        $.ajax({
+        url: "scriptBorrarNumerosMayoresa10.php",
+        cache: false,
+        method: "POST",
+        dataType: "json",
+        data:{
+            get:'get'
+        },
+        headers : {
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+        }
+        }).done(function(data) {
+            console.log(data);
+            for (var i = 0; i < data.contenido.length; i++) {
+                update(data.contenido[i]);
+            }
+        }).error(function(data) {
+            console.log(data.responseText);
+        });
+
+        function update(row){
+            // console.log(row);
+            var number = row.Cel.substring(0,10);
+            if(isNaN(number))
+            {
+                number = row.Cel.substring(8,18);
+                if(isNaN(number))
+                {
+                    console.log(row);    
+                }
+                else if(number.length == 10)
+                {
+                updateajax(number,row.Id)
+                // console.log(number);
+                }
+                else
+                    console.log(number);
+            }
+            else if(number.length == 10)
+            {
+                updateajax(number,row.Id)
+                // console.log(number);
+            }
+            else
+                console.log(number);
+
+            
+        }
+
+        function updateajax(number,id){
+            $.ajax({
+                url: "scriptBorrarNumerosMayoresa10.php",
+                cache: false,
+                method: "POST",
+                dataType: "json",
+                data:{
+                    get:'update',
+                    cel:number,
+                    id:id
+                },
+                headers : {
+                    "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+                }
+            }).done(function(data) {
+                console.log(data);
+            }).error(function(data) {
+                console.log(data.responseText);
+            });
+        }
+    </script>
+</body>
+</html>

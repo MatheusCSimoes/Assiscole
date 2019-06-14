@@ -1,0 +1,60 @@
+<section id="content">
+        
+  <!--breadcrumbs start-->
+  <div id="breadcrumbs-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m12 l12">
+          <ol class="breadcrumbs">
+              <li class="active">Asistencia</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--breadcrumbs end-->
+  <div class="divider"></div>
+
+  <!--start container-->
+  <div class="container">
+    <div class="section">
+      <!--DataTables example-->
+      <div class="row">
+        <div id="table-datatables" class="col m10 offset-m1 l8 offset-l2">
+          <div class="row">
+            <!-- <div class="col s12 m12 l12">
+            <a ng-click="modalNuevoCurso()" class="waves-effect waves-light green lighten-2 btn right"><i class="mdi-social-group-add right"></i>Nuevo Curso</a>              
+            </div> -->
+            <div class="col s12 m6 l6">
+              <p>Escolha um curso</p>
+            </div>
+            <div class="col s12 m6 l6">
+              <p><span style="position: static; color: transparent; " class="new badge green lighten-3">6</span>&nbsp;Foi feita a chamada</p>
+            </div>
+            
+            <div class="col s12 m12 l12">
+              <div class="card-panel">
+                <table id="tableCurso" class="striped display" cellspacing="0">
+                  <thead>
+                      <tr>
+                          <th>Curso</th>
+                          <th></th>
+                      </tr>
+                  </thead>
+                
+                  <tbody>
+                      <tr  ng-class="{'green lighten-3': asistenciaCurso(curso.Dia)}" ng-repeat="curso in cursos">
+                        <td ng-class="{'green lighten-3': asistenciaCurso(curso.Dia)}">{{curso.Nome}}</td>
+                        <td style="width: 40%;"><a ng-click="clickCurso(curso)" class="waves-effect waves-light blue lighten-2 btn"><i class="mdi-image-navigate-next right"></i>Seleccionar</a></td>
+                      </tr>
+                  </tbody>
+                </table>            
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div> 
+    </div> 
+  </div> 
+  <!--end container-->
+</section>

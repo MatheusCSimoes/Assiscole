@@ -1,0 +1,93 @@
+<section id="content">
+        
+    <!--breadcrumbs start-->
+    <div id="breadcrumbs-wrapper">
+      <div class="container">
+        <div class="row">
+          <div class="col s12 m12 l12">
+            <ol class="breadcrumbs">
+                <li><a href="#app/cursos">Asistencia</a></li>
+                <li class="active">{{clickedCurso.Nome}}</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--breadcrumbs end-->
+    <div class="divider"></div>
+
+    <!--start container-->
+    <div class="container">
+        <div class="section">
+
+            <div class="row">
+                <div id="table-datatables" class="col m10 offset-m1 l8 offset-l2">
+                  <h4 class="header">Curso: {{clickedCurso.Nome}}</h4>
+                  <div class="row">
+                    <div class="col s12 m12 l12">
+                      <a ng-click="modalNovoEstudante()" class="waves-effect waves-light green lighten-2 btn right"><i class="mdi-social-person-add right"></i>Novo Estudante</a>              
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <p>Escolha o estudante</p>
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <div class="row">                            
+                            <div class="col s12 m12 l12">
+                                <p class="right"><span style="position: static; color: transparent; " class="new badge green lighten-3">6</span>&nbsp;chamada feita nesse dia</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m12 l12">
+                        <div class="card-panel">
+                            <!-- <table datatable="ng" class="responsive-table display" cellspacing="0"> -->
+                            <table class="display" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Estudante</th>
+                                        <th style="text-align: center" ng-repeat="chamada in chamadas">{{chamada.Nome}}</th>
+                                        <th style="text-align: center">Opções</th>
+                                    </tr>
+                                </thead>
+                             
+                                <tbody>
+                                    <tr ng-class="{'green lighten-3': asistenciaEstudante(estudante.Dia)}" ng-repeat="estudante in estudantes">
+                                        <td ng-class="{'green lighten-3': asistenciaEstudante(estudante.Dia)}">
+                                            {{estudante.Nome}}
+                                        </td>
+                                        <td style="text-align: center;" ng-repeat="chamada in chamadas">
+                                            <div>
+                                                <input class="with-gap" ng-click="checkEstudante(estudante,chamadas,$index)" name="{{chamada.Alias+estudante.Documento}}" type="checkbox" id="{{chamada.Alias+estudante.Documento}}"/>
+                                                <label ng-hide="asistenciaEstudante(estudante.Dia)" for="{{chamada.Alias+estudante.Documento}}"></label>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <a ng-click="modalDetallesEstudante(estudante.Documento)" class="btn-floating waves-effect waves-light blue lighten-1"><i class="mdi-action-description"></i></a>
+                                            <a ng-click="modalEditarEstudante(estudante.Documento)" class="btn-floating waves-effect waves-light lime darken-1"><i class="mdi-editor-mode-edit"></i></a>
+                                            <a ng-if="mostrarBorrar()" ng-click="modalBorrarEstudante(estudante)" class="btn-floating waves-effect waves-light red lighten-2"><i class="mdi-action-delete"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                  </div>
+                  <div style="padding-top: 20px;" class="row">
+                    <div style="display:none" id='progress' class="col s12 m6 l6">
+                        <div id='cantidadProgress'></div>
+                        <div class="progress">
+                            <div class="determinate" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="col s6 m6 l6 right">
+                      <button id="fazerChamada" ng-click="fazerChamada()" class="waves-effect waves-light red accent-2 btn right"><i class="mdi-image-navigate-next right"></i>Fazer Chamada</button>              
+                    </div>
+                  </div>
+                  <div id="modalEstudantes" ng-include="getTemplateModalEstudantes()" class="modal">
+                        
+                  </div>
+                </div> 
+            </div> 
+        </div>
+    </div>
+    <!--end container-->
+</section>

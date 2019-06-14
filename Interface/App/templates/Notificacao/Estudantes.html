@@ -1,0 +1,69 @@
+<section id="content">
+	
+	<!--breadcrumbs start-->
+    <div id="breadcrumbs-wrapper">
+	  <div class="container">
+	    <div class="row">
+	      <div class="col s12 m12 l12">
+	        <ol class="breadcrumbs">
+	            <li>Notificações</li>
+	        </ol>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!--breadcrumbs end-->
+
+    <div class="divider"></div>
+
+    <!--start container-->
+    <div id="basic-form" class="section">
+      	<div class="row">
+	        <div class="col m10 offset-m1 l8 offset-l2">
+	          	<div class="card-panel">
+		          	<ul id="task-card" class="collection with-header">
+			      		<li class="collection-header cyan darken-1">
+			      			<h4 class="task-card-title">Procurar Estudante</h4>
+			      		</li>
+			      	</ul>
+			        <div style="margin-bottom: 0px" class="row">
+			          <form class="col s12 formValidate" novalidate id="formValidate" ng-include="getTemplateMulti('FiltroEstudante','preferenciasFiltroEstudante')">
+			            
+			          </form>
+			        </div>
+		      	</div>
+		    <div class="card-panel" ng-show="estudanteNPS">
+		      	<ul id="task-card" class="collection with-header">
+		      		<li class="collection-header cyan darken-1">
+		      			<h4 class="task-card-title">Seleccionados</h4>
+		      		</li>
+		      		<li class="collection-item dismissable" ng-include="getTemplateMulti('EstudantesSeleccionados','preferenciasEstudantesSeleccionados')">
+			      			
+		      		</li>
+		      		<li class="collection-item dismissable">
+		      			<form class="col s12">	
+		      				<div class="row">
+		      					<div class="input-field col s12 m6 l6">
+		      						<textarea id="textareaNotificacoes" class="materialize-textarea" length="158"></textarea>
+		      						<label class="active" for="textareaNotificacoes">Mensaje</label>
+		      					</div>
+		      					<div style="display:none" id='progress' class="col s12 m12 l12">
+		      						<div id='cantidadProgress' align="center"></div>
+		      						<div class="progress">
+		      							<div class="determinate" style="width: 0%"></div>
+		      						</div>
+		      					</div>
+		      					<div class="input-field col s12 m12 l12">
+		      						<button id="enviarNotificacoes" ng-click="enviarNotificacoes()" class="btn blue lighten-1 waves-effect waves-light left" type="submit" name="action">Enviar Notificacoes
+		      							<i class="mdi-content-send right"></i>
+		      						</button>
+		      					</div>
+		      				</div>
+		      			</form>
+		      		</li>
+		      	</ul>
+	          </div>
+	        </div>
+      	</div>
+    </div>
+</section>

@@ -1,0 +1,25 @@
+<div id="striped-table">
+	<div class="row">
+		<div class="col s12 m12 l12">
+			<table>
+				<thead>
+					<tr>
+						<th data-field="id"></th>
+						<th data-field="id">Nombre</th>
+						<th data-field="name">Curso</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="estudante in estudantesSeleccionados">
+						<td><a ng-click="desseleccionarEstudante(estudante)" class="btn-floating waves-effect waves-light red lighten-1"><i class="mdi-content-remove"></i></a></td>
+						<td>
+							{{estudante.Nome}}
+                		</div>
+						</td>
+						<td>{{estudante.Curso}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

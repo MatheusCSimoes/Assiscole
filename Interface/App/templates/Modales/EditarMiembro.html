@@ -1,0 +1,35 @@
+<div style="padding-bottom: 0px" class="modal-content">
+  <div class="row">
+    <!-- Form with validation -->
+    <div class="col s12 m12 l12">
+      <div class="card-panel">
+        <div style="margin-bottom: 0px" class="row">
+          <form class="col s12 formValidate" novalidate ng-submit="editarMiembro()" id="formValidate">
+            <h4 class="header2">Editar Miembro</h4>
+            <div class="row">
+              <div class="input-field col s6">
+                <i class="mdi-social-person prefix"></i>
+                <input ng-model="nuevoMiembro.Nombre" name="nuevoMiembroNombre" id="nuevoMiembroNombre" type="text" class="validate" data-error=".errorTxt1">
+                <label for="nuevoMiembroNombre">Nombre(s) y Apellido(s)</label>
+                <div class="errorTxt1"></div>
+              </div>
+              <div class="input-field col s6">
+                <i class="mdi-communication-phone prefix"></i>
+                <input ng-model="nuevoMiembro.Cel" name="nuevoMiembroCel" id="nuevoMiembroCel" type="text" data-error=".errorTxt2">
+                <label for="nuevoMiembroAcudiente1Cel">Celular</label>
+                <div class="errorTxt2"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Enviar
+                  <i class="mdi-content-send right"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

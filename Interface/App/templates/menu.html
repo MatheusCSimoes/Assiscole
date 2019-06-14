@@ -1,0 +1,210 @@
+<div class="loaded">
+    <div id="loader-wrapper">
+        <div id="loader"></div>        
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div> 
+    <!-- START HEADER -->
+    <header id="header" class="page-topbar">
+        <!-- start header nav-->
+        <div class="navbar-fixed">
+            <nav class="orange">
+                <div class="nav-wrapper">
+                    <ul class="left">                      
+                        <li>
+                            <h1 class="logo-wrapper">
+                                <h4>Assiscole</h4>
+                                <span class="logo-text">Sipaf</span>
+                            </h1>
+                        </li>
+                    </ul>
+                    <!-- <div class="header-search-wrapper hide-on-med-and-down">
+                        <i class="mdi-action-search"></i>
+                        <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize"/>
+                    </div> -->
+                    <ul class="right hide-on-med-and-down">
+                        <li><a ng-click="clickSalir()" class="waves-effect waves-block waves-light"><i class="mdi-hardware-keyboard-tab"></i></a>
+                        </li>                    
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- end header nav-->
+    </header>
+    <!-- END HEADER -->
+    <!-- START MAIN -->
+    <div id="main">
+        <!-- START WRAPPER -->
+        <div class="wrapper">
+
+            <!-- START LEFT SIDEBAR NAV-->
+            <aside id="left-sidebar-nav">
+                <ul id="slide-out" class="side-nav fixed leftside-navigation">
+                    <li class="user-details blue lighten-1">
+                        <div class="row">
+                            <div class="col col s4 m4 l4">
+                                <img ng-src="{{logo}}" alt="" style="max-width: 120%;" class="responsive-img valign profile-image">
+                            </div>
+                            <div class="col col s8 m8 l8">
+                                <ul id="profile-dropdown" class="dropdown-content">
+                                    <!-- <li><a href="#"><i class="mdi-action-face-unlock"></i> Profile</a>
+                                    </li>
+                                    <li><a href="#"><i class="mdi-action-settings"></i> Settings</a>
+                                    </li>
+                                    <li><a href="#"><i class="mdi-communication-live-help"></i> Help</a>
+                                    </li>
+                                    <li class="divider"></li> -->
+                                    <!-- <li><a href="#"><i class="mdi-action-lock-outline"></i> Lock</a> -->
+                                    <!-- </li> -->
+                                    <li><a ng-click="clickSalir()" class="collapsible-header waves-effect waves-blue"><i class="mdi-hardware-keyboard-tab"></i>Salir</a>
+                                    </li>
+                                </ul>
+                                <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">{{username}}<i class="mdi-navigation-arrow-drop-down right"></i></a>
+                                <p class="user-roal">{{role}}</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="no-padding">
+                        <ul class="collapsible collapsible-accordion">
+                            <li class="bold" ng-if="mostrarAsistencia()">
+                                <a ng-click="clickModulo('cursos')" class="collapsible-header waves-effect waves-blue"><i class="mdi-action-assignment-ind"></i> Asistencia</a>
+                            </li>
+                            <li class="bold" ng-if="mostrarNotificaciones()">
+                                <a ng-click="clickModulo('notificacaoEstudantes')" class="collapsible-header waves-effect waves-blue"><i class="mdi-social-people"></i> Notificaciones</a>
+                            </li>
+                            <li class="bold" ng-if="mostrarHistorial()">
+                                <a class="collapsible-header  waves-effect waves-blue"><i class="mdi-action-history"></i>Historial</a>
+                                <div class="collapsible-body">
+                                    <ul>
+                                        <li ng-if="mostrarHistorialDiario()" class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('diarioHistorial')">Diario</a>
+                                        </li>
+                                        <li ng-if="mostrarHistorialEstudiante()" class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('estudanteHistorial')">Estudante</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <!-- <li class="bold" ng-repeat="Modulo in Modulos" ng-if="modulosExtra">
+                                <a class="collapsible-header  waves-effect waves-blue"><i class="{{Modulo.Icono}}"></i>{{Modulo.Nombre}}</a>
+                                <div class="collapsible-body">
+                                    <ul class="collapsible collapsible-accordion">
+                                        <li ng-repeat="SubModulos in Modulo.SubModulos" class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo(SubModulos.Alias)">{{SubModulos.Nombre}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li> -->
+                            <!-- <li class="bold" ng-if="mostrarReportes()">
+                                <a class="collapsible-header  waves-effect waves-blue"><i class="mdi-action-receipt"></i>Reportes</a>
+                                <div class="collapsible-body">
+                                    <ul class="collapsible collapsible-accordion">
+                                        <li class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('reporteEstudiantesCurso')">Estudiantes por Curso</a>
+                                        </li>
+                                        <li class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('reporteCurso')">Cursos</a>
+                                        </li>
+                                        <li class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('reporteAuxilio')">Secretaria de Educacion</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li> -->
+                            <!-- <li class="bold" ng-if="mostrarGraficas()">
+                                <a class="collapsible-header  waves-effect waves-blue"><i class="mdi-action-assessment"></i>Graficas</a>
+                                <div class="collapsible-body">
+                                    <ul class="collapsible collapsible-accordion">
+                                        <li class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('graficaAusencias')">Ausencias</a>
+                                        </li>
+                                        <li class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('graficaMensajes')">Mensajes Enviados</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li> -->
+                            <!-- <li class="bold" ng-if="mostrarHerramientas()">
+                                <a class="collapsible-header  waves-effect waves-blue"><i class="mdi-action-settings"></i>Herramientas</a>
+                                <div class="collapsible-body">
+                                    <ul class="collapsible collapsible-accordion">
+                                        <li class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('datosEstudiantes')">Datos de los estudiantes</a>
+                                        </li>
+                                        <li class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('datosIncompletos')">Datos Incompletos</a>
+                                        </li>
+                                        <li  ng-if="mostrarEditarEstudiante()" class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('editarEstudiante')">Editar Estudiante</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li> -->
+                            <!-- <li class="bold" ng-if="mostrarPromocion()">
+                                <a class="collapsible-header waves-effect waves-blue"><i class="mdi-content-redo"></i>Promocion</a>
+                                <div class="collapsible-body">
+                                    <ul class="collapsible collapsible-accordion">
+                                        <li ng-if="sede.Tipo == 'P'" ng-repeat="sede in sedesJornadas" class="bold"><a class="collapsible-header waves-effect waves-blue"><i class="mdi-action-label"></i>{{sede.Nombre}}</a>
+                                            <div class="collapsible-body">
+                                                <ul>
+                                                    <li ng-if="jornada.Tipo == 'P'" ng-repeat="jornada in sede.Jornadas" ><a class="waves-effect waves-blue" ng-click="clickJornadaPromocion(sede.Id,jornada.Id)">{{jornada.Nombre}}</a>
+                                                    </li>                                        
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li> -->
+                            <!-- <li class="bold" ng-if="mostrarPromocion()">
+                                <a class="collapsible-header waves-effect waves-blue"><i class="mdi-content-add-box"></i>Cursos {{ano}}</a>
+                                <div class="collapsible-body">
+                                    <ul class="collapsible collapsible-accordion">
+                                        <li ng-repeat="sede in sedesJornadas" class="bold"><a class="collapsible-header waves-effect waves-blue"><i class="mdi-action-label"></i>{{sede.Nombre}}</a>
+                                            <div class="collapsible-body">
+                                                <ul>
+                                                    <li ng-repeat="jornada in sede.Jornadas" ><a class="waves-effect waves-blue" ng-click="clickJornadaNuevo(sede.Id,jornada.Id)">{{jornada.Nombre}}</a>
+                                                    </li>                                        
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li> -->
+                            <!-- <li class="bold">
+                                <a ng-click="clickModulo('soporte')" class="collapsible-header waves-effect waves-blue"><i class="mdi-notification-event-note"></i> Soporte</a>
+                            </li> -->
+                        </ul>
+                    </li>
+                </ul>
+                <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only darken-2"><i class="mdi-navigation-menu" ></i></a>
+            </aside>
+            <!-- END LEFT SIDEBAR NAV-->
+            <div ui-view></div>
+            <!-- START RIGHT SIDEBAR NAV-->
+            <aside id="right-sidebar-nav">
+                <ul id="chat-out" class="side-nav rightside-navigation">
+                    <li class="li-hover">
+                    <a href="#" data-activates="chat-out" class="chat-close-collapse right"><i class="mdi-navigation-close"></i></a>
+                    </li>
+                    <li class="li-hover">
+                        <ul class="chat-collapsible" data-collapsible="expandable">
+                        <li>
+                            <div class="collapsible-header teal white-text active"><i class="mdi-social-whatshot"></i>Recent Activity</div>
+                            <!-- <div class="collapsible-body recent-activity" ng-repeat="actividad in actividades">
+                                <div class="recent-activity-list chat-out-list row">
+                                    <div class="col s3 recent-activity-list-icon"><i class="mdi-action-add-shopping-cart"></i>
+                                    </div>
+                                    <div class="col s12 recent-activity-list-text">
+                                        <a href="#">{{actividad.Titulo}}</a>
+                                        <p>{{actividad.Texto}}</p>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </li>
+                        </ul>
+                    </li>
+                </ul>
+            </aside>            
+            <!-- LEFT RIGHT SIDEBAR NAV-->
+            <div id="modalPrincipal" ng-include="getTemplateModal()" class="modal">
+                
+            </div>
+            <!-- <div id="modalConfirmar" ng-include="getTemplateConfirmar()" class="modal">
+                
+            </div> -->
+        </div>
+        <!-- END WRAPPER -->
+
+    </div>
+    <!-- END MAIN -->
+</div>
+<!-- <div prueba></div> -->

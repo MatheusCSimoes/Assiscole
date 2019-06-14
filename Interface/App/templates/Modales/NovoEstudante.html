@@ -1,0 +1,56 @@
+<div style="padding-bottom: 0px" class="modal-content">
+  <div class="row">
+    <!-- Form with validation -->
+    <div class="col s12 m12 l12">
+      <div class="card-panel">        
+        <div style="margin-bottom: 0px" class="row">
+          <form class="col s12 formValidate" novalidate ng-submit="agregarEstudante()" id="formValidate">            
+            <h4 class="header2">Novo Estudante</h4>
+            <div class="row">
+              <div class="input-field col l6 s12" style="margin-top: 0px">
+                <i class="mdi-action-account-circle prefix"></i>
+                <input ng-model="novoEstudante.Nome" name="novoEstudanteNome" id="novoEstudanteNome" type="text" class="validate">
+                <label for="novoEstudanteNome">Nome(s)</label>
+              </div>
+              <div class="input-field col l6 s12" style="margin-top: 0px">
+                <i class="mdi-action-account-circle prefix"></i>
+                <input ng-model="novoEstudante.Sobrenome" name="novoEstudanteSobrenome" id="novoEstudanteSobrenome" type="text" class="validate">
+                <label for="novoEstudanteSobrenome">Sobrenome(s)</label>
+              </div>
+              <div class="input-field col l6 s12">
+                <i class="mdi-image-portrait prefix"></i>
+                <input ng-model="novoEstudante.Documento" name="novoEstudanteDocumento" id="novoEstudanteDocumento" type="text" class="validate">
+                <label for="novoEstudanteDocumento">Documento</label>
+              </div>
+            </div>  
+            <h4 class="header2">Responsável</h4>
+            <div class="row">
+              <div class="input-field col l6 s12">
+                <i class="mdi-action-account-circle prefix"></i>
+                <input ng-model="novoEstudante.Responsavel.Nome" name="novoEstudanteResponsavelNome" id="novoEstudanteResponsavelNome" type="text">
+                <label for="novoEstudanteResponsavelNome">Nome(s) e Sobrenome(s)</label>
+              </div>
+              <div class="input-field col l6 s12">
+                <i class="mdi-communication-call prefix"></i>
+                <input ng-model="novoEstudante.Responsavel.Cel" name="novoEstudanteResponsavelCel" id="novoEstudanteResponsavelCel" type="text">
+                <label for="novoEstudanteResponsavelCel">Celular</label>
+              </div>
+              <div class="input-field col l6 s12">
+                <i class="mdi-image-portrait prefix"></i>
+                <input ng-model="novoEstudante.Responsavel.Documento" name="novoEstudanteResponsavelDocumento" id="novoEstudanteResponsavelDocumento" type="text" class="validate">
+                <label for="novoEstudanteResponsavelDocumento">Documento</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Submit
+                  <i class="mdi-content-send right"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

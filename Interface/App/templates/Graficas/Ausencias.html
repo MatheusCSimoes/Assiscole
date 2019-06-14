@@ -1,0 +1,154 @@
+<section id="content">
+  <!--start container-->
+  <div id="breadcrumbs-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m12 l12">
+          <ol class="breadcrumbs">
+            <li>Historial</li>
+            <li class="active">Grafica</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="container">
+    <div class="section">
+      <div class="row">
+        <div class="col s12 card-panel">
+            <div class="nav-wrapper">                
+              <h4 class="header2">Seleccione su configuracion para la Grafica</h4>
+              <div class="input-field col s12 m6 l4">
+                <!-- <i class="mdi-action-home prefix"></i> -->
+                <select class="SelectNoMargin" name="selectSedeFiltro" ng-model="configGrafica.sede">
+                    <option value="" >Todas las Sedes</option>
+                    <option ng-repeat="sede in configBuscador.sedes" value="{{sede.Id}}">{{sede.Nombre}}</option>
+                </select>
+                <label>Sedes</label>
+              </div>
+              <div class="input-field col s12 m6 l4">
+                <!-- <i class="mdi-action-home prefix"></i> -->
+                <select class="SelectNoMargin" name="selectJornadaFiltro" ng-model="configGrafica.jornada">
+                    <option value="" >Todas las Jornadas</option>
+                    <option ng-repeat="jornada in configBuscador.jornadas" value="{{jornada.Id}}">{{jornada.Nombre}}</option>
+                </select>
+                <label>Jornadas</label>
+              </div>
+              <div class="input-field col s12 m6 l4">
+                <!-- <i class="mdi-action-home prefix"></i> -->
+                <!-- <select class="SelectNoMargin" name="selectCursoFiltro" ng-model="configGrafica.curso" ng-options="curso.Id as curso.Nombre for curso in configBuscador.cursos"> -->
+                <select class="SelectNoMargin" name="selectCursoFiltro" ng-model="configGrafica.curso">
+                  <option value="" >Todos los Cursos</option>
+                  <option ng-repeat="curso in configBuscador.cursos" value="{{curso.Id}}">{{curso.Nombre}}</option>
+                </select>
+                <label>Cursos</label>
+              </div>
+              <div class="input-field col s12 m6 l4">
+                <!-- <i class="mdi-action-home prefix"></i> -->
+                <select class="SelectNoMargin" name="selectTipoGrafica" ng-model="configGrafica.tipo">
+                  <option ng-repeat="tipo in configBuscador.tipos" value="{{tipo.Id}}">{{tipo.Nombre}}</option>
+                </select>
+                <label>Tipos de Graficas</label>
+              </div>
+              <!-- <div class="input-field col s12 m6 l4" style="margin-top: 0px"> -->
+                <div class="input-field col s6 m3 l2">
+                  <input type="date" class="datepicker1">
+                  <label for="FECHA">FECHA 1</label>
+                </div>
+                <div class="input-field col s6 m3 l2">
+                  <input type="date" class="datepicker2">
+                  <label for="FECHA">FECHA 2</label>
+                </div>
+              <!-- </div> -->
+              <div class="input-field col s12 m6 l4">
+                <!-- <i class="mdi-action-home prefix"></i> -->
+                <select class="SelectNoMargin" name="selectDiasGrafica" ng-model="configGrafica.dias">
+                  <option value="1">Sumatoria de los dias</option>
+                  <option value="2">Separado por dias</option>
+                  <option value="3">Dias de la semana</option>
+                </select>
+                <label>Tipos de Agrupaci&oacute;n</label>
+              </div>
+              <div class="input-field col s12 m6 l4" style="margin-bottom: 10px;">
+                <div class="col s12" style="text-align: center;">
+                  <button id="BotonGraficar" ng-click="graficarAusencias()" class="btn cyan waves-effect waves-light" type="submit" name="action">Graficar
+                    <i class="mdi-editor-insert-chart right"></i>
+                  </button>
+                </div>
+                <div id='progress' class="col s12">
+                    <div id='cantidadProgress' align="center"></div>
+                    <div class="progress">
+                        <div class="determinate" style="width: 0%"></div>
+                    </div>
+                </div>
+              </div> 
+            </div>
+        </div>
+        <div class="col s12 card-panel">
+          <h4 class="header2" style="text-align: center;">Distribucion de las Ausencias</h4>
+          <div class="col s12 m12 l12 z-depth-1" style="padding: 0px;height:300px;margin-bottom: 10px;">
+            <canvas id="graficaHistorial" style="width: 100%;height: 100%;"></canvas>
+          </div>
+          <!-- <div class="col s12 m12 l1 card-panel z-depth-1"> -->
+          <!-- </div> -->
+          <br>
+          <div class="row">
+            <div class="col s12 m12 l7 z-depth-1" style="margin-bottom: 10px;">
+              <table ng-show="mostrar.tablaColor" id="tableColor" class="centered responsive-table display" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                  </tr>
+                </thead>
+             
+                <tbody>
+                    <tr ng-repeat="nombre in grafica.nombres">
+                      <td ng-class="getColor($index)" style="padding: 2px 2px;">{{nombre}}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 2px 2px;"></td>
+                    </tr>
+                </tbody>
+              </table> 
+              <table ng-hide="mostrar.tablaColor" id="tableCurso" class="centered striped responsive-table display" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th ng-show="mostrar.columnaAlumno">Numero</th>
+                        <th>{{grafica.titulo}}</th>
+                        <th>Asistencias Tomadas</th>
+                        <th>Cantidad de Ausencias</th>
+                    </tr>
+                </thead>
+             
+                <tbody>
+                    <tr ng-repeat="historial in grafica.historiales">
+                      <td ng-show="mostrar.columnaAlumno" ng-class="{'green lighten-3': $index%2 == 1}" style="padding: 2px 2px;">{{historial.Numero}}</td>
+                      <td ng-class="{'green lighten-3': $index%2 == 1}" style="padding: 2px 2px;">{{historial.Dia}}<a ng-click="verEstudiante(historial)" ng-show="mostrar.columnaAlumno" href=""><i class="mdi-action-search cyan-text text-darken-2"></i></a></td>
+                      <td ng-class="{'green lighten-3': $index%2 == 1}" style="padding: 2px 2px;">{{historial.CantidadLlamadas}}</td>
+                      <td ng-class="{'green lighten-3': $index%2 == 1}" style="padding: 2px 2px;">{{historial.Cantidad}} ({{historial.Porcentaje}}%)</td>
+                    </tr>
+                    <tr>
+                      <td ng-show="mostrar.columnaAlumno" ng-class="{'green lighten-3': $index%2 == 1}" style="padding: 2px 2px;"></td>
+                      <td ng-class="{'green lighten-3': $index%2 == 1}" style="padding: 2px 2px;"></td>
+                      <td ng-class="{'green lighten-3': $index%2 == 1}" style="padding: 2px 2px;">Cantidad Total</td>
+                      <td ng-class="{'green lighten-3': $index%2 == 1}" style="padding: 2px 2px;">{{cantidadTotal}}</td>
+                    </tr>
+                </tbody>
+              </table>    
+            </div>
+            <div class="col s12 m12 l5">
+              <h4 class="header2" style="text-align: center;">Posibilidad total de llamadas de Asistencia: {{grafica.totalLlamadas}}</h4>
+              <canvas id="doughnut-chart" ></canvas>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--end container-->
+
+</section>
+<!-- END CONTENT -->

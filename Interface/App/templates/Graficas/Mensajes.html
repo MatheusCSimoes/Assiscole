@@ -1,0 +1,75 @@
+<section id="content">
+  <!--start container-->
+  <div id="breadcrumbs-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m12 l12">
+          <ol class="breadcrumbs">
+            <li>Historial</li>
+            <li class="active">Grafica</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="container">
+    <div class="section">
+      <div class="row">
+        <div class="col s12 card-panel">
+            <div class="nav-wrapper">                
+              <h4 class="header2">Selecciona el Rango de Fechas</h4>
+              <div class="left col s12 m12 l12">
+                <div class="input-field col s12 m3">
+                  <input type="date" class="datepicker1">
+                  <label for="FECHA">FECHA 1</label>
+                </div>
+                <div class="input-field col s12 m3">
+                  <input type="date" class="datepicker2">
+                  <label for="FECHA">FECHA 2</label>
+                </div>
+              </div>
+              <div class="input-field col s6" style="margin-bottom: 10px;">
+              <button ng-click="graficar()" class="btn cyan waves-effect waves-light left" type="submit" name="action">Graficar
+                  <i class="mdi-editor-insert-chart right"></i>
+                </button>
+              </div> 
+            </div>
+        </div>
+        <div class="col s12">
+          <div class="col s12 m12 l6 card-panel z-depth-1">
+            <canvas id="graficaHistorial" style="width: 95%;height: 100%;"></canvas>
+          </div>
+          <div class="col s12 m12 l1 card-panel z-depth-1">
+          </div>
+          <div class="col s12 m12 l5 card-panel z-depth-1">
+            <table id="tableCurso" class="centered striped responsive-table display" cellspacing="0">
+              <thead>
+                  <tr>
+                      <th>Fecha</th>
+                      <th>Cantidad</th>
+                  </tr>
+              </thead>
+           
+              <tbody>
+                  <tr ng-repeat="historial in historiales">
+                      <td ng-class="{'green lighten-3': $index%2 == 1}" style="padding: 2px 2px;">{{historial.Dia}}</td>
+                      <td ng-class="{'green lighten-3': $index%2 == 1}" style="padding: 2px 2px;">{{historial.Cantidad}}</td>
+                  </tr>
+                  <tr>
+                      <td ng-class="{'green lighten-3': $index%2 == 1}" style="padding: 2px 2px;">Cantidad Total</td>
+                      <td ng-class="{'green lighten-3': $index%2 == 1}" style="padding: 2px 2px;">{{cantidadTotal}}</td>
+                  </tr>
+              </tbody>
+            </table>    
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--end container-->
+
+</section>
+<!-- END CONTENT -->

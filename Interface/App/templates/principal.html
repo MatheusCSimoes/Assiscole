@@ -1,0 +1,210 @@
+<section id="content">
+	<div id="breadcrumbs-wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="col s12 m12 l12">
+					<ol class="breadcrumbs">
+						<li class="active">Inicio</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+  <div class="divider"></div>
+	<div class="container">
+		<div class="section">
+			<div class="row">
+				<div id="table-datatables" class="col m10 l8">
+					<h4 class="header">Bienvenido</h4>
+				</div> 
+			</div> 
+		</div>
+		<div id="card-stats">
+			<div class="row">
+        <div class="col s12 m6 l4">
+          <div class="card">
+            <div class="card-content cyan white-text">
+              <p class="card-stats-title">
+                <i class="mdi-action-trending-neutral"></i> Mensajes Enviados Hoy</p>
+              <h4 class="card-stats-number">{{mensajeHoy}}</h4>
+              <p class="card-stats-compare">
+                <!-- <i class="mdi-hardware-keyboard-arrow-down"></i> -->
+                {{cursosHoy}}
+                <span class="cyan text text-lighten-5">Curso(s)</span>
+                , 
+                {{notificacionesHoy}}
+                <span class="cyan text text-lighten-5">Notificacion(es)</span>
+              </p>
+            </div>
+            <!-- <div class="card-action cyan darken-1">
+              <div id="clients-bar" class="center-align"></div>
+            </div> -->
+          </div>
+        </div>
+        <div class="col s12 m6 l4">
+          <div class="card">
+            <div class="card-content cyan white-text">
+              <p class="card-stats-title">
+                <i class="mdi-action-trending-up"></i> Mensajes Enviados Este Mes</p>
+              <h4 class="card-stats-number">{{mensajeMes}}</h4>
+              <p class="card-stats-compare">
+                <!-- <i class="mdi-hardware-keyboard-arrow-down"></i>  -->
+                {{porcentajeMes}}%
+                <span class="cyan text text-lighten-5">Consumido este mes</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6 l4">
+          <div class="card">
+            <div class="card-content cyan white-text">
+              <p class="card-stats-title">
+                <i class="mdi-hardware-smartphone"></i> Mensajes Restantes del Contrato</p>
+              <h4 class="card-stats-number">{{restanteContrato}}</h4>
+              <p class="card-stats-compare">
+                <!-- <i class="mdi-hardware-keyboard-arrow-down"></i>  -->
+                {{restantePorcentajeContrato}}%
+                <span class="cyan text text-lighten-5">Restante de todo el Contrato</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col s12 m6 l3" style="float left" ng-repeat="cursoAsistencia in cursosAsistencia">
+          <div class="card">
+            <div class="card-content white-text"  ng-class="{'red lighten-2': cursoAsistencia.cantidad == 0,'green lighten-2': cursoAsistencia.cantidad > 0}">
+              <p class="card-stats-title">{{cursoAsistencia.texto}}</p>
+              <h4 class="card-stats-number">Se tomo la asistencia en {{cursoAsistencia.cantidad}} cursos</h4>
+            </div>
+            <div class="card-content" style="padding: 0">
+              <ul class="collapsible collapsible-accordion" data-collapsible="accordion" style="margin: 0px">
+                <li>
+                  <div class="collapsible-header">Ver los Cursos</div>
+                  <div class="collapsible-body">
+                    <table>
+                      <tbody>
+                        <tr ng-repeat="nombrecursos in cursoAsistencia.curso">
+                          <td style="padding: 2px 2px; text-align: center">{{nombrecursos}}</td>
+                        </tr>
+                      </tbody>
+                    </table> 
+                  </div>
+                </li>
+              </ul>                
+            </div>
+            <div class="card-reveal">
+              
+            </div>
+          </div>
+        </div>
+      </div>  --> 
+      <div class="row">        
+        <div class="col s3">
+          <!-- <div class="col s12" style="padding: 0px">
+            <div id="flight-card" class="card">
+              <div class="card-header orange">
+                  <div class="card-title">
+                      <h4 class="flight-card-title">{{username}}</h4>
+                      <p class="flight-card-date">{{diaHoy}}, {{dataHoy}} {{mesHoy}}</p>
+                  </div>
+              </div>
+              <div class="card-content-bg white-text">
+                  <div class="card-content">
+                      <div class="row flight-state-wrapper">
+                          <div class="col s5 m5 l5 center-align">
+                              <div class="flight-state">
+                                  <h4 class="margin">LDN</h4>
+                                  <p class="ultra-small">London</p>
+                              </div>
+                          </div>
+                          <div class="col s2 m2 l2 center-align">
+                              <i class="mdi-device-airplanemode-on flight-icon"></i>
+                          </div>
+                          <div class="col s5 m5 l5 center-align">
+                              <div class="flight-state">
+                                  <h4 class="margin">SFO</h4>
+                                  <p class="ultra-small">San Francisco</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col s6 m6 l6 center-align">
+                              <div class="flight-info">
+                                  <p class="small"><span class="grey-text text-lighten-4">Depart:</span> 04.50</p>
+                                  <p class="small"><span class="grey-text text-lighten-4">Flight:</span> IB 5786</p>
+                                  <p class="small"><span class="grey-text text-lighten-4">Terminal:</span> B</p>
+                              </div>
+                          </div>
+                          <div class="col s6 m6 l6 center-align flight-state-two">
+                              <div class="flight-info">
+                                  <p class="small"><span class="grey-text text-lighten-4">Arrive:</span> 08.50</p>
+                                  <p class="small"><span class="grey-text text-lighten-4">Flight:</span> IB 5786</p>
+                                  <p class="small"><span class="grey-text text-lighten-4">Terminal:</span> C</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <div class="col s9">
+          <div class="row">
+            <div class="col s12 m6 l4" ng-repeat="cursoAsistencia in cursosAsistencia">
+              <div class="card">
+                <div class="card-content white-text"  ng-class="{'red lighten-2': cursoAsistencia.cantidad == 0,'green lighten-2': cursoAsistencia.cantidad > 0}">
+                  <p class="card-stats-title">{{cursoAsistencia.texto}}</p>
+                  <h4 class="card-stats-number">Se tomo la asistencia en {{cursoAsistencia.cantidad}} cursos</h4>
+                </div>
+                <div class="card-content" style="padding: 0px;">
+                    <div class="row flight-state-wrapper">
+                      <div class="col s12 m12 l12 center-align collapsible-header activator">
+                        <a class="waves-effect waves-light darken-2 middle activator">Ver los Cursos</a>
+                      </div>
+                    </div>
+                </div>
+                <div class="card-reveal" style="padding: 0px">
+                  <div class="card-content white-text"  ng-class="{'red lighten-2': cursoAsistencia.cantidad == 0,'green lighten-2': cursoAsistencia.cantidad > 0}">
+                    <p class="card-stats-title">{{cursoAsistencia.texto}}</p>
+                    <!-- <span class="card-title grey-text text-darken-4"><i class="mdi-navigation-close right"></i></span> -->
+                  </div>
+                  <table class="striped" style="text-align: center">
+                    <!-- <thead>
+                        <tr>
+                            <th>Cursos</th>
+                            <th>Fallas</th>
+                            <th><span class=" grey-text text-darken-4"><i class="mdi-navigation-close right"></i></span></th>
+                        </tr>
+                    </thead> -->
+                    <tbody>
+                      <tr ng-repeat="nombrecursos in cursoAsistencia.curso">
+                        <td style="padding: 2px 2px; text-align: center">{{nombrecursos}}</td>
+                        <!-- <td> 0</td> -->
+                      </tr>
+                    </tbody>
+                  </table> 
+                </div>
+              </div>
+            </div>
+          </div>    
+        </div>
+        <div class="col s3">
+          <div class="card">
+            <div class="card-content orange amber -1 white-text">
+              <p class="card-stats-title">
+                <i class="mdi-action-accessibility"></i> Ausencias Hoy: {{ausenciasHoy}}</p>
+              <p class="card-stats-compare">
+                <span class="orange amber -1 text text-lighten-5">{{ausenciasUltimosDias}} ausencias en las dos ultimas semanas</span>
+              </p>
+            </div>
+            <div class="card-action orange amber -1">
+              <div id="clients-bar" class="center-align"></div>
+            </div>
+          </div>
+        </div>  
+      </div>
+		</div>
+	</div>
+</section>
+  <!-- END CONTENT -->

@@ -1,0 +1,151 @@
+<section id="content">
+	<div id="breadcrumbs-wrapper">
+	  <div class="container">
+	    <div class="row">
+	      <div class="col s12 m12 l12">
+	        <ol class="breadcrumbs">
+	            <li>Historial</li>
+	            <li class="active">Personal</li>
+	        </ol>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="divider"></div>
+    <!--Basic Form-->
+    <div id="basic-form" class="section">
+      	<div class="row">
+	        <div class="col s12 m12 l12">
+	          	<div class="card-panel">
+		          	<ul id="task-card" class="collection with-header">
+			      		<li class="collection-header cyan darken-1">
+			      			<h4 class="task-card-title">Procurar Estudante</h4>
+			      		</li>
+			      	</ul>
+			        <div style="margin-bottom: 0px" class="row">
+			          <form class="col s12 formValidate" novalidate id="formValidate" ng-include="getTemplateMulti('FiltroEstudante','preferenciasFiltroEstudante')">
+			            
+			          </form>
+			        </div>
+		      	</div>
+
+		      	<div class="container" ng-show="estudanteNPS">
+			      	<div class="section">
+			      		<!-- <h2 class="caption">{{estudanteSeleccionado.Nome}}asd</h2> -->
+			      		<!-- <div class="divider"></div> -->
+			      		<ul class="collection with-header">
+			      			<li class="collection-header"><h4>{{estudanteSeleccionado.Nome}}</h4> <span class="ultra-small">{{estudanteSeleccionado.Curso}}</span></li>
+			      			<li class="collection-item">
+			      				<div class="row">
+				      				<div class="col s12 m6 l6" style="padding: 0px">
+				      					<div class="col s12 grey-text darken-1" style="padding-left: 0px;"><i class="mdi-image-timer-auto"></i> Responsavel</div>
+				      					{{estudanteSeleccionado.Responsavel.Nome <br> {{estudanteSeleccionado.Responsavel.Cel}} <br> {{estudanteSeleccionado.Responsavel.RG}}
+				      				</div>
+				      				<div class="col s12 m6 l6 right">
+		                  	<button id="generarPdf" ng-click="modalgenerarPdf()" class="waves-effect waves-light green lighten-2 btn right"><i class="mdi-image-navigate-next right"></i>Criar Informe</button>
+			                </div>
+			                <div class="col s12 m6 l6 right" style="margin-top: 1rem">
+		                  	<button id="nuevaObservacion" ng-click="modalNovaObservacao()" class="waves-effect waves-light blue lighten-2 btn right"><i class="mdi-image-navigate-next right"></i>Nova Observação</button>
+			                </div>
+			      				</div>
+			      			</li>
+			      			<!-- s<li class="collection-item">Fixed IE and Firefox support issues</li> -->
+			      		</ul>
+			      		<ul class="collection with-header">
+			      			<h5 style="text-align: center" style="background-color: white">Observações</h5>
+			      			<li class="collection-header">
+			      				<div class="row">
+			                <div class="col s12 m12 l12">
+			                  <table class="centered striped">
+			                    <thead>
+			                      <tr>
+			                      	<th style="text-align: center">Data</th>
+			                        <th style="text-align: center">Observação</th>
+			                      </tr>
+			                    </thead>
+			                    <tbody>
+			                      <tr ng-repeat="historia in historial.Observacion">
+			                      	<td style="text-align: center">{{getFecha(historia.Dia,historia.Mes)}}</td>
+			                        <td style="text-align: justify;">{{historia.Observacao}}</td>
+			                      </tr>
+			                    </tbody>
+			                  </table>
+			                </div>
+			              </div>
+			      			</li>
+			      		</ul>
+			      		<ul class="collection with-header" ng-show="historial.Falla.length > 0">
+			      			<h5 style="text-align: center" style="background-color: white">Fallas</h5>
+			      			<li class="collection-header">
+			      				<div class="row">
+			                <div class="col s12 m12 l12">
+			                  <table class="centered striped">
+			                    <thead>
+			                      <tr>
+			                      	<th></th>
+			                      	<th ng-repeat="chamada in chamadas">{{chamada.Nome}}</th>
+			                        <th style="text-align: center">Justificacion</th>
+			                        <!-- <th ng-if="Adds.arcjust" style="text-align: center">Justificacion</th> -->
+			                        <!-- <th style="text-align: center">Retardo</th> -->
+			                      </tr>
+			                    </thead>
+			                    <tbody>
+			                      <tr ng-repeat="historia in historial.Falla" ng-class="{'green lighten-3': fallaJustificada(historia.Justificado)}">
+			                      	<td style="text-align: center">
+			                      		{{getFecha(historia.Dia,historia.Mes)}}
+			                      	</td>
+			                      	<td ng-repeat="chamada in chamadas">{{getLlamada(chamada.Id,historia.Tipo)}}</td>
+			                        <td style="text-align: center">
+					                    	<input class="with-gap" ng-click="checkHistorial(historia.IdFalla)" name="{{'historial'+historia.IdFalla}}" type="checkbox" id="{{'historial'+historia.IdFalla}}"/>
+                                <label ng-show="!fallaJustificada(historia.Justificado)" for="{{'historial'+historia.IdFalla}}" style="padding-left: 20px;"></label>
+					                    	<br>
+					                    	<em ng-show="fallaJustificada(historia.Justificado)">Justificado</em>
+					                    	<em ng-show="!fallaJustificada(historia.Justificado)">No Justificado</em>
+			                        </td>
+			                        <!-- <td style="text-align: center">{{getRetardo(historia.Tipo)}}</td> -->
+			                      </tr>
+			                      <tr>
+			                      	<td></td>
+			                      	<td ng-repeat="chamada in chamadas"></td>
+			                        <td style="text-align: center">
+					                    	<a ng-click="justificarMasivo()" class="btn-floating waves-effect waves-light green lighten-1"><i class="mdi-action-done"></i></a>
+					                    	<br>
+					                    	<em>Justificar</em>
+			                        </td>
+			                      </tr>
+			                    </tbody>
+			                  </table>
+			                </div>
+			              </div>
+			      			</li>
+			      		</ul>
+			      		<ul class="collection with-header" ng-show="historial.Notificacion.length > 0">
+			      			<h5 style="text-align: center" style="background-color: white">Notificação</h5>
+			      			<li class="collection-header">
+			      				<div class="row">
+			                <div class="col s12 m12 l12">
+			                  <table class="centered striped">
+			                    <thead>
+			                      <tr>
+			                      	<th style="width: 20%"></th>
+			                        <th style="text-align: center">Mensagem</th>
+			                      </tr>
+			                    </thead>
+			                    <tbody>
+			                      <tr ng-repeat="historia in historial.Notificacion">
+			                      	<td style="text-align: center">{{getFecha(historia.Dia,historia.Mes)}}</td>
+			                        <td style="text-align: justify;">{{historia.Mensagem}}</td>
+			                      </tr>
+			                    </tbody>
+			                  </table>
+			                </div>
+			              </div>
+			      			</li>
+			      		</ul>
+			      	</div>
+		      	</div>
+	        </div>
+      	</div>
+    </div>
+</section>

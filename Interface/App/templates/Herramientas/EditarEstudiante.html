@@ -1,0 +1,123 @@
+<section id="content">
+	
+	<!--breadcrumbs start-->
+    <div id="breadcrumbs-wrapper">
+	  <div class="container">
+	    <div class="row">
+	      <div class="col s12 m12 l12">
+	        <ol class="breadcrumbs">
+	            <li>Notificaciones</li>
+	            <li class="active">Personales</li>
+	        </ol>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!--breadcrumbs end-->
+
+  <div class="divider"></div>
+
+  <!--start container-->
+  <div id="basic-form" class="section">
+  	<div class="row">
+      <div class="col s12 m12 l12">
+      	<div class="card-panel">
+        	<ul id="task-card" class="collection with-header">
+	      		<li class="collection-header cyan darken-1">
+	      			<h4 class="task-card-title">Buscar Estudiante</h4>
+	      		</li>
+	      	</ul>
+        	<div style="margin-bottom: 0px" class="row">
+          	<form class="col s12 formValidate" novalidate id="formValidateFiltro" ng-include="getTemplateMulti('FiltroEstudiante','preferenciasFiltroEstudiante')">
+          	</form>
+        	</div>
+    		</div>
+				<div class="card-panel" ng-show="estudianteNPS">
+					<div style="margin-bottom: 0px" class="row">
+    				<form class="col s12 formValidate" novalidate ng-submit="editarEstudiante()" id="formValidate">
+	            <h4 class="header2">Editar Estudiante</h4>
+	            <div class="row">
+	              <div class="input-field col s12">
+	                <i class="mdi-action-account-circle prefix"></i>
+	                <input ng-model="nuevoEstudiante.Nombre" name="nuevoEstudianteNombre" id="nuevoEstudianteNombre" type="text" class="validate" data-error=".errorTxt1">
+	                <label for="nuevoEstudianteNombre">Nombre y Apellidos</label>
+	                <div class="errorTxt1"></div>
+	              </div>
+	            </div>
+	            <br>
+	            <h4 class="header2">Datos Adicionales</h4>
+	            <div class="row">
+	              <div class="input-field col l6 s12">
+	                <i class="mdi-image-portrait prefix"></i>
+	                <input ng-model="nuevoEstudiante.Documento" name="nuevoEstudianteDocumento" id="nuevoEstudianteDocumento" type="text" class="validate">
+	                <label for="nuevoEstudianteDocumento">Documento</label>
+	              </div>
+	              <div class="input-field col l6 s12">
+	                <i class="mdi-action-home prefix"></i>
+	                <input ng-model="nuevoEstudiante.Acudiente.Direccion" name="nuevoEstudianteDireccion" id="nuevoEstudianteDireccion" type="text">
+	                <label for="nuevoEstudianteDireccion">Direccion</label>
+	              </div>
+	              <div class="input-field col l6 s12">
+	                <i class="mdi-action-today prefix"></i>
+	                <input ng-model="nuevoEstudiante.Fecha" name="nuevoEstudianteFecha" id="nuevoEstudianteFecha" type="text" class="validate">
+	                <label for="nuevoEstudianteFecha">Nacimiento (DD-MM-AAAA)</label>
+	              </div>
+	              <div class="col l6 s12">
+	                <label for="genter_select">Sexo</label>
+	                <p>
+	                  <input ng-model="nuevoEstudiante.Sexo" name="nuevoEstudianteSexo" type="radio" id="nuevoEstudianteSexoMasculino" value="M" data-error=".errorTxtRadio" />
+	                  <label for="nuevoEstudianteSexoMasculino">Masculino</label>
+	                </p>
+	                <p>
+	                  <input ng-model="nuevoEstudiante.Sexo" name="nuevoEstudianteSexo" type="radio" id="nuevoEstudianteSexoFemenino" value="F" />
+	                  <label for="nuevoEstudianteSexoFemenino">Femenino</label>
+	                </p>
+	                <div class="input-field">
+	                  <div class="errorTxtRadio"></div>
+	                </div>
+	              </div>
+	            </div>      
+	            <br>    
+	            <h4 class="header2">Acudiente</h4>
+	            <div class="row">
+	              <div class="input-field col l6 s12">
+	                <i class="mdi-action-account-circle prefix"></i>
+	                <input ng-model="nuevoEstudiante.Acudiente.Nombre" name="nuevoEstudianteAcudienteNombre" id="nuevoEstudianteAcudienteNombre" type="text">
+	                <label for="nuevoEstudianteAcudienteNombre">Nombre(s) y Apellido(s)</label>
+	                <div class="errorTxt2"></div>
+	              </div>
+	              <div class="input-field col l6 s12">
+	                <i class="mdi-communication-call prefix"></i>
+	                <input ng-model="nuevoEstudiante.Acudiente.Cel" name="nuevoEstudianteAcudienteCel" id="nuevoEstudianteAcudienteCel" type="text">
+	                <label for="nuevoEstudianteAcudienteCel">Celular</label>
+	              </div>
+	            </div>
+	            <h4 class="header2" ng-if="Adds.cursoextra">Extra</h4>
+	            <div class="row" ng-if="Adds.cursoextra">
+	              <div class="input-field col s12">
+	                <i class="mdi-content-content-paste prefix"></i>
+	                <select name="selectCursoAdicional" ng-model="nuevoEstudiante.CursoAd">
+	                  <option value="0" disabled selected>Sin Curso Extracurricular</option>
+	                  <option ng-repeat="cursoAd in cursosAdicionales" value="{{cursoAd.Id}}">{{cursoAd.Nombre}}</option>
+	                </select>
+	                <label class="active" style="top: 0.8rem;">Curso Extracurricular</label>
+	              </div>  
+	              <div class="input-field col s12">
+	                <a class="btn orange waves-effect waves-light left" ng-click="sacarCursoExtra(nuevoEstudiante)">Sacar del curso extracurricular
+	                </a>
+	              </div> 
+	            </div>
+	            <div class="row">
+	              <div class="input-field col s12">
+	                <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Enviar
+	                  <i class="mdi-content-send right"></i>
+	                </button>
+	              </div>
+	            </div>
+	          </form>
+					</div>					      	
+				</div>
+      </div>
+  	</div>
+  </div>
+</section>

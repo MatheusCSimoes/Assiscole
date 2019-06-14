@@ -1,0 +1,77 @@
+<section id="content">
+  <div id="breadcrumbs-wrapper">
+      <div class="container">
+        <div class="row">
+          <div class="col s12 m12 l12">
+            <ol class="breadcrumbs">
+            <li>Reportes</li>
+            <li class="active">Cursos</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  <div class="divider"></div>
+  <!--Basic Form-->
+  <div id="basic-form" class="section">
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <div class="card-panel">
+          <h4 class="header2">Selecciona la Sede</h4>
+          <div class="row">
+            <form class="col s12">
+              <div class="row" ng-include="getTemplateMulti('SelectorSede')">
+                
+              </div>  
+              <div class="col s12 m12 l12" ng-show="sedeDatos == cursoFiltro.IdSede" ng-repeat="cursoFiltro in cursosFiltro" ng-include="getTemplateMulti('FiltroCursosSede','preferenciasFiltroCursosSede')">
+                  
+              </div>
+              <div class="row" ng-show="checkCurso">
+                <div class="col s12 m6 l6 right">
+                  <button id="generarPdf" ng-click="modalgenerarPdf()" class="waves-effect waves-light green lighten-2 btn right"><i class="mdi-image-navigate-next right"></i>Generar Reporte en PDF</button>              
+                </div>
+              </div>
+              <div class="row" ng-show="checkCurso">
+                <div class="input-field col s12 m12 l12">
+                  <table id="tableCurso" class="display striped mybordered bordered" cellspacing="0">
+                    <thead>
+                        <tr>
+                          <th>
+                            <input ng-click="checkestudiantes()" type="checkbox" id="todosestudiantes" />
+                            <label style="top: 0.5rem;left: 0.5rem" for="todosestudiantes"></label>
+                          </th>
+                          <th style="text-align: center;">Nombre</th>
+                          <th style="text-align: center;">Datos Alumno</th>
+                          <th style="text-align: center;">Acudiente</th>
+                          <th style="text-align: center;">Datos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="estudiante in estudiantes">
+                          <td style="width: 1%;">
+                              <input ng-model="estudiante.Habilitar" type="checkbox" id="{{'estudiante'+$index}}" />
+                              <label style="top: 0.5rem;left: 0.5rem" for="{{'estudiante'+$index}}"></label>
+                          </td>                          
+                          <td class="" ng-click="checkestudiante($index)" style="border: solid 1px;max-width: 10%;cursor:pointer;">{{estudiante.Nombre}}</td>
+                          <td ng-bind-html="printDatosEstudiante(estudiante)"></td>
+                          <td>{{estudiante.Contacto.Nombre}}</td>
+                          <td ng-bind-html="printDatosAcudiente(estudiante.Contacto)"></td>
+                        </tr>
+                    </tbody>
+                  </table>   
+                </div>
+              </div>
+              <div class="row" ng-show="checkCurso">
+                <div class="col s12 m6 l6 right">
+                  <button id="generarPdf" ng-click="modalgenerarPdf()" class="waves-effect waves-light green lighten-2 btn right"><i class="mdi-image-navigate-next right"></i>Generar Reporte en PDF</button>              
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>          
+    </div>
+  </div>
+</section>
+<!-- END CONTENT -->

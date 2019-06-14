@@ -1,0 +1,15 @@
+<ul id="task-card" class="collection with-header">
+  <li class="collection-header amber lighten-1">
+    <p style="margin-top: 0px">
+    <label style="font-size: 2rem; color: white">Meses</label>
+    </p>
+  </li>
+  <li class="collection-item dismissable">
+    <div class="row" style="margin-bottom: 0px">
+      <div class="col s6 m4 l3" ng-repeat="Mes in meses">
+        <input ng-click="checkMesReportes($index)" type="checkbox" id="{{'mes'+$index}}" />
+        <label for="{{'mes'+$index}}">{{Mes}}</label>
+      </div>
+    </div>
+  </li>
+</ul>
