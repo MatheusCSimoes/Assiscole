@@ -2,9 +2,9 @@
     1) Matheus Cunha Simões                     117091021
     2) Rodrigo Carvalho de Figueiredo           117053497
     3) Daniel Fernando Jimenez Sepúlveda        117028769
-    4) Tomás Bizet de Barros                    116183736                              
+    4) Tomás Bizet de Barros                    116183736
     5) Caio Silva de Freitas                    117032792
-    6) Miguel                                   
+    6) Miguel Angelo Santos Bicudo				      116033119
 
     Disciplina: Banco de dados 1
     Turma: 2019.1
@@ -18,17 +18,17 @@ DROP TABLE IF EXISTS Estudante;
 
 CREATE TABLE Estudante (
     Nome VARCHAR (40) NOT NULL,
-    RG VARCHAR (9) PRIMARY KEY,
+    CPF VARCHAR (11) PRIMARY KEY,
     Ativo INT (2) NOT NULL DEFAULT '1'
 );
 
 DROP TABLE IF EXISTS Escola;
 
 CREATE TABLE Escola (
+    Id INT PRIMARY KEY,
     fk_Filial_Filial_PK INT,
     Nome VARCHAR (40) NOT NULL,
-    Id INT PRIMARY KEY,
-    Endereço VARCHAR (40) NOT NULL,
+    Endereco VARCHAR (40) NOT NULL,
     Telefone VARCHAR (15) NOT NULL
 );
 
@@ -45,13 +45,13 @@ CREATE TABLE Contrato (
 DROP TABLE IF EXISTS Funcionarios;
 
 CREATE TABLE Funcionarios (
-    fk_Usuários_RG VARCHAR (9) PRIMARY KEY
+    fk_Usuarios_CPF VARCHAR (11) PRIMARY KEY
 );
 
 DROP TABLE IF EXISTS Professores;
 
 CREATE TABLE Professores (
-    fk_Usuários_RG VARCHAR (9) PRIMARY KEY
+    fk_Usuarios_CPF VARCHAR (11) PRIMARY KEY
 );
 
 DROP TABLE IF EXISTS Disciplina;
@@ -65,12 +65,13 @@ DROP TABLE IF EXISTS Curso;
 
 CREATE TABLE Curso (
     Id INT PRIMARY KEY,
-    Nome VARCHAR (40) NOT NULL
+    Nome VARCHAR (40) NOT NULL,
+    fk_Escola_Id INT NOT NULL
 );
 
-DROP TABLE IF EXISTS Notificações;
+DROP TABLE IF EXISTS Notificacoes;
 
-CREATE TABLE Notificações (
+CREATE TABLE Notificacoes (
     Mensagem VARCHAR (200),
     Id INT PRIMARY KEY,
     Data datetime NOT NULL
@@ -81,61 +82,61 @@ DROP TABLE IF EXISTS Justificativas;
 CREATE TABLE Justificativas (
     Texto VARCHAR (200),
     Id INT PRIMARY KEY,
-    fk_Presença_Id INT
+    fk_Presenca_Id INT
 );
 
-DROP TABLE IF EXISTS Usuários;
+DROP TABLE IF EXISTS Usuarios;
 
-CREATE TABLE Usuários (
-    RG VARCHAR (9) PRIMARY KEY,
+CREATE TABLE Usuarios (
+    CPF VARCHAR (11) PRIMARY KEY,
     Nome VARCHAR (40) NOT NULL,
     Telefone VARCHAR (15) NOT NULL,
-    Usuário VARCHAR (40) NOT NULL,
+    Usuario VARCHAR (40) NOT NULL,
     Senha VARCHAR (40) NOT NULL,
-    Ativo INT(2) NOT NULL DEFAULT '1',    
+    Ativo INT(2) NOT NULL DEFAULT '1',
     fk_Escola_Id INT
 );
 
-DROP TABLE IF EXISTS Presença;
+DROP TABLE IF EXISTS Presenca;
 
-CREATE TABLE Presença (
+CREATE TABLE Presenca (
     Tipo VARCHAR (40),
     Dia DATE NOT NULL,
     Id INT PRIMARY KEY,
-    fk_Estudante_RG VARCHAR (9)
+    fk_Estudante_CPF VARCHAR (11)
 );
 
-DROP TABLE IF EXISTS Observações;
+DROP TABLE IF EXISTS Observacoes;
 
-CREATE TABLE Observações (
+CREATE TABLE Observacoes (
     Id INT PRIMARY KEY,
-    Observação VARCHAR (200) NOT NULL,
+    Observacao VARCHAR (200) NOT NULL,
     Acordo VARCHAR (200) NOT NULL
 );
 
-DROP TABLE IF EXISTS Módulos;
+DROP TABLE IF EXISTS Modulos;
 
-CREATE TABLE Módulos (
+CREATE TABLE Modulos (
     Id INT PRIMARY KEY,
     Nome VARCHAR (40) NOT NULL,
-    Descrição VARCHAR (200)
+    Descricao VARCHAR (200)
 );
 
-DROP TABLE IF EXISTS Responsáveis;
+DROP TABLE IF EXISTS Responsaveis;
 
-CREATE TABLE Responsáveis (
+CREATE TABLE Responsaveis (
     Nome VARCHAR (40) NOT NULL,
-    RG VARCHAR (9) PRIMARY KEY,
+    CPF VARCHAR (11) PRIMARY KEY,
     Telefone VARCHAR (15) NOT NULL
 );
 
-DROP TABLE IF EXISTS Inscrição_inscrito;
+DROP TABLE IF EXISTS Inscricao_inscrito;
 
-CREATE TABLE Inscrição_inscrito (
+CREATE TABLE Inscricao_inscrito (
     Nota DOUBLE NOT NULL,
-    Situação VARCHAR (40) NOT NULL,
-    fk_Professores_fk_Usuários_RG VARCHAR (9),
-    fk_Estudante_RG VARCHAR (9) ,
+    Situacao VARCHAR (40) NOT NULL,
+    fk_Professores_fk_Usuarios_CPF VARCHAR (11),
+    fk_Estudante_CPF VARCHAR (11) ,
     fk_Disciplina_Id INT
 );
 
@@ -143,19 +144,19 @@ DROP TABLE IF EXISTS Filial;
 
 CREATE TABLE Filial (
     Filial_PK INT NOT NULL PRIMARY KEY,
-    Filial Varchar (40) NOT NULL
+    Filial VARCHAR (40) NOT NULL
 );
 
 DROP TABLE IF EXISTS Lecionam;
 
 CREATE TABLE Lecionam (
     fk_Disciplina_Id INT,
-    fk_Professores_fk_Usuários_RG VARCHAR (9)
+    fk_Professores_fk_Usuarios_CPF VARCHAR (11)
 );
 
-DROP TABLE IF EXISTS Contém;
+DROP TABLE IF EXISTS Contem;
 
-CREATE TABLE Contém (
+CREATE TABLE Contem (
     fk_Curso_Id INT,
     fk_Disciplina_Id INT
 );
@@ -164,213 +165,213 @@ DROP TABLE IF EXISTS Pertence;
 
 CREATE TABLE Pertence (
     fk_Curso_Id INT,
-    fk_Estudante_RG VARCHAR (9), 
+    fk_Estudante_CPF VARCHAR (11),
     Ano INT
 );
 
-DROP TABLE IF EXISTS Informa_Funcionarios_Notificações_Estudante;
+DROP TABLE IF EXISTS Informa_Funcionarios_Notificacoes_Estudante;
 
-CREATE TABLE Informa_Funcionarios_Notificações_Estudante (
-    fk_Funcionarios_fk_Usuários_RG VARCHAR (9),
-    fk_Notificações_Id INT,
-    fk_Estudante_RG VARCHAR (9)
+CREATE TABLE Informa_Funcionarios_Notificacoes_Estudante (
+    fk_Funcionarios_fk_Usuarios_CPF VARCHAR (11),
+    fk_Notificacoes_Id INT,
+    fk_Estudante_CPF VARCHAR (11)
 );
 
-DROP TABLE IF EXISTS Informa_Funcionarios_Estudante_Observações;
+DROP TABLE IF EXISTS Informa_Funcionarios_Estudante_Observacoes;
 
-CREATE TABLE Informa_Funcionarios_Estudante_Observações (
-    fk_Funcionarios_fk_Usuários_RG VARCHAR (9),
-    fk_Estudante_RG VARCHAR (9),
-    fk_Observações_Id INT
+CREATE TABLE Informa_Funcionarios_Estudante_Observacoes (
+    fk_Funcionarios_fk_Usuarios_CPF VARCHAR (11),
+    fk_Estudante_CPF VARCHAR (11),
+    fk_Observacoes_Id INT
 );
 
 DROP TABLE IF EXISTS Tem;
 
 CREATE TABLE Tem (
     fk_Contrato_Id INT,
-    fk_Módulos_Id INT
+    fk_Modulos_Id INT
 );
 
 DROP TABLE IF EXISTS Possui;
 
 CREATE TABLE Possui (
-    fk_Estudante_RG VARCHAR (9),
-    fk_Responsáveis_RG VARCHAR (9)
+    fk_Estudante_CPF VARCHAR (11),
+    fk_Responsaveis_CPF VARCHAR (11)
 );
 
 
 ALTER TABLE `Escola`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-  
+
 ALTER TABLE `Contrato`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-  
+
 ALTER TABLE `Disciplina`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-  
+
 ALTER TABLE `Curso`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-  
-ALTER TABLE `Notificações`
+
+ALTER TABLE `Notificacoes`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-  
+
 ALTER TABLE `Justificativas`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-  
-ALTER TABLE `Presença`
+
+ALTER TABLE `Presenca`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-  
-ALTER TABLE `Observações`
+
+ALTER TABLE `Observacoes`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-  
-ALTER TABLE `Módulos`
+
+ALTER TABLE `Modulos`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-  
- 
+
+
 ALTER TABLE Escola ADD CONSTRAINT FK_Escola_2
     FOREIGN KEY (fk_Filial_Filial_PK)
     REFERENCES Filial (Filial_PK)
     ON DELETE NO ACTION;
- 
+
 ALTER TABLE Contrato ADD CONSTRAINT FK_Contrato_2
     FOREIGN KEY (fk_Escola_Id)
     REFERENCES Escola (Id)
     ON DELETE RESTRICT;
- 
+
 ALTER TABLE Funcionarios ADD CONSTRAINT FK_Funcionarios_2
-    FOREIGN KEY (fk_Usuários_RG)
-    REFERENCES Usuários (RG)
+    FOREIGN KEY (fk_Usuarios_CPF)
+    REFERENCES Usuarios (CPF)
     ON DELETE CASCADE;
- 
+
 ALTER TABLE Professores ADD CONSTRAINT FK_Professores_2
-    FOREIGN KEY (fk_Usuários_RG)
-    REFERENCES Usuários (RG)
+    FOREIGN KEY (fk_Usuarios_CPF)
+    REFERENCES Usuarios (CPF)
     ON DELETE CASCADE;
- 
+
 ALTER TABLE Justificativas ADD CONSTRAINT FK_Justificativas_2
-    FOREIGN KEY (fk_Presença_Id)
-    REFERENCES Presença (Id)
+    FOREIGN KEY (fk_Presenca_Id)
+    REFERENCES Presenca (Id)
     ON DELETE CASCADE;
- 
-ALTER TABLE Usuários ADD CONSTRAINT FK_Usuários_2
+
+ALTER TABLE Usuarios ADD CONSTRAINT FK_Usuarios_2
     FOREIGN KEY (fk_Escola_Id)
     REFERENCES Escola (Id)
     ON DELETE RESTRICT;
- 
-ALTER TABLE Presença ADD CONSTRAINT FK_Presença_2
-    FOREIGN KEY (fk_Estudante_RG)
-    REFERENCES Estudante (RG)
+
+ALTER TABLE Presenca ADD CONSTRAINT FK_Presenca_2
+    FOREIGN KEY (fk_Estudante_CPF)
+    REFERENCES Estudante (CPF)
     ON DELETE RESTRICT;
- 
-ALTER TABLE Inscrição_inscrito ADD CONSTRAINT FK_Inscrição_inscrito_1
-    FOREIGN KEY (fk_Professores_fk_Usuários_RG)
-    REFERENCES Professores (fk_Usuários_RG)
+
+ALTER TABLE Inscricao_inscrito ADD CONSTRAINT FK_Inscricao_inscrito_1
+    FOREIGN KEY (fk_Professores_fk_Usuarios_CPF)
+    REFERENCES Professores (fk_Usuarios_CPF)
     ON DELETE CASCADE;
- 
-ALTER TABLE Inscrição_inscrito ADD CONSTRAINT FK_Inscrição_inscrito_2
-    FOREIGN KEY (fk_Estudante_RG)
-    REFERENCES Estudante (RG);
- 
-ALTER TABLE Inscrição_inscrito ADD CONSTRAINT FK_Inscrição_inscrito_3
+
+ALTER TABLE Inscricao_inscrito ADD CONSTRAINT FK_Inscricao_inscrito_2
+    FOREIGN KEY (fk_Estudante_CPF)
+    REFERENCES Estudante (CPF);
+
+ALTER TABLE Inscricao_inscrito ADD CONSTRAINT FK_Inscricao_inscrito_3
     FOREIGN KEY (fk_Disciplina_Id)
     REFERENCES Disciplina (Id);
- 
+
 ALTER TABLE Lecionam ADD CONSTRAINT FK_Lecionam_1
     FOREIGN KEY (fk_Disciplina_Id)
     REFERENCES Disciplina (Id)
     ON DELETE SET NULL;
- 
+
 ALTER TABLE Lecionam ADD CONSTRAINT FK_Lecionam_2
-    FOREIGN KEY (fk_Professores_fk_Usuários_RG)
-    REFERENCES Professores (fk_Usuários_RG)
+    FOREIGN KEY (fk_Professores_fk_Usuarios_CPF)
+    REFERENCES Professores (fk_Usuarios_CPF)
     ON DELETE SET NULL;
- 
-ALTER TABLE Contém ADD CONSTRAINT FK_Contém_1
+
+ALTER TABLE Contem ADD CONSTRAINT FK_Contem_1
     FOREIGN KEY (fk_Curso_Id)
     REFERENCES Curso (Id)
     ON DELETE RESTRICT;
- 
-ALTER TABLE Contém ADD CONSTRAINT FK_Contém_2
+
+ALTER TABLE Contem ADD CONSTRAINT FK_Contem_2
     FOREIGN KEY (fk_Disciplina_Id)
     REFERENCES Disciplina (Id)
     ON DELETE RESTRICT;
- 
+
 ALTER TABLE Pertence ADD CONSTRAINT FK_Pertence_1
     FOREIGN KEY (fk_Curso_Id)
     REFERENCES Curso (Id)
     ON DELETE RESTRICT;
- 
+
 ALTER TABLE Pertence ADD CONSTRAINT FK_Pertence_2
-    FOREIGN KEY (fk_Estudante_RG)
-    REFERENCES Estudante (RG)
+    FOREIGN KEY (fk_Estudante_CPF)
+    REFERENCES Estudante (CPF)
     ON DELETE RESTRICT;
- 
-ALTER TABLE Informa_Funcionarios_Notificações_Estudante ADD CONSTRAINT FK_Informa_Funcionarios_Notificações_Estudante_1
-    FOREIGN KEY (fk_Funcionarios_fk_Usuários_RG)
-    REFERENCES Funcionarios (fk_Usuários_RG)
+
+ALTER TABLE Informa_Funcionarios_Notificacoes_Estudante ADD CONSTRAINT FK_Informa_Funcionarios_Notificacoes_Estudante_1
+    FOREIGN KEY (fk_Funcionarios_fk_Usuarios_CPF)
+    REFERENCES Funcionarios (fk_Usuarios_CPF)
     ON DELETE RESTRICT;
- 
-ALTER TABLE Informa_Funcionarios_Notificações_Estudante ADD CONSTRAINT FK_Informa_Funcionarios_Notificações_Estudante_2
-    FOREIGN KEY (fk_Notificações_Id)
-    REFERENCES Notificações (Id)
+
+ALTER TABLE Informa_Funcionarios_Notificacoes_Estudante ADD CONSTRAINT FK_Informa_Funcionarios_Notificacoes_Estudante_2
+    FOREIGN KEY (fk_Notificacoes_Id)
+    REFERENCES Notificacoes (Id)
     ON DELETE NO ACTION;
- 
-ALTER TABLE Informa_Funcionarios_Notificações_Estudante ADD CONSTRAINT FK_Informa_Funcionarios_Notificações_Estudante_3
-    FOREIGN KEY (fk_Estudante_RG)
-    REFERENCES Estudante (RG)
+
+ALTER TABLE Informa_Funcionarios_Notificacoes_Estudante ADD CONSTRAINT FK_Informa_Funcionarios_Notificacoes_Estudante_3
+    FOREIGN KEY (fk_Estudante_CPF)
+    REFERENCES Estudante (CPF)
     ON DELETE NO ACTION;
- 
-ALTER TABLE Informa_Funcionarios_Estudante_Observações ADD CONSTRAINT FK_Informa_Funcionarios_Estudante_Observações_1
-    FOREIGN KEY (fk_Funcionarios_fk_Usuários_RG)
-    REFERENCES Funcionarios (fk_Usuários_RG)
+
+ALTER TABLE Informa_Funcionarios_Estudante_Observacoes ADD CONSTRAINT FK_Informa_Funcionarios_Estudante_Observacoes_1
+    FOREIGN KEY (fk_Funcionarios_fk_Usuarios_CPF)
+    REFERENCES Funcionarios (fk_Usuarios_CPF)
     ON DELETE RESTRICT;
- 
-ALTER TABLE Informa_Funcionarios_Estudante_Observações ADD CONSTRAINT FK_Informa_Funcionarios_Estudante_Observações_2
-    FOREIGN KEY (fk_Estudante_RG)
-    REFERENCES Estudante (RG)
+
+ALTER TABLE Informa_Funcionarios_Estudante_Observacoes ADD CONSTRAINT FK_Informa_Funcionarios_Estudante_Observacoes_2
+    FOREIGN KEY (fk_Estudante_CPF)
+    REFERENCES Estudante (CPF)
     ON DELETE NO ACTION;
- 
-ALTER TABLE Informa_Funcionarios_Estudante_Observações ADD CONSTRAINT FK_Informa_Funcionarios_Estudante_Observações_3
-    FOREIGN KEY (fk_Observações_Id)
-    REFERENCES Observações (Id)
+
+ALTER TABLE Informa_Funcionarios_Estudante_Observacoes ADD CONSTRAINT FK_Informa_Funcionarios_Estudante_Observacoes_3
+    FOREIGN KEY (fk_Observacoes_Id)
+    REFERENCES Observacoes (Id)
     ON DELETE NO ACTION;
- 
+
 ALTER TABLE Tem ADD CONSTRAINT FK_Tem_1
     FOREIGN KEY (fk_Contrato_Id)
     REFERENCES Contrato (Id)
     ON DELETE SET NULL;
- 
+
 ALTER TABLE Tem ADD CONSTRAINT FK_Tem_2
-    FOREIGN KEY (fk_Módulos_Id)
-    REFERENCES Módulos (Id)
+    FOREIGN KEY (fk_Modulos_Id)
+    REFERENCES Modulos (Id)
     ON DELETE SET NULL;
- 
+
 ALTER TABLE Possui ADD CONSTRAINT FK_Possui_1
-    FOREIGN KEY (fk_Estudante_RG)
-    REFERENCES Estudante (RG)
+    FOREIGN KEY (fk_Estudante_CPF)
+    REFERENCES Estudante (CPF)
     ON DELETE RESTRICT;
- 
+
 ALTER TABLE Possui ADD CONSTRAINT FK_Possui_2
-    FOREIGN KEY (fk_Responsáveis_RG)
-    REFERENCES Responsáveis (RG)
+    FOREIGN KEY (fk_Responsaveis_CPF)
+    REFERENCES Responsaveis (CPF)
     ON DELETE RESTRICT;
 
 delimiter //
-create trigger aluno_curso_unico after insert on Pertence
+create trigger aluno_curso_unico before insert on Pertence
 for each row
 begin
-    if NEW.Ano < (select Ano from Pertence where fk_Curso_Id = NEW.fk_Curso_Id and fk_Estudante_RG = NEW.fk_Estudante_RG) then
-        delete from Pertence where fk_Estudante_RG = NEW.fk_Estudante_RG and fk_Curso_Id = NEW.fk_Curso_Id and Ano = NEW.Ano;
+    if (SELECT COUNT(Id) FROM Contrato) <> 0 and NEW.Ano < (select Ano from Pertence where fk_Curso_Id = NEW.fk_Curso_Id and fk_Estudante_CPF = NEW.fk_Estudante_CPF) then
+        signal sqlstate '45000';
     end if;
 end;//
 delimiter ;
 
 delimiter //
-create trigger contrato_unico after insert on Contrato
-for each row 
+create trigger contrato_unico before insert on Contrato
+for each row
 begin
-    if NEW.Data_Inicial < (select Data_Final from Contrato where fk_Escola_Id = NEW.fk_Escola_Id) then
-        delete from Contrato where Id = NEW.Id;
+    if (SELECT COUNT(Id) FROM Contrato) <> 0 AND NEW.Data_Inicial < (select Data_Final from Contrato where fk_Escola_Id = NEW.fk_Escola_Id) then
+        signal sqlstate '45000';
     end if;
 end;//
 delimiter ;
