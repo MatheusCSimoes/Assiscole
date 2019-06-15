@@ -37,7 +37,7 @@ class nuevoPDO
           break;
         case 'estudantes':
             $fecha = $_POST['fecha'];
-            $this->querySql['query'] = 'SELECT e.RG as IdEstudante,e.Nome as NomeEstudante,r.*, pr.Dia, pr.Tipo from Estudante as e left join Possui as po on e.RG = po.fk_Estudante_RG left join Responsaveis as r on r.RG = po.fk_Responsaveis_RG inner join Pertence as pe on pe.fk_Estudante_RG = e.RG and pe.Ano = :ano left join Presenca as pr on e.RG = pr.fk_Estudante_RG where pe.fk_Curso_Id = :idCurso and e.Ativo = 1 and (pr.Dia LIKE "'.$fecha.'%" or pr.Dia is null) GROUP by e.RG,pr.Tipo ORDER BY e.Nome asc';
+            $this->querySql['query'] = 'SELECT e.RG as IdEstudante,e.Nome as NomeEstudante,r.*, max(pr.Dia) as Dia, pr.Tipo from Estudante as e left join Possui as po on e.RG = po.fk_Estudante_RG left join Responsaveis as r on r.RG = po.fk_Responsaveis_RG inner join Pertence as pe on pe.fk_Estudante_RG = e.RG and pe.Ano = :ano left join Presenca as pr on e.RG = pr.fk_Estudante_RG where pe.fk_Curso_Id = :idCurso and e.Ativo = 1 GROUP by e.RG ORDER BY e.Nome asc';
             array_push($arrayOptions,"idCurso","ano");
             break;
         case 'getEstudantebyNome':
@@ -48,7 +48,29 @@ class nuevoPDO
           array_push($arrayOptions,"id");
             break;
 
+        case 'todoslosCursos':
+          $this->querySql['query'] = 'SELECT c.Id,c.Nome,COUNT(pe.fk_Curso_Id) AS Estudiantes FROM Curso as c left JOIN Pertence as pe ON (c.Id = pe.fk_Curso_Id and pe.Ano = :ano) where EXISTS (SELECT fk_Estudante_RG FROM Pertence as p WHERE c.Id = p.fk_Curso_Id) GROUP BY c.Id ORDER by Id';  
+          // ORDER by Nombre + 0
+            array_push($arrayOptions,"ano");
+          break;
 
+
+        case 'estudantesMuchosCursos':
+          $this->querySql['query'] = "SELECT e.RG as IdEstudiante,e.Nome as Estudante,c.* from Estudante as e inner join Possui as ce on e.RG = ce.fk_Estudante_RG inner join Responsaveis as c on c.RG = ce.fk_Responsaveis_RG inner join Pertence as epc on (e.RG = epc.fk_Estudante_RG and epc.Ano = $this->ano) where epc.fk_Curso_Id in (";
+          // if(count($_POST['cursos']) == 1){
+
+          // }
+          // else{
+            for ($i=0; $i < count($_POST['cursos']); $i++) { 
+
+              $idCur = $_POST['cursos'][$i];
+              if($i > 0)
+              $this->querySql['query'] .= ',';
+              $this->querySql['query'] .= "$idCur";
+            }
+          // }
+          $this->querySql['query'] .= ') and e.Ativo = 1 Group by e.RG ORDER BY Estudante asc, c.RG';
+          break;
 
             ///////////////////////////////////
         //----------DashService----------//
@@ -136,32 +158,8 @@ class nuevoPDO
         /////////////////////////////////////
         //-------NotificacionService-------//
         /////////////////////////////////////
-          case 'todoslosCursos':
-          case 'cursosPorSede':
-            $this->querySql['query'] = 'SELECT c.Id,c.Nombre,COUNT(epc.IdEstudiante) AS Estudiantes, j.Id as IdJornada, j.Alias as NombreJornada,s.Id as IdSede, s.Alias as NombreSede FROM cursos as c inner join sedesjornadas as sj on c.IdSedeJornada = sj.Id inner join jornadas as j on sj.IdJornada = j.Id inner join sedes as s on s.Id = sj.IdSede inner join cursosporano as cpa on c.Id = cpa.IdCurso left JOIN estudiantesporcurso as epc ON ((c.Id = epc.IdCurso or c.Id = epc.IdCursoAux) and epc.Ano = :ano) where c.Mostrar = 0 and cpa.Ano = :ano ';
-            if($_POST['get'] == "todoslosCursos")
-              $this->querySql['query'] .= 'and c.Especial = 0 ';
-            $this->querySql['query'] .= 'GROUP BY c.Id ORDER by s.Id, j.Id, c.Orden, c.Id';
-            array_push($arrayOptions,"ano");
-            break;          
-          case 'estudiantesMuchosCursos':
-            $this->querySql['query'] = "SELECT e.Id as IdEstudiante,e.ApellidosNombres,c.*, ce.Mandar from estudiantes as e inner join contactosporestudiante as ce on e.Id = ce.IdEstudiante inner join contactos as c on c.Id = ce.IdContacto inner join estudiantesporcurso as epc on (e.Id = epc.IdEstudiante and epc.Ano = $this->ano) where (";
-            // if(count($_POST['cursos']) == 1){
-
-            // }
-            // else{
-              for ($i=0; $i < count($_POST['cursos']); $i++) { 
-
-                $idCur = $_POST['cursos'][$i];
-                if($i > 0)
-                $this->querySql['query'] .= 'or ';
-                $this->querySql['query'] .= "epc.IdCurso = $idCur ";
-                $this->querySql['query'] .= 'or ';
-                $this->querySql['query'] .= "epc.IdCursoAux = $idCur ";
-              }
-            // }
-            $this->querySql['query'] .= ') and e.Mostrar = 0 ORDER BY ApellidosNombres asc, c.Id';
-            break;
+          
+          
           case 'grupos':
             $this->querySql['query'] = 'SELECT * FROM grupos where Mostrar = 0 ORDER by Nombre';
             break;
@@ -541,16 +539,16 @@ class nuevoPDO
               $idContacto = "";
               $dia = "";
               while ($row=$stmt->fetch()) {
-                  $arreglo[] = array(
-                  "Nome" => $row['NomeEstudante'],
-                  "Dia" => $row['Dia'],
-                  "Documento" => $row['IdEstudante'],
-                  "Responsavel" => array(
-                    "Documento" => $row['RG'],
-                    "Nome" => $row['Nome'],
-                    "Telefone" => $row['Telefone'],
-                    ),
-                  );
+                $arreglo[] = array(
+                "Nome" => $row['NomeEstudante'],
+                "Dia" => $row['Dia'],
+                "Documento" => $row['IdEstudante'],
+                "Responsavel" => array(
+                  "Documento" => $row['RG'],
+                  "Nome" => $row['Nome'],
+                  "Telefone" => $row['Telefone'],
+                  ),
+                );
               }
               break;
             case 'getEstudantebyNome':
@@ -607,6 +605,28 @@ class nuevoPDO
               }
               break;
 
+            case 'estudantesMuchosCursos':
+              while ($row=$stmt->fetch()) {
+                $arreglo[] = array(
+                "Documento" => $row['IdEstudiante'],
+                "Nombre" => $row['Estudante'],
+                "Responsavel" => array(
+                  "RG" => $row['RG'],
+                  "Nome" => $row['Nome'],
+                  "Cel" => $row['Telefone'],
+                  ),
+                );
+              }
+              break;
+            case 'todoslosCursos':
+              while ($row=$stmt->fetch()) {
+                $arreglo[]=array(
+                  "Estudiantes" => $row['Estudiantes'],
+                  "Nome" => $row['Nome'],
+                  "Id" => $row['Id'],
+                );
+              }
+              break;
 
 
 
@@ -704,16 +724,7 @@ class nuevoPDO
             ///////////////////////////////////////////
             //----------NotificacionService----------//
             ///////////////////////////////////////////
-              case 'todoslosCursos':
-                while ($row=$stmt->fetch()) {
-                  $arreglo[]=array(
-                    "Id" => $row['Id'],
-                    "Nombre" => $row['Nombre'],
-                    "NombreSede" => $row['NombreSede'],
-                    "NombreJornada" => $row['NombreJornada'],
-                  );
-                }
-                break;
+              
               case 'cursosPorSede':
                 while ($row=$stmt->fetch()) {
                   if(isset($arreglo) && count($arreglo)>0 && $arreglo[count($arreglo)-1]['IdSede'] == $row['IdSede'])
@@ -775,21 +786,7 @@ class nuevoPDO
                     );
                 }
                 break;
-              case 'estudiantesMuchosCursos':
-                while ($row=$stmt->fetch()) {
-                  $arreglo[] = array(
-                  "Id" => $row['IdEstudiante'],
-                  "Nombre" => $row['ApellidosNombres'],
-                  "Contacto" => array(
-                    "Id" => $row['Id'],
-                    "Nombre" => $row['Nombres'],
-                    "Cel" => $row['Cel'],
-                    "Direccion" => $row['Direccion'],
-                    "Mandar" => $row['Mandar'],
-                    ),
-                  );
-                }
-                break;
+              
               // case 'estudiantesbyDocumento':
               case 'estudiantebyId':
               case 'estudiantebyNombre':

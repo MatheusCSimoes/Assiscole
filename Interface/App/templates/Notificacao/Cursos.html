@@ -1,0 +1,54 @@
+<section id="content">
+  <div id="breadcrumbs-wrapper">
+	  <div class="container">
+	    <div class="row">
+	      <div class="col s12 m12 l12">
+	        <ol class="breadcrumbs">
+	            <li>Notificaciones</li>
+	            <li class="active">Cursos</li>
+	        </ol>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+  <div class="divider"></div>
+  <!--Basic Form-->
+  <div class="container">
+    <div id="basic-form" class="section">
+      <div class="row">
+        <div class="col m10 offset-m1 l8 offset-l2">
+          <div class="card-panel">
+            <h4 class="header2">Escolha os cursos</h4>
+            <div class="row">
+              <form class="col s12">
+                <div class="col s12 m12 l12" ng-include="getTemplateMulti('FiltroCursosSede','preferenciasFiltroCursosSede')">
+                  
+                </div>
+                <div class="row">
+                  <div class="input-field col s12 m6 l6">
+                    <textarea id="textareaNotificaciones" class="materialize-textarea" length="158"></textarea>
+                    <label for="textareaNotificaciones">Notificacion</label>
+                  </div>
+                  <div style="display:none" id='progress' class="col s12 m12 l12">
+                  	<div id='cantidadProgress' align="center"></div>
+                  	<div class="progress">
+                  		<div class="determinate" style="width: 0%"></div>
+                  	</div>
+                  </div>
+                  <div class="input-field col s12 m12 l12">
+                    <button id="enviarNotificacoes" ng-click="enviarNotificacoes()" class="btn blue lighten-1 waves-effect waves-light left" type="submit" name="action">Enviar Notificações
+                    <i class="mdi-content-send right"></i>
+                  </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end container-->
+</section>
+  <!-- END CONTENT -->

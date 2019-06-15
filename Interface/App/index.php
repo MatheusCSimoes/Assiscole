@@ -52,6 +52,7 @@
     <script src="js/Cursos/Estudante.js?version=<?php echo $version; ?>"></script>
 
     <script src="js/Notificacion/Estudantes.js?version=<?php echo $version; ?>"></script>
+    <script src="js/Notificacion/Curso.js?version=<?php echo $version; ?>"></script>
 
     <script src="js/Historial/Diario.js?version=<?php echo $version; ?>"></script>
     <script src="js/Historial/Estudante.js?version=<?php echo $version; ?>"></script>   

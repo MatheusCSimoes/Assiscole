@@ -70,7 +70,15 @@
                                 <a ng-click="clickModulo('cursos')" class="collapsible-header waves-effect waves-blue"><i class="mdi-action-assignment-ind"></i> Asistencia</a>
                             </li>
                             <li class="bold" ng-if="mostrarNotificaciones()">
-                                <a ng-click="clickModulo('notificacaoEstudantes')" class="collapsible-header waves-effect waves-blue"><i class="mdi-social-people"></i> Notificaciones</a>
+                                <a class="collapsible-header  waves-effect waves-blue"><i class="mdi-social-people"></i>Notificação</a>
+                                <div class="collapsible-body">
+                                    <ul>
+                                        <li class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('notificacaoCursos')">Cursos</a>
+                                        </li>                                        
+                                        <li class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('notificacaoEstudantes')">Estudiantes</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                             <li class="bold" ng-if="mostrarHistorial()">
                                 <a class="collapsible-header  waves-effect waves-blue"><i class="mdi-action-history"></i>Historial</a>

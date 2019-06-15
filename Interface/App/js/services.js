@@ -645,7 +645,7 @@ myApp
 
       var data = {
         ano: (new Date().getFullYear()),
-        get: 'cursosPorSede'
+        get: 'todoslosCursos'
       };
       functionAjax(getsuccess,geterror,data,'get');
     });
@@ -1024,9 +1024,9 @@ myApp
   };
 
   return {
-    // getCursos: getCursos,    
+    getCursos: getCursos,    
     // getGrupos: getGrupos,
-    // getEstudantesCursos: getEstudantesCursos,
+    getEstudantesCursos: getEstudantesCursos,
     // getMiembrosGrupos: getMiembrosGrupos,
     getEstudantebyNome:getEstudantebyNome,
     // getEstudantebyId:getEstudantebyId,

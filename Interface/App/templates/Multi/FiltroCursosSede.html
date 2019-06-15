@@ -1,22 +1,13 @@
 <ul id="task-card" class="collection with-header">
     <li class="collection-header blue lighten-1">
-    	<p style="margin-top: 0px">
-		    <input ng-if="inputSede" ng-click="checkSede(cursoFiltro.IdSede)" type="checkbox" id="{{'sede'+cursoFiltro.IdSede}}" />
-	      <label style="font-size: 2rem; color: white" for="{{'sede'+cursoFiltro.IdSede}}">{{cursoFiltro.NombreSede}}</label>
-        <!-- <label style="font-size: 2rem; color: white">{{cursosReporte.NombreSede}}</label> -->
-      </p>
+    	<h4>Cursos</h4>
     </li>
-    <li class="collection-item dismissable" ng-repeat="Jornada in cursoFiltro.Jornadas">
+    <li class="collection-item dismissable">
     	<div class="row" style="margin-bottom: 0px">
-    		<p>
-    			<input ng-if="inputJornada" ng-click="checkJornada(cursoFiltro.IdSede,Jornada.IdJornada)" type="checkbox" id="{{'jornada'+Jornada.IdJornada+cursoFiltro.IdSede}}" />
-    			<label style="font-size: 1.4rem" for="{{'jornada'+Jornada.IdJornada+cursoFiltro.IdSede}}">{{Jornada.NombreJornada}}</label>
-          <!-- <label style="font-size: 1.4rem">{{Jornada.NombreJornada}}</label> -->
-    		</p>
-    		<div class="col s6 m4 l3" ng-repeat="Cursos in Jornada.Cursos">
-      		<input ng-click="checkCursoFiltro(cursoFiltro.IdSede,Jornada.IdJornada,Cursos.Id)"
-      		data-curso="{{Cursos.Id}}" type="checkbox" id="{{'curso'+Cursos.Id+Jornada.IdJornada+cursoFiltro.IdSede}}" />
-          <label for="{{'curso'+Cursos.Id+Jornada.IdJornada+cursoFiltro.IdSede}}">{{Cursos.Nombre}}</label>
+    		<div class="col s6 m4 l3" ng-repeat="Cursos in cursosFiltro">
+      		<input ng-click="checkCursoFiltro(Cursos.Id)"
+      		data-curso="{{Cursos.Id}}" type="checkbox" id="{{'curso'+Cursos.Id}}" />
+          <label for="{{'curso'+Cursos.Id}}">{{Cursos.Nome}}</label>
         </div>
     	</div>
     </li>

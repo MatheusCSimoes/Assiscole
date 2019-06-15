@@ -120,7 +120,7 @@ controllers
         $('#modalEstudantes').closeModal();
         EstudantesService.insertEstudante($scope.novoEstudante,AjaxService.miAjax).then(function(a){
           var funcionSucess = function(){
-            $scope.alert('Bem','Estudante Adicionado');
+            $scope.alert('Bien','Estudante Adicionado');
           }
           carregarEstudantes($scope.clickedCurso.Id,funcionSucess);
         }, function(a){
@@ -134,15 +134,10 @@ controllers
 
   $scope.asistenciaEstudante = function(dia){
     var today = new Date().setHours(0, 0, 0, 0);
-    if(diaAnterior){
-      today = new Date(today - 24*60*60*1000);
-      while(today.getDay() == 6 || today.getDay() == 0) {
-        today = new Date(today - 24*60*60*1000)
-      }
-    }
     if(dia != null)
     {
       var date = new Date(dia).setHours(0, 0, 0, 0);
+      date += 24*60*60*1000;
       if(date >= today)
         return true;
       else
