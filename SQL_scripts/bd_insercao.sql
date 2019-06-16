@@ -4,15 +4,49 @@
     3) Daniel Fernando Jimenez Sepúlveda        117028769
     4) Tomás Bizet de Barros                    116183736
     5) Caio Silva de Freitas                    117032792
-    6) Miguel Angelo Santos Bicudo				      116033119
+    6) Miguel Angelo Santos Bicudo		116033119
 
     Disciplina: Banco de dados 1
     Turma: 2019.1
 
     Trabalho Prático 1
 
-      Script de Inserção
+    Script de Inserção
 */
+
+DELETE FROM Possui;
+DELETE FROM Tem;
+DELETE FROM Informa_Funcionarios_Estudante_Observacoes;
+DELETE FROM Informa_Funcionarios_Notificacoes_Estudante;
+DELETE FROM Observacoes;
+DELETE FROM Pertence;
+DELETE FROM Contem;
+DELETE FROM Lecionam;
+DELETE FROM Inscricao_inscrito;
+DELETE FROM Justificativas;
+DELETE FROM Disciplina;
+DELETE FROM Responsaveis;
+DELETE FROM Modulos;
+DELETE FROM Presenca;
+DELETE FROM Professores;
+DELETE FROM Funcionarios;
+DELETE FROM Usuarios;
+DELETE FROM Notificacoes;
+DELETE FROM Curso;
+DELETE FROM Contrato;
+DELETE FROM Escola;
+DELETE FROM Filial;
+DELETE FROM Estudante;
+
+ALTER TABLE `Escola` AUTO_INCREMENT=0;
+ALTER TABLE `Contrato` AUTO_INCREMENT=0;
+ALTER TABLE `Disciplina` AUTO_INCREMENT=0;
+ALTER TABLE `Curso` AUTO_INCREMENT=0;
+ALTER TABLE `Notificacoes` AUTO_INCREMENT=0;
+ALTER TABLE `Justificativas`  AUTO_INCREMENT=0;
+ALTER TABLE `Presenca` AUTO_INCREMENT=0;
+ALTER TABLE `Observacoes` AUTO_INCREMENT=0;
+ALTER TABLE `Modulos` AUTO_INCREMENT=0;
 
 INSERT INTO `Estudante` (`Nome`, `CPF`, `Ativo`) VALUES
 ('JIMENEZ RODRIGUEZ', '12345670110', 0),

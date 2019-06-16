@@ -2,9 +2,9 @@
     1) Matheus Cunha Simões                     117091021
     2) Rodrigo Carvalho de Figueiredo           117053497
     3) Daniel Fernando Jimenez Sepúlveda        117028769
-    4) Tomás Bizet de Barros                    116183736                              
+    4) Tomás Bizet de Barros                    116183736
     5) Caio Silva de Freitas                    117032792
-    6) Miguel Angelo Santos Bicudo				      116033119
+    6) Miguel Angelo Santos Bicudo		116033119
 
     Disciplina: Banco de dados 1
     Turma: 2019.1
@@ -14,13 +14,15 @@
     Script de Criação
 */
 
+SET NAMES utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS Estudante;
 
 CREATE TABLE Estudante (
     Nome VARCHAR (40) NOT NULL,
     CPF VARCHAR (11) PRIMARY KEY,
     Ativo INT (2) NOT NULL DEFAULT '1'
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Escola;
 
@@ -30,7 +32,7 @@ CREATE TABLE Escola (
     Nome VARCHAR (40) NOT NULL,
     Endereco VARCHAR (40) NOT NULL,
     Telefone VARCHAR (15) NOT NULL
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Contrato;
 
@@ -40,26 +42,26 @@ CREATE TABLE Contrato (
     Data_Inicial DATE NOT NULL,
     fk_Escola_Id INT,
     Valor INT NOT NULL
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Funcionarios;
 
 CREATE TABLE Funcionarios (
     fk_Usuarios_CPF VARCHAR (11) PRIMARY KEY
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Professores;
 
 CREATE TABLE Professores (
     fk_Usuarios_CPF VARCHAR (11) PRIMARY KEY
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Disciplina;
 
 CREATE TABLE Disciplina (
     Id INT PRIMARY KEY,
     Nome VARCHAR (40) NOT NULL
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Curso;
 
@@ -67,7 +69,7 @@ CREATE TABLE Curso (
     Id INT PRIMARY KEY,
     Nome VARCHAR (40) NOT NULL,
     fk_Escola_Id INT NOT NULL
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Notificacoes;
 
@@ -75,7 +77,7 @@ CREATE TABLE Notificacoes (
     Mensagem VARCHAR (200),
     Id INT PRIMARY KEY,
     Data datetime NOT NULL
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Justificativas;
 
@@ -83,7 +85,7 @@ CREATE TABLE Justificativas (
     Texto VARCHAR (200),
     Id INT PRIMARY KEY,
     fk_Presenca_Id INT
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Usuarios;
 
@@ -95,7 +97,7 @@ CREATE TABLE Usuarios (
     Senha VARCHAR (40) NOT NULL,
     Ativo INT(2) NOT NULL DEFAULT '1',
     fk_Escola_Id INT
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Presenca;
 
@@ -104,7 +106,7 @@ CREATE TABLE Presenca (
     Dia DATE NOT NULL,
     Id INT PRIMARY KEY,
     fk_Estudante_CPF VARCHAR (11)
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Observacoes;
 
@@ -112,7 +114,7 @@ CREATE TABLE Observacoes (
     Id INT PRIMARY KEY,
     Observacao VARCHAR (200) NOT NULL,
     Acordo VARCHAR (200) NOT NULL
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Modulos;
 
@@ -120,7 +122,7 @@ CREATE TABLE Modulos (
     Id INT PRIMARY KEY,
     Nome VARCHAR (40) NOT NULL,
     Descricao VARCHAR (200)
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Responsaveis;
 
@@ -128,7 +130,7 @@ CREATE TABLE Responsaveis (
     Nome VARCHAR (40) NOT NULL,
     CPF VARCHAR (11) PRIMARY KEY,
     Telefone VARCHAR (15) NOT NULL
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Inscricao_inscrito;
 
@@ -138,28 +140,28 @@ CREATE TABLE Inscricao_inscrito (
     fk_Professores_fk_Usuarios_CPF VARCHAR (11),
     fk_Estudante_CPF VARCHAR (11) ,
     fk_Disciplina_Id INT
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Filial;
 
 CREATE TABLE Filial (
     Filial_PK INT NOT NULL PRIMARY KEY,
     Filial VARCHAR (40) NOT NULL
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Lecionam;
 
 CREATE TABLE Lecionam (
     fk_Disciplina_Id INT,
     fk_Professores_fk_Usuarios_CPF VARCHAR (11)
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Contem;
 
 CREATE TABLE Contem (
     fk_Curso_Id INT,
     fk_Disciplina_Id INT
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Pertence;
 
@@ -167,7 +169,7 @@ CREATE TABLE Pertence (
     fk_Curso_Id INT,
     fk_Estudante_CPF VARCHAR (11),
     Ano INT
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Informa_Funcionarios_Notificacoes_Estudante;
 
@@ -175,7 +177,7 @@ CREATE TABLE Informa_Funcionarios_Notificacoes_Estudante (
     fk_Funcionarios_fk_Usuarios_CPF VARCHAR (11),
     fk_Notificacoes_Id INT,
     fk_Estudante_CPF VARCHAR (11)
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Informa_Funcionarios_Estudante_Observacoes;
 
@@ -183,21 +185,21 @@ CREATE TABLE Informa_Funcionarios_Estudante_Observacoes (
     fk_Funcionarios_fk_Usuarios_CPF VARCHAR (11),
     fk_Estudante_CPF VARCHAR (11),
     fk_Observacoes_Id INT
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Tem;
 
 CREATE TABLE Tem (
     fk_Contrato_Id INT,
     fk_Modulos_Id INT
-);
+) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Possui;
 
 CREATE TABLE Possui (
     fk_Estudante_CPF VARCHAR (11),
     fk_Responsaveis_CPF VARCHAR (11)
-);
+) DEFAULT CHARSET=utf8;
 
 
 ALTER TABLE `Escola`
