@@ -22,7 +22,7 @@ SELECT c.Id,c.Nome FROM Curso as c left JOIN Pertence as pe ON (c.Id = pe.fk_Cur
 SELECT e.CPF as IdEstudante,e.Nome as NomeEstudante,r.*, max(pr.Dia) as Dia, pr.Tipo from Estudante as e left join Possui as po on e.CPF = po.fk_Estudante_CPF left join Responsaveis as r on r.CPF = po.fk_Responsaveis_CPF inner join Pertence as pe on pe.fk_Estudante_CPF = e.CPF and pe.Ano = '2019' left join Presenca as pr on e.CPF = pr.fk_Estudante_CPF where pe.fk_Curso_Id = '1' and e.Ativo = 1 GROUP by e.CPF ORDER BY e.Nome asc
 
 -- Procura um estudante pelo nome e tras seu curso e seu responsavel
-SELECT e.CPF as IdEstudiante, e.Nome as NomeEstudante, c.Nome as Curso, co.* FROM Estudante as e inner join Pertence as epc on (epc.fk_Estudante_CPF = e.CPF and epc.Ano = 2019) inner join Curso as c on c.Id = epc.fk_Curso_Id inner join Possui as ce on e.CPF = ce.fk_Estudante_CPF inner join Responsaveis as co on co.CPF = ce.fk_Responsaveis_CPF WHERE e.Nome LIKE '%sepulveda%' and e.Ativo = 1 group by e.CPF ORDER by e.Nome asc, co.CPF
+SELECT e.CPF as IdEstudiante, e.Nome as NomeEstudante, c.Nome as Curso, co.* FROM Estudante as e inner join Pertence as epc on (epc.fk_Estudante_CPF = e.CPF and epc.Ano = 2019) inner join Curso as c on c.Id = epc.fk_Curso_Id left join Possui as ce on e.CPF = ce.fk_Estudante_CPF left join Responsaveis as co on co.CPF = ce.fk_Responsaveis_CPF WHERE e.Nome LIKE '%sepulveda%' and e.Ativo = 1 group by e.CPF ORDER by e.Nome asc, co.CPF
 
 -- Traz as observações, notificações e chamadas do aluno procurado pelo RG
 -- Função UNION
