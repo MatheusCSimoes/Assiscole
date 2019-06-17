@@ -19,7 +19,7 @@ SET NAMES utf8 COLLATE utf8_general_ci;
 DROP TABLE IF EXISTS Chamadas;
 
 CREATE TABLE Chamadas (
-  Id int(11) NOT NULL,
+  Id int(11) PRIMARY KEY,
   Nome varchar(30) NOT NULL,
   Alias varchar(30) NOT NULL
 ) DEFAULT CHARSET=utf8;
@@ -209,6 +209,8 @@ CREATE TABLE Possui (
     fk_Responsaveis_CPF VARCHAR (11)
 ) DEFAULT CHARSET=utf8;
 
+ALTER TABLE Filial
+  MODIFY Filial_PK int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 ALTER TABLE Escola
   MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
@@ -235,6 +237,9 @@ ALTER TABLE Observacoes
   MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 ALTER TABLE Modulos
+  MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+  
+ALTER TABLE Chamadas
   MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 ALTER TABLE Presenca ADD CONSTRAINT FK_Presença_3 
@@ -284,12 +289,12 @@ ALTER TABLE Inscricao_inscrito ADD CONSTRAINT FK_Inscricao_inscrito_1
 
 ALTER TABLE Inscricao_inscrito ADD CONSTRAINT FK_Inscricao_inscrito_2
     FOREIGN KEY (fk_Estudante_CPF)
-    REFERENCES Estudante (CPF);
+    REFERENCES Estudante (CPF)
     ON DELETE CASCADE;
 
 ALTER TABLE Inscricao_inscrito ADD CONSTRAINT FK_Inscricao_inscrito_3
     FOREIGN KEY (fk_Disciplina_Id)
-    REFERENCES Disciplina (Id);
+    REFERENCES Disciplina (Id)
     ON DELETE CASCADE;
 
 ALTER TABLE Lecionam ADD CONSTRAINT FK_Lecionam_1

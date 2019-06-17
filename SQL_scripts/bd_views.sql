@@ -39,6 +39,10 @@ GRANT SELECT ON inscricoes TO professor;
 GRANT UPDATE ON inscricoes TO professor;
 GRANT INSERT ON inscricoes TO professor;
 
+GRANT SELECT ON estudante TO professor;
+GRANT UPDATE ON estudante TO professor;
+GRANT INSERT ON estudante TO professor;
+
 GRANT SELECT ON listaPresenca TO professor;
 GRANT UPDATE ON listaPresenca TO professor;
 GRANT INSERT ON listaPresenca TO professor;
@@ -54,3 +58,24 @@ GRANT INSERT ON responsaveisEstudantes TO funcionario;
 GRANT SELECT ON notificacoes TO funcionario;
 GRANT UPDATE ON notificacoes TO funcionario;
 GRANT INSERT ON notificacoes TO funcionario;
+
+CREATE USER 'Admin'@'%' IDENTIFIED VIA mysql_native_password USING '***';
+GRANT ALL PRIVILEGES ON *.* TO 'Admin'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+GRANT ALL PRIVILEGES ON `assiscole`.* TO 'Admin'@'%';
+
+CREATE USER 'Matheus'@'%' IDENTIFIED VIA mysql_native_password USING '***';
+GRANT SELECT, INSERT, UPDATE ON *.* TO 'Matheus'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+GRANT ALL PRIVILEGES ON `assiscole`.* TO 'Matheus'@'%';
+
+CREATE USER 'Daniel'@'%' IDENTIFIED VIA mysql_native_password USING '***';
+GRANT SELECT, INSERT, UPDATE, DELETE, FILE ON *.* TO 'Daniel'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+GRANT ALL PRIVILEGES ON `assiscole`.* TO 'Daniel'@'%';
+
+CREATE USER 'funcionario_01'@'%' IDENTIFIED VIA mysql_native_password USING '***';
+GRANT USAGE ON *.* TO 'funcionario_01'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+GRANT funcionario TO 'funcionario_01'@'%';
+
+CREATE USER 'professor_01'@'%' IDENTIFIED VIA mysql_native_password USING '***';
+GRANT USAGE ON *.* TO 'professor_01'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+GRANT professor TO 'professor_01'@'%';
+
