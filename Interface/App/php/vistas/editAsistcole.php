@@ -35,24 +35,6 @@ class nuevoPDO
             $this->querySql['query'] .= 'UPDATE Responsaveis as c SET c.Nome=:responsavelNome, c.Telefone=:responsavelCel, c.RG=:responsavelDocumento WHERE c.Id = :responsavelDocumentoAntigo;';
             array_push($arrayOptions,'nome','responsavelDocumentoAntigo','documentoAntigo','responsavelNome','responsavelCel','responsavelDocumento','documento');
             break;
-          case 'grupo':
-            $this->querySql['query'] = 'UPDATE grupos as e SET e.Nombre=:nombre WHERE e.Id = :id';
-            array_push($arrayOptions,'id','nombre');
-            break;
-          case 'miembro':
-            $this->querySql['query'] = 'UPDATE miembros as m SET m.Nombre=:nombre, m.Telefono=:cel WHERE m.Id = :id';
-            array_push($arrayOptions,'id','nombre','cel');
-            break;
-          case 'imagen':
-            $this->querySql['query'] = 'REPLACE INTO justificaciones (IdFalla, Url, Justificado) VALUES ';
-            for ($i=0; $i < count($_POST['idFalla']); $i++) { 
-              $idFalla = $_POST['idFalla'][$i];
-              if($i > 0)
-              $this->querySql['query'] .= ',';
-              $this->querySql['query'] .= "($idFalla, :url, 1)";
-            }
-            array_push($arrayOptions,'url');
-            break;
           default:
             http_response_code(405);
             $this->querySql['query'] = '';

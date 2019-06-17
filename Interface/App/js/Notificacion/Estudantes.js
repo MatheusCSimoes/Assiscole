@@ -105,7 +105,7 @@ controllers
         insertarDatos($scope.estudantesSeleccionados)
       }
 
-      $scope.confirm("Confirmación","Vai mandar essa notififcação a "+$scope.estudantesSeleccionados.length+" Estudantes, tem certeza?",posConfirm);
+      $scope.confirm("Confirmação","Vai mandar essa notififcação a "+$scope.estudantesSeleccionados.length+" Estudantes, tem certeza?",posConfirm);
     }
     else
     {

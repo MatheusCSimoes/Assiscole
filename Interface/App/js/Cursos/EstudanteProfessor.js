@@ -65,7 +65,7 @@ controllers
       });
     }
 
-    $scope.confirm('Confirmación',"Vai atualizar as notas de "+$scope.estudantes.length+" Estudante(s), Tem certeza?",function(){
+    $scope.confirm('Confirmação',"Vai atualizar as notas de "+$scope.estudantes.length+" Estudante(s), Tem certeza?",function(){
       $("#tomarAsistencia").attr('disabled',true);
       $("#tomarAsistencia").text('Atualizando Notas...');
       $('#progress').show();

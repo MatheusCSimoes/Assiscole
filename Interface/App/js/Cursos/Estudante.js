@@ -148,7 +148,7 @@ controllers
   }
 
   var carregarEstudantes = function(idCurso,callback){
-    $scope.chamadas = [{"Nome":"Ausencia","Alias":"Aus","Id":"1"},{"Nome":"Retardo","Alias":"Ret","Id":"2"}];
+    $scope.chamadas = [{"Nome":"Ausencia","Alias":"Aus","Id":"1"},{"Nome":"Atrasado","Alias":"Ret","Id":"2"}];
     EstudantesService.getEstudantes(idCurso,AjaxService.miAjax).then(function(estudantes){
       $scope.estudantes = estudantes;       
       if(callback != undefined)
@@ -290,7 +290,7 @@ controllers
         });
       }
 
-      $scope.confirm('Confirmación',"Vai fazer a chamada de "+$scope.estudantesAsistencia.length+" Estudante(s), Tem certeza?",function(){
+      $scope.confirm('Confirmação',"Vai fazer a chamada de "+$scope.estudantesAsistencia.length+" Estudante(s), Tem certeza?",function(){
         $("#tomarAsistencia").attr('disabled',true);
         $("#tomarAsistencia").text('Enviando Mensagens...');
         $('#progress').show();

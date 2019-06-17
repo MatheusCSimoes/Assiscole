@@ -86,7 +86,7 @@ controllers
           });
         }   
 
-        $scope.confirm("Confirmación","Vai mandar essa mensagen pra "+$scope.estudiantesNotificaciones.length+" estudantes, Tem certeza?",posConfirm,function(){$("#enviarNotificaciones").attr('disabled',false);});
+        $scope.confirm("Confirmação","Vai mandar essa mensagen pra "+$scope.estudiantesNotificaciones.length+" estudantes, Tem certeza?",posConfirm,function(){$("#enviarNotificaciones").attr('disabled',false);});
       }, function(a){
         $scope.alert('Error_Red');
       });

@@ -66,7 +66,7 @@ controllers
   }
 
   $scope.getFecha = function(dia, mes){
-    var meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Júlio","Agosto","Setembro","Outubro","Novembro","Dezembro"]
+    var meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
     return meses[mes-1] + " " + dia;
   }
 
@@ -212,9 +212,9 @@ controllers
   }
 
   $scope.fallaJustificada = function(justificado){
-    return (justificado == "1");
+    return(justificado != null)
   }
 
-  $scope.chamadas = [{"Nome":"Ausencia","Alias":"Aus","Id":"1"},{"Nome":"Retardo","Alias":"Ret","Id":"2"}];
+  $scope.chamadas = [{"Nome":"Ausencia","Alias":"Aus","Id":"1"},{"Nome":"Atrasado","Alias":"Ret","Id":"2"}];
   cargarForm();        
 })

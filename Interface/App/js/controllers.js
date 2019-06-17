@@ -177,7 +177,7 @@ controllers
           tipoAlerta = "error";
           break;
       case 'Bien':
-          titulo = "Confirmación";
+          titulo = "Confirmação";
           texto = _texto;
           tipoAlerta = "success";
           break;
@@ -192,17 +192,17 @@ controllers
           tipoAlerta = "warning";
           break;
       case 'Alert_EstudianteModificado':
-          titulo = 'Confirmación';
-          texto = 'Estudiante Modificado';
+          titulo = 'Confirmação';
+          texto = 'Estudante Modificado';
           tipoAlerta = "success";
           break;
       case 'Alert_EstudianteNoModificado':
           titulo = 'Error';
-          texto = 'Estudiante no pudo ser modificado, Intentelo de nuevo';
+          texto = 'Estudante não foi modificado, Tente depois';
           tipoAlerta = "error";
           break;      
       case 'Alert_NotificacionEnviada':
-          titulo = 'Confirmación';
+          titulo = 'Confirmação';
           texto = 'Notificacion Enviada';
           tipoAlerta = "success";
           break;

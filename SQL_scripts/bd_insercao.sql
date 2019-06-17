@@ -37,18 +37,20 @@ DELETE FROM Contrato;
 DELETE FROM Escola;
 DELETE FROM Filial;
 DELETE FROM Estudante;
+DELETE FROM Chamadas;
 
-ALTER TABLE `Escola` AUTO_INCREMENT=0;
-ALTER TABLE `Contrato` AUTO_INCREMENT=0;
-ALTER TABLE `Disciplina` AUTO_INCREMENT=0;
-ALTER TABLE `Curso` AUTO_INCREMENT=0;
-ALTER TABLE `Notificacoes` AUTO_INCREMENT=0;
-ALTER TABLE `Justificativas`  AUTO_INCREMENT=0;
-ALTER TABLE `Presenca` AUTO_INCREMENT=0;
-ALTER TABLE `Observacoes` AUTO_INCREMENT=0;
-ALTER TABLE `Modulos` AUTO_INCREMENT=0;
+ALTER TABLE Escola AUTO_INCREMENT=0;
+ALTER TABLE Contrato AUTO_INCREMENT=0;
+ALTER TABLE Disciplina AUTO_INCREMENT=0;
+ALTER TABLE Curso AUTO_INCREMENT=0;
+ALTER TABLE Notificacoes AUTO_INCREMENT=0;
+ALTER TABLE Justificativas  AUTO_INCREMENT=0;
+ALTER TABLE Presenca AUTO_INCREMENT=0;
+ALTER TABLE Observacoes AUTO_INCREMENT=0;
+ALTER TABLE Modulos AUTO_INCREMENT=0;
+ALTER TABLE Chamadas AUTO_INCREMENT=0;
 
-INSERT INTO `Estudante` (`Nome`, `CPF`, `Ativo`) VALUES
+INSERT INTO Estudante (Nome, CPF, Ativo) VALUES
 ('JIMENEZ RODRIGUEZ', '12345670110', 0),
 ('ALVAREZ  ORTEGA', '12345670210', 0),
 ('JIMENEZ SEPULVEDA', '12345670410', 0),
@@ -134,20 +136,20 @@ INSERT INTO `Estudante` (`Nome`, `CPF`, `Ativo`) VALUES
 ('DIAZ PIZA', '12345679810', 0),
 ('GALAN SEBASTIAN', '12345679910', 0);
 
-INSERT INTO `Filial` (`Filial_PK`, `Filial`) VALUES
+INSERT INTO Filial (Filial_PK, Filial) VALUES
 (1, 'Novo Leblon'),
 (2, 'Leblon'),
 (3, 'Alfabarra');
 
-INSERT INTO `Escola` (`Id`, `fk_Filial_Filial_PK`, `Nome`, `Endereco`, `Telefone`) VALUES
+INSERT INTO Escola (Id, fk_Filial_Filial_PK, Nome, Endereco, Telefone) VALUES
 (1, 3, 'PH', 'endereço 1', '12345601'),
 (2, 1, 'Santo Agostinho', 'endereço 2', '12345602');
 
-INSERT INTO `Contrato` (`Id`,`fk_Escola_Id`, `Valor`, `Data_Inicial`, `Data_Final`) VALUES
+INSERT INTO Contrato (Id,fk_Escola_Id, Valor, Data_Inicial, Data_Final) VALUES
 (1, 1, 1001, STR_TO_DATE('2019-01-01','%Y-%m-%d'), STR_TO_DATE('2019-12-31','%Y-%m-%d')),
 (2, 2, 1002, STR_TO_DATE('2018-11-24','%Y-%m-%d'), STR_TO_DATE('2019-11-29','%Y-%m-%d'));
 
-INSERT INTO `Curso` (`Id`, `Nome`, `fk_Escola_Id`) VALUES
+INSERT INTO Curso (Id, Nome, fk_Escola_Id) VALUES
 (1, '101', 1),
 (2, '201', 1),
 (3, '1010', 2),
@@ -158,7 +160,7 @@ INSERT INTO `Curso` (`Id`, `Nome`, `fk_Escola_Id`) VALUES
 (8, '901', 1),
 (9, '1001', 2);
 
-INSERT INTO `Notificacoes` (`Id`, `Mensagem`, `Data`) VALUES
+INSERT INTO Notificacoes (Id, Mensagem, Data) VALUES
 (1, 'este es el primer mensaje de prueba', STR_TO_DATE('2017-07-12 21:53:11','%Y-%m-%d %H:%i:%s')),
 (2, 'Este es el segundo mensaje de prueba', STR_TO_DATE('2017-07-12 21:53:59','%Y-%m-%d %H:%i:%s')),
 (3, 'este es el cuarto mensaje de prueba', STR_TO_DATE('2017-07-12 21:56:26','%Y-%m-%d %H:%i:%s')),
@@ -206,7 +208,7 @@ INSERT INTO `Notificacoes` (`Id`, `Mensagem`, `Data`) VALUES
 (55, 'señor padre de familia su hijo se enfermo. favor acercarse', STR_TO_DATE('2019-05-28 11:03:19','%Y-%m-%d %H:%i:%s')),
 (56, 'SENOR PADRE DE FAMILIA FAVOR ACERCARSE AL COLEGIO', STR_TO_DATE('2019-06-04 11:49:17','%Y-%m-%d %H:%i:%s'));
 
-INSERT INTO `Usuarios` (`CPF`, `Usuario`, `Senha`, `Ativo`, `fk_Escola_Id`, `Nome`, `Telefone`) VALUES
+INSERT INTO Usuarios (CPF, Usuario, Senha, Ativo, fk_Escola_Id, Nome, Telefone) VALUES
 ('12345678911', '1', '1', 1, 1, 'DanielAdmin', 11234501),
 ('22345678910', '2', '2', 1, 1, 'DemoColegio', 11234502),
 ('32345678910', '3', '3', 1, 1, 'LuisFernando', 11234503),
@@ -216,37 +218,37 @@ INSERT INTO `Usuarios` (`CPF`, `Usuario`, `Senha`, `Ativo`, `fk_Escola_Id`, `Nom
 ('72345678910', '7', '7', 1, 2, 'YanethCastillo', 11234507),
 ('12345678910', '10', '10', 1, 2, 'DemoToscana', 11234510);
 
-INSERT INTO `Funcionarios` (`fk_Usuarios_CPF`) VALUES
+INSERT INTO Funcionarios (fk_Usuarios_CPF) VALUES
 ('12345678911'),
 ('22345678910'),
 ('12345678910');
 
-INSERT INTO `Professores` (`fk_Usuarios_CPF`) VALUES
+INSERT INTO Professores (fk_Usuarios_CPF) VALUES
 ('32345678910'),
 ('42345678910'),
 ('52345678910'),
 ('62345678910'),
 ('72345678910');
 
-INSERT INTO `Presenca` (`Id`, `fk_Estudante_CPF`, `Tipo`, `Dia`) VALUES
-(1, '12345670410', 'Atrasado', STR_TO_DATE('2018-07-09','%Y-%m-%d')),
-(2, '12345670610', 'Regular', STR_TO_DATE('2018-01-14','%Y-%m-%d')),
-(3, '12345670710', 'Regular', STR_TO_DATE('2018-01-14','%Y-%m-%d')),
-(4, '12345670810', 'Atrasado', STR_TO_DATE('2018-01-14','%Y-%m-%d')),
-(5, '12345670910', 'Regular', STR_TO_DATE('2018-01-14','%Y-%m-%d')),
-(6, '12345671710', 'Atrasado', STR_TO_DATE('2018-01-14','%Y-%m-%d')),
-(7, '12345671810', 'Regular', STR_TO_DATE('2018-01-14','%Y-%m-%d')),
-(10, '12345670410', 'Regular', STR_TO_DATE('2018-01-14','%Y-%m-%d')),
-(11, '12345671910', 'Regular', STR_TO_DATE('2018-01-14','%Y-%m-%d')),
-(12, '12345671810', 'Atrasado', STR_TO_DATE('2018-01-14','%Y-%m-%d'));
+INSERT INTO Presenca (Id, fk_Estudante_CPF, Tipo, Dia) VALUES
+(1, '12345670410', 1, STR_TO_DATE('2018-07-09','%Y-%m-%d')),
+(2, '12345670610', 2, STR_TO_DATE('2018-01-14','%Y-%m-%d')),
+(3, '12345670710', 2, STR_TO_DATE('2018-01-14','%Y-%m-%d')),
+(4, '12345670810', 1, STR_TO_DATE('2018-01-14','%Y-%m-%d')),
+(5, '12345670910', 2, STR_TO_DATE('2018-01-14','%Y-%m-%d')),
+(6, '12345671710', 1, STR_TO_DATE('2018-01-14','%Y-%m-%d')),
+(7, '12345671810', 2, STR_TO_DATE('2018-01-14','%Y-%m-%d')),
+(10, '12345670410', 2, STR_TO_DATE('2018-01-14','%Y-%m-%d')),
+(11, '12345671910', 2, STR_TO_DATE('2018-01-14','%Y-%m-%d')),
+(12, '12345671810', 1, STR_TO_DATE('2018-01-14','%Y-%m-%d'));
 
-INSERT INTO `Modulos` (`Id`, `Nome`, `Descricao`) VALUES
+INSERT INTO Modulos (Id, Nome, Descricao) VALUES
 (1, 'Modulo 1', 'Minha descrição do modulo 1'),
 (2, 'Modulo 2', 'Minha descrição do modulo 2'),
 (3, 'Modulo 3', 'Minha descrição do modulo 3'),
 (4, 'Modulo 4', 'Minha descrição do modulo 4');
 
-INSERT INTO `Responsaveis` (`CPF`, `Nome`, `Telefone`) VALUES
+INSERT INTO Responsaveis (CPF, Nome, Telefone) VALUES
 ('22345671943', 'Daniel Fernadno', '30065131'),
 ('22345673943', 'pepito papa', '51317012'),
 ('22345674943', 'jose anibal', '64210963'),
@@ -329,7 +331,7 @@ INSERT INTO `Responsaveis` (`CPF`, `Nome`, `Telefone`) VALUES
 ('12345679643', 'ALEXANDRA PIZA', '30056170'),
 ('12345679743', 'JHON ALEJO', '31839825');
 
-INSERT INTO `Disciplina` (`Id`, `Nome`) VALUES
+INSERT INTO Disciplina (Id, Nome) VALUES
 (1, 'Matemática'),
 (2, 'História'),
 (3, 'Geografia'),
@@ -340,20 +342,30 @@ INSERT INTO `Disciplina` (`Id`, `Nome`) VALUES
 (8, 'Inglês'),
 (9, 'Informática');
 
-INSERT INTO `Justificativas` (`Texto`, `Id`, `fk_Presenca_Id`) VALUES
+INSERT INTO Justificativas (Texto, Id, fk_Presenca_Id) VALUES
 ('Perdeu o onibus', 1, 1),
 ('Acidente de carro', 2, 4),
 ('Transito', 3, 6),
 ('Pais se responsabilizaram', 4, 12);
 
-INSERT INTO `Inscricao_inscrito` (`Nota`, `Situacao`, `fk_Professores_fk_Usuarios_CPF`, `fk_Estudante_CPF`, `fk_Disciplina_Id`) VALUES
+INSERT INTO Inscricao_inscrito (Nota, Situacao, fk_Professores_fk_Usuarios_CPF, fk_Estudante_CPF, fk_Disciplina_Id) VALUES
 (5.5, 'Reprovado', '52345678910', '12345670210', 3),
 (6.5, 'Reprovado', '52345678910', '12345670210', 4),
 (6, 'Reprovado', '52345678910', '12345670210', 5),
 (7, 'Aprovado', '52345678910', '12345670210', 1),
-(8.5, 'Aprovado', '52345678910', '12345670210', 2);
+(8.5, 'Aprovado', '52345678910', '12345670210', 2),
+(5.5, 'Reprovado', '52345678910', '12345677010', 3),
+(6.5, 'Reprovado', '52345678910', '12345677010', 4),
+(6, 'Reprovado', '52345678910', '12345677010', 5),
+(7, 'Aprovado', '52345678910', '12345677010', 1),
+(8.5, 'Aprovado', '52345678910', '12345677010', 2),
+(5.5, 'Reprovado', '52345678910', '12345672310', 3),
+(6.5, 'Reprovado', '52345678910', '12345672310', 4),
+(6, 'Reprovado', '52345678910', '12345672310', 5),
+(7, 'Aprovado', '52345678910', '12345672310', 1),
+(8.5, 'Aprovado', '52345678910', '12345672310', 2);
 
-INSERT INTO `Lecionam` (`fk_Disciplina_Id`, `fk_Professores_fk_Usuarios_CPF`) VALUES
+INSERT INTO Lecionam (fk_Disciplina_Id, fk_Professores_fk_Usuarios_CPF) VALUES
 (1, '52345678910'),
 (2, '52345678910'),
 (3, '52345678910'),
@@ -364,7 +376,7 @@ INSERT INTO `Lecionam` (`fk_Disciplina_Id`, `fk_Professores_fk_Usuarios_CPF`) VA
 (8, '32345678910'),
 (9, '72345678910');
 
-INSERT INTO `Contem` (`fk_Curso_Id`, `fk_Disciplina_Id`) VALUES
+INSERT INTO Contem (fk_Curso_Id, fk_Disciplina_Id) VALUES
 (1, 1),
 (1, 2),
 (1, 3),
@@ -447,25 +459,40 @@ INSERT INTO `Contem` (`fk_Curso_Id`, `fk_Disciplina_Id`) VALUES
 (9, 8),
 (9, 9);
 
-INSERT INTO `Pertence` (`fk_Curso_Id`, `fk_Estudante_CPF`, `Ano`) VALUES
-(1, '12345670210', 2018),
-(1, '12345670410', 2018),
-(1, '12345670610', 2018),
-(1, '12345670710', 2018),
-(1, '12345670810', 2018),
-(1, '12345670910', 2018),
-(1, '12345671710', 2018),
-(1, '12345671810', 2018),
-(1, '12345670410', 2018),
-(1, '12345671810', 2018),
-(1, '12345671910', 2018),
-(1, '12345679310', 2018);
+INSERT INTO Pertence (fk_Curso_Id, fk_Estudante_CPF, Ano) VALUES
+(1, '12345670210', 2019),
+(1, '12345670410', 2019),
+(1, '12345670610', 2019),
+(2, '12345670710', 2019),
+(2, '12345670810', 2019),
+(3, '12345670910', 2019),
+(3, '12345671710', 2019),
+(4, '12345671810', 2019),
+(4, '12345674510', 2019),
+(5, '12345672910', 2019),
+(5, '12345671910', 2019),
+(6, '12345673410', 2019),
+(6, '12345678110', 2019),
+(7, '12345678210', 2019),
+(7, '12345678310', 2019),
+(8, '12345678410', 2019),
+(8, '12345678510', 2019),
+(9, '12345678810', 2019),
+(9, '12345679110', 2019),
+(2, '12345679210', 2019),
+(3, '12345679310', 2019),
+(4, '12345679410', 2019),
+(5, '12345679510', 2019),
+(6, '12345679610', 2019),
+(7, '12345679710', 2019),
+(8, '12345679810', 2019),
+(9, '12345679910', 2019);
 
-INSERT INTO `Observacoes` (`Id`, `Observacao`, `Acordo`) VALUES
+INSERT INTO Observacoes (Id, Observacao, Acordo) VALUES
 (1, 'O seu filho se envolveu em uma briga', 'Frequentar sessões com o psicologo da escola'),
 (2, 'O seu filho atrapalhou o andamento da aula gritando com a professora', 'Próxima ocorrência, os pais da criança serão obrigados a comparecer a coordenação da escola');
 
-INSERT INTO `Informa_Funcionarios_Notificacoes_Estudante` (`fk_Funcionarios_fk_Usuarios_CPF`, `fk_Notificacoes_Id`, `fk_Estudante_CPF`) VALUES
+INSERT INTO Informa_Funcionarios_Notificacoes_Estudante (fk_Funcionarios_fk_Usuarios_CPF, fk_Notificacoes_Id, fk_Estudante_CPF) VALUES
 ('12345678911', 1, '12345670210'),
 ('22345678910', 2, '12345670410'),
 ('12345678910', 3, '12345670610'),
@@ -479,17 +506,17 @@ INSERT INTO `Informa_Funcionarios_Notificacoes_Estudante` (`fk_Funcionarios_fk_U
 ('22345678910', 11, '12345671910'),
 ('12345678910', 12, '12345679310');
 
-INSERT INTO `Informa_Funcionarios_Estudante_Observacoes` (`fk_Funcionarios_fk_Usuarios_CPF`, `fk_Estudante_CPF`, `fk_Observacoes_Id`) VALUES
+INSERT INTO Informa_Funcionarios_Estudante_Observacoes (fk_Funcionarios_fk_Usuarios_CPF, fk_Estudante_CPF, fk_Observacoes_Id) VALUES
 ('22345678910', '12345670710', 1),
 ('12345678910', '12345671810', 2);
 
-INSERT INTO `Tem` (`fk_Contrato_Id`, `fk_Modulos_Id`) VALUES
+INSERT INTO Tem (fk_Contrato_Id, fk_Modulos_Id) VALUES
 (1, 1),
 (1, 2),
 (2, 3),
 (2, 4);
 
-INSERT INTO `Possui` (`fk_Estudante_CPF`, `fk_Responsaveis_CPF`) VALUES
+INSERT INTO Possui (fk_Estudante_CPF, fk_Responsaveis_CPF) VALUES
 ('12345670210', '22345671943'),
 ('12345670410', '22345673943'),
 ('12345670610', '22345674943'),
@@ -502,3 +529,7 @@ INSERT INTO `Possui` (`fk_Estudante_CPF`, `fk_Responsaveis_CPF`) VALUES
 ('12345671810', '22345671243'),
 ('12345671910', '22345671343'),
 ('12345679310', '22345671443');
+
+INSERT INTO Chamadas (Id, Nome, Alias) VALUES
+(1, 'Ausencia', 'Aus'),
+(2, 'Retardo', 'Ret');

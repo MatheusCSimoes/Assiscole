@@ -32,15 +32,15 @@ class nuevoPDO
       switch ($_POST['get']) {
 
         case 'estudante':
-          $this->querySql['query'] = 'INSERT INTO Estudante (RG,Nome) VALUES (:documento,:nome);';
-          $this->querySql['query'] .= "INSERT INTO Pertence(fk_Estudante_RG, fk_Curso_Id, Ano) VALUES (:documento,:curso,$this->ano);";
-          $this->querySql['query'] .= 'REPLACE INTO Responsaveis(Nome, RG, Telefone) VALUES (:responsavelNome,:responsavelDocumento,:responsavelCel);';
-          $this->querySql['query'] .= 'INSERT INTO Possui(fk_Estudante_RG, fk_Responsaveis_RG) VALUES (:documento,:responsavelDocumento);';
+          $this->querySql['query'] = 'INSERT INTO Estudante (CPF,Nome) VALUES (:documento,:nome);';
+          $this->querySql['query'] .= "INSERT INTO Pertence(fk_Estudante_CPF, fk_Curso_Id, Ano) VALUES (:documento,:curso,$this->ano);";
+          $this->querySql['query'] .= 'REPLACE INTO Responsaveis(Nome, CPF, Telefone) VALUES (:responsavelNome,:responsavelDocumento,:responsavelCel);';
+          $this->querySql['query'] .= 'INSERT INTO Possui(fk_Estudante_CPF, fk_Responsaveis_CPF) VALUES (:documento,:responsavelDocumento);';
             array_push($arrayOptions,'documento','nome','curso','responsavelNome','responsavelDocumento','responsavelCel');            
           break;
 
         case 'asistencia':
-          $this->querySql['query'] = 'INSERT INTO Presenca (Tipo,Dia,fk_Estudante_RG) VALUES ';
+          $this->querySql['query'] = 'INSERT INTO Presenca (Tipo,Dia,fk_Estudante_CPF) VALUES ';
             //(:idEstudante,:tipo,LAST_INSERT_ID());
           for ($i=0; $i < count($_POST['idEstudantes']); $i++) { 
             $idEst = $_POST['idEstudantes'][$i];
@@ -54,7 +54,7 @@ class nuevoPDO
         
         case 'notifiacionCursos':
           $this->querySql['query'] = 'INSERT INTO Notificacoes (Mensagem,Data) VALUES (:mensaje,:dia);';
-          $this->querySql['query'] .= 'INSERT INTO Informa_Funcionarios_Notificações_Estudante (fk_Funcionarios_fk_Usuários_RG,fk_Notificações_Id,fk_Estudante_RG) VALUES';
+          $this->querySql['query'] .= 'INSERT INTO Informa_Funcionarios_Notificações_Estudante (fk_Funcionarios_fk_Usuários_CPF,fk_Notificações_Id,fk_Estudante_CPF) VALUES';
             //(:idEstudante,:tipo,LAST_INSERT_ID());
           for ($i=0; $i < count($_POST['idEstudantes']); $i++) { 
             $idEst = $_POST['idEstudantes'][$i];
@@ -71,78 +71,10 @@ class nuevoPDO
             $documento = $_POST['estudantes'][$i]["Documento"];
             $situacao = $_POST['estudantes'][$i]["Situacao"];
             $nota = $_POST['estudantes'][$i]["Nota"];
-            $this->querySql['query'] .= "UPDATE inscrição_inscrito SET Nota=$nota,Situação='$situacao' WHERE fk_Professores_fk_Usuários_RG=:idUser and fk_Estudante_RG='$documento' and fk_Disciplina_Id=:idDisciplina;";
+            $this->querySql['query'] .= "UPDATE inscricao_inscrito SET Nota=$nota,Situacao='$situacao' WHERE fk_Professores_fk_Usuarios_CPF=:idUser and fk_Estudante_CPF='$documento' and fk_Disciplina_Id=:idDisciplina;";
           }
           array_push($arrayOptions,'idUser','idDisciplina');
           break;
-
-
-
-
-
-
-
-
-
-
-          
-          
-          case 'notifiacionGrupos':
-            $this->querySql['query'] = 'INSERT INTO notificaciones (Texto,Dia,User,Continuacion) VALUES (:mensaje,:dia,:idUser,:random);';
-            $this->querySql['query'] .= 'INSERT INTO notificacionespormiembro (IdMiembro, IdNotificacion,Numero) VALUES';
-             //(:idEstudante,:tipo,LAST_INSERT_ID());
-            for ($i=0; $i < count($_POST['idMiembros']); $i++) { 
-              $idMemb = $_POST['idMiembros'][$i];
-              $numCont = $_POST['numContactos'][$i];
-              if($i > 0)
-              $this->querySql['query'] .= ',';
-              $this->querySql['query'] .= "($idMemb,LAST_INSERT_ID(),$numCont)";
-            }
-            array_push($arrayOptions,'dia','mensaje','idUser','random');
-            break;
-          case 'curso':
-            $this->querySql['query'] = 'SET @Orden = (SELECT Orden FROM cursos where Id = :idCurso);';
-
-            $this->querySql['query'] .= 'UPDATE cursos SET Orden = Orden + 1 where IdSedeJornada = :idSedeJornada and orden > @Orden;';
-
-            $this->querySql['query'] .= 'INSERT INTO cursos (Nome, IdSedeJornada, IdSedeJornadaExtra, Especial, Orden) SELECT :nome,:idSedeJornada,IdSedeJornadaExtra,Especial,Orden+1 FROM cursos where Id = :idCurso;';
-            $this->querySql['query'] .= 'INSERT INTO cursosporano (IdCurso,Ano) Values(LAST_INSERT_ID(),:ano)';
-            array_push($arrayOptions,'nome','idSedeJornada','idCurso','ano');
-              break;
-          case 'cursoSinAusencia':
-            $this->querySql['query'] = 'INSERT INTO asistenciaporcurso (Dia,IdCurso,IdSedeJornada,User) VALUES (:dia,:idCurso,:idSedeJornada,:idUser);';
-            array_push($arrayOptions,'dia','idCurso','idUser','idSedeJornada');
-            break;
-          
-          case 'grupo':
-            $this->querySql['query'] = 'INSERT INTO grupos (Nome) VALUES (:nome);';
-            array_push($arrayOptions,'nome');
-            break;
-          case 'miembro':
-            $this->querySql['query'] = 'INSERT INTO miembros (Nome, Telefono, IdGrupo) VALUES (:nome,:cel,:grupo);';
-              array_push($arrayOptions,'nome','cel','grupo');            
-            break;
-          case 'itcloud':
-            $this->querySql['query'] = 'INSERT INTO itcloud (Dia,Objeto) VALUES (:dia,:object);';
-            array_push($arrayOptions,'dia','object');
-            break;
-          case 'estudantesPromocion':
-            $this->querySql['query'] = 'INSERT INTO estudantesporcurso (IdEstudante,IdCurso,IdCursoAux,Ano) VALUES ';
-             //(:idEstudante,:tipo,LAST_INSERT_ID());
-            for ($i=0; $i < count($_POST['estudantes']); $i++) { 
-              $idEstudante = $_POST['estudantes'][$i]['idEstudante'];
-              $cursoFuturo = $_POST['estudantes'][$i]['cursoFuturo'];
-              $cursoFuturoAux = $_POST['estudantes'][$i]['cursoFuturoAux'];
-              if($i > 0)
-              $this->querySql['query'] .= ',';
-              $this->querySql['query'] .= "($idEstudante,$cursoFuturo,$cursoFuturoAux,:ano)";
-            }
-            array_push($arrayOptions,'ano');
-            break;
-          case 'observacion':
-            $this->querySql['query'] = 'INSERT INTO observaciones (IdEstudante,Descripcion,Accion,Compromiso,Dia,Acudiente) VALUES (:idEstudante,:descripcion,:accion,:compromiso,:dia,:acudiente);';
-            array_push($arrayOptions,'idEstudante','descripcion','accion','compromiso','dia','acudiente');
-            break;
           default:
             http_response_code(405);
             $this->querySql['query'] = '';

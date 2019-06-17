@@ -16,6 +16,14 @@
 
 SET NAMES utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS Chamadas;
+
+CREATE TABLE Chamadas (
+  Id int(11) NOT NULL,
+  Nome varchar(30) NOT NULL,
+  Alias varchar(30) NOT NULL
+) DEFAULT CHARSET=utf8;
+
 DROP TABLE IF EXISTS Estudante;
 
 CREATE TABLE Estudante (
@@ -102,7 +110,7 @@ CREATE TABLE Usuarios (
 DROP TABLE IF EXISTS Presenca;
 
 CREATE TABLE Presenca (
-    Tipo VARCHAR (40),
+    Tipo INT (11),
     Dia DATE NOT NULL,
     Id INT PRIMARY KEY,
     fk_Estudante_CPF VARCHAR (11)
@@ -202,33 +210,37 @@ CREATE TABLE Possui (
 ) DEFAULT CHARSET=utf8;
 
 
-ALTER TABLE `Escola`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE Escola
+  MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
-ALTER TABLE `Contrato`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE Contrato
+  MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
-ALTER TABLE `Disciplina`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE Disciplina
+  MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
-ALTER TABLE `Curso`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE Curso
+  MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
-ALTER TABLE `Notificacoes`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE Notificacoes
+  MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
-ALTER TABLE `Justificativas`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE Justificativas
+  MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
-ALTER TABLE `Presenca`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE Presenca
+  MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
-ALTER TABLE `Observacoes`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE Observacoes
+  MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
-ALTER TABLE `Modulos`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+ALTER TABLE Modulos
+  MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
+ALTER TABLE Presenca ADD CONSTRAINT FK_Presença_3 
+    FOREIGN KEY (Tipo) 
+    REFERENCES Chamadas(Id) 
+    ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE Escola ADD CONSTRAINT FK_Escola_2
     FOREIGN KEY (fk_Filial_Filial_PK)
@@ -263,7 +275,7 @@ ALTER TABLE Usuarios ADD CONSTRAINT FK_Usuarios_2
 ALTER TABLE Presenca ADD CONSTRAINT FK_Presenca_2
     FOREIGN KEY (fk_Estudante_CPF)
     REFERENCES Estudante (CPF)
-    ON DELETE RESTRICT;
+    ON DELETE CASCADE;
 
 ALTER TABLE Inscricao_inscrito ADD CONSTRAINT FK_Inscricao_inscrito_1
     FOREIGN KEY (fk_Professores_fk_Usuarios_CPF)
@@ -273,10 +285,12 @@ ALTER TABLE Inscricao_inscrito ADD CONSTRAINT FK_Inscricao_inscrito_1
 ALTER TABLE Inscricao_inscrito ADD CONSTRAINT FK_Inscricao_inscrito_2
     FOREIGN KEY (fk_Estudante_CPF)
     REFERENCES Estudante (CPF);
+    ON DELETE CASCADE;
 
 ALTER TABLE Inscricao_inscrito ADD CONSTRAINT FK_Inscricao_inscrito_3
     FOREIGN KEY (fk_Disciplina_Id)
     REFERENCES Disciplina (Id);
+    ON DELETE CASCADE;
 
 ALTER TABLE Lecionam ADD CONSTRAINT FK_Lecionam_1
     FOREIGN KEY (fk_Disciplina_Id)
@@ -291,27 +305,27 @@ ALTER TABLE Lecionam ADD CONSTRAINT FK_Lecionam_2
 ALTER TABLE Contem ADD CONSTRAINT FK_Contem_1
     FOREIGN KEY (fk_Curso_Id)
     REFERENCES Curso (Id)
-    ON DELETE RESTRICT;
+    ON DELETE CASCADE;
 
 ALTER TABLE Contem ADD CONSTRAINT FK_Contem_2
     FOREIGN KEY (fk_Disciplina_Id)
     REFERENCES Disciplina (Id)
-    ON DELETE RESTRICT;
+    ON DELETE CASCADE;
 
 ALTER TABLE Pertence ADD CONSTRAINT FK_Pertence_1
     FOREIGN KEY (fk_Curso_Id)
     REFERENCES Curso (Id)
-    ON DELETE RESTRICT;
+    ON DELETE CASCADE;
 
 ALTER TABLE Pertence ADD CONSTRAINT FK_Pertence_2
     FOREIGN KEY (fk_Estudante_CPF)
     REFERENCES Estudante (CPF)
-    ON DELETE RESTRICT;
+    ON DELETE CASCADE;
 
 ALTER TABLE Informa_Funcionarios_Notificacoes_Estudante ADD CONSTRAINT FK_Informa_Funcionarios_Notificacoes_Estudante_1
     FOREIGN KEY (fk_Funcionarios_fk_Usuarios_CPF)
     REFERENCES Funcionarios (fk_Usuarios_CPF)
-    ON DELETE RESTRICT;
+    ON DELETE CASCADE;
 
 ALTER TABLE Informa_Funcionarios_Notificacoes_Estudante ADD CONSTRAINT FK_Informa_Funcionarios_Notificacoes_Estudante_2
     FOREIGN KEY (fk_Notificacoes_Id)
@@ -321,17 +335,17 @@ ALTER TABLE Informa_Funcionarios_Notificacoes_Estudante ADD CONSTRAINT FK_Inform
 ALTER TABLE Informa_Funcionarios_Notificacoes_Estudante ADD CONSTRAINT FK_Informa_Funcionarios_Notificacoes_Estudante_3
     FOREIGN KEY (fk_Estudante_CPF)
     REFERENCES Estudante (CPF)
-    ON DELETE NO ACTION;
+    ON DELETE CASCADE;
 
 ALTER TABLE Informa_Funcionarios_Estudante_Observacoes ADD CONSTRAINT FK_Informa_Funcionarios_Estudante_Observacoes_1
     FOREIGN KEY (fk_Funcionarios_fk_Usuarios_CPF)
     REFERENCES Funcionarios (fk_Usuarios_CPF)
-    ON DELETE RESTRICT;
+    ON DELETE CASCADE;
 
 ALTER TABLE Informa_Funcionarios_Estudante_Observacoes ADD CONSTRAINT FK_Informa_Funcionarios_Estudante_Observacoes_2
     FOREIGN KEY (fk_Estudante_CPF)
     REFERENCES Estudante (CPF)
-    ON DELETE NO ACTION;
+    ON DELETE CASCADE;
 
 ALTER TABLE Informa_Funcionarios_Estudante_Observacoes ADD CONSTRAINT FK_Informa_Funcionarios_Estudante_Observacoes_3
     FOREIGN KEY (fk_Observacoes_Id)
@@ -351,7 +365,7 @@ ALTER TABLE Tem ADD CONSTRAINT FK_Tem_2
 ALTER TABLE Possui ADD CONSTRAINT FK_Possui_1
     FOREIGN KEY (fk_Estudante_CPF)
     REFERENCES Estudante (CPF)
-    ON DELETE RESTRICT;
+    ON DELETE CASCADE;
 
 ALTER TABLE Possui ADD CONSTRAINT FK_Possui_2
     FOREIGN KEY (fk_Responsaveis_CPF)

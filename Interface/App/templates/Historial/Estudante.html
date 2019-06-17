@@ -57,13 +57,11 @@
 			                  <table class="centered striped">
 			                    <thead>
 			                      <tr>
-			                      	<th style="text-align: center">Data</th>
 			                        <th style="text-align: center">Observação</th>
 			                      </tr>
 			                    </thead>
 			                    <tbody>
 			                      <tr ng-repeat="historia in historial.Observacion">
-			                      	<td style="text-align: center">{{getFecha(historia.Dia,historia.Mes)}}</td>
 			                        <td style="text-align: justify;">{{historia.Observacao}}</td>
 			                      </tr>
 			                    </tbody>
@@ -73,7 +71,7 @@
 			      			</li>
 			      		</ul>
 			      		<ul class="collection with-header" ng-show="historial.Falla.length > 0">
-			      			<h5 style="text-align: center" style="background-color: white">Fallas</h5>
+			      			<h5 style="text-align: center" style="background-color: white">Faltas</h5>
 			      			<li class="collection-header">
 			      				<div class="row">
 			                <div class="col s12 m12 l12">
@@ -82,7 +80,7 @@
 			                      <tr>
 			                      	<th></th>
 			                      	<th ng-repeat="chamada in chamadas">{{chamada.Nome}}</th>
-			                        <th style="text-align: center">Justificacion</th>
+			                        <th style="text-align: center">Justificação</th>
 			                        <!-- <th ng-if="Adds.arcjust" style="text-align: center">Justificacion</th> -->
 			                        <!-- <th style="text-align: center">Retardo</th> -->
 			                      </tr>
@@ -95,7 +93,7 @@
 			                      	<td ng-repeat="chamada in chamadas">{{getLlamada(chamada.Id,historia.Tipo)}}</td>
 			                        <td style="text-align: center">
 					                    	<em ng-show="fallaJustificada(historia.Justificado)">Justificado</em>
-					                    	<em ng-show="!fallaJustificada(historia.Justificado)">No Justificado</em>
+					                    	<em ng-show="!fallaJustificada(historia.Justificado)">Não Justificado</em>
 			                        </td>
 			                      </tr>
 			                    </tbody>

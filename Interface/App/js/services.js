@@ -496,9 +496,9 @@ myApp
 
       for (var i = 0; i < Estudantes.length; i++) {
         if(Estudantes[i].Nota < 5)
-          Estudantes[i].Situacao = "Reprovou"
+          Estudantes[i].Situacao = "Reprovado"
         else
-          Estudantes[i].Situacao = "Aprovou"
+          Estudantes[i].Situacao = "Aprovado"
       }
 
       var data = {
