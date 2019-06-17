@@ -29,8 +29,6 @@ controllers
   var files = {};
   var historiales = [];
 
-  $timeout(function() {$scope.setTemplateModal('ConfirmarImagen.html',"");}, 500);  
-  
   var preferenciasMulti = function(pref){
     if(pref == "preferenciasFiltroEstudante"){
       $scope.botonEstudante = "mdi-action-visibility";
@@ -68,7 +66,7 @@ controllers
   }
 
   $scope.getFecha = function(dia, mes){
-    var meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+    var meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Júlio","Agosto","Setembro","Outubro","Novembro","Dezembro"]
     return meses[mes-1] + " " + dia;
   }
 
@@ -79,70 +77,9 @@ controllers
       return " ";
   }
 
-  $scope.setFiles = function(element,p) {
-    $scope.$apply(function($scope) {
-      console.log('files:', element.files);
-      // Turn the FileList object into an Array
-        files = {
-          imagen:element.files[0],
-          id: element.id,
-        }
-        var file = element.files[0];
-        if(historiales.length == 0){
-          // alert("El archivo no puede ser de mas de 2MB")
-          $scope.alert('Predet','No se ha seleccionado ninguna falla');
-          element.value = "";
-        } else if(file.size > 2000000){
-          // alert("El archivo no puede ser de mas de 2MB")
-          $scope.alert('Predet','El archivo no puede ser de mas de 2MB');
-          element.value = "";
-        } else if(!extensionValida(file)){
-          // alert("El archivo no es valido, revise que sea jpg, png o jpeg")
-          $scope.alert('Predet','El archivo no es valido, revise que sea jpg, png o jpeg');
-          element.value = "";
-        } else {
-          $scope.setTemplateModal('ConfirmarImagen.html?version=1',"");
-          setTimeout(function() {
-            $('#modalPrincipal').openModal();
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#imgLoad').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(element.files[0]);
-            // $(".materialboxed").materialbox();
-          }, 500);
-        }
-      });
-    console.log(files);
-
-    function extensionValida(file){
-      var ext = file.name.split('.').pop().toLowerCase();
-      if(ext == "jpg" || ext == "png" || ext == "jpeg"){
-        return true;
-      }
-      return false;
-    }
-  }
-
-  $scope.confirmarImagen = function(){
-    var fd = new FormData();
-    fd.append('image', files.imagen);    
-    HistorialService.insertImages(fd,AjaxService.miAjaxImage).then(function(res){
-      HistorialService.insertImageinBd(historiales,files.imagen.name,AjaxService.miAjax).then(function(res){
-        console.log(res);
-        $scope.alert('Bien','Imagen Agregada');
-        $scope.seleccionarEstudante($scope.estudanteSeleccionado);
-      }, function(a){
-        $scope.alert('Error_Red');
-      });
-    }, function(a){
-      $scope.alert('Error_Red');
-    });
-  }
-
   $scope.modalgenerarPdf = function(){
-    var texto = "Generando PDF del estudante: "+$scope.estudanteSeleccionado.Nombre;
-    texto += "\n Esta seguro?";
+    var texto = "Gerando reporte de: "+$scope.estudanteSeleccionado.Nombre;
+    texto += "\n Tem certeza?";
     $scope.confirm("Generando PDF",texto,function() {
       $scope.generarPdf();  
     });
@@ -211,39 +148,6 @@ controllers
         // }
       }
     });
-    // PENDIENTES LAS NOTIFICACIONES, PARA SABER SI VAN TAMBIEN
-    // posY+=8*$scope.historial.Falla.length;
-    // escribir("Notificaciones");
-    // doc.autoTable(getColumnsFallasPdf(), getDataFallasPdf(), {
-    //   startY: posY,
-    //   theme: 'grid',
-    //   styles: {
-    //         halign: 'center',
-    //         cellPadding: 0.5, 
-    //         fontSize: 10,
-    //         columnWidth:20,
-    //         overflow: 'visible'
-    //     },
-    //   columnStyles: {
-    //       day: {
-    //         halign: 'center',
-    //         // columnWidth:'auto',
-    //         columnWidth:30,
-    //       }
-    //   },
-    //   tableWidth: 'wrap',
-    //   drawHeaderCell: function (cell, data) {
-    //     // if (data.column.raw.title == 'Dia') {
-    //       // cell.width = 40;
-    //       // Para no mostrar return false
-    //       // return false;
-    //     // }
-    //     // else if (data.column.raw.title != 'Nombre'){
-    //       // cell.width = cell.width*$scope.chamadas.length;
-    //       // cell.x = cell.x + 8;
-    //     // }
-    //   }
-    // });
      doc.setProperties({
       title: 'Reporte de ' + $scope.estudanteSeleccionado.Nombre,
       // subject: 'A jspdf-autotable example pdf (' + funcStr + ')'
@@ -297,15 +201,6 @@ controllers
     return DataContent;
   }  
 
-  var cargarEstudante = function(idEstudante,callback){
-    NotificacaoService.getEstudantebyId(idEstudante,AjaxService.miAjax).then(function(a){
-      $scope.seleccionarEstudante(a[0])      
-      callback()
-    }, function(a){
-      $scope.alert('Error_Red');
-    });  
-  }
-
   var cargarForm = function(){
     var rules = {
         procurarEstudante: {
@@ -316,118 +211,8 @@ controllers
     $scope.activarFormulario(rules);
   }
 
-  $scope.fallaUrl = function(url){
-    return (url != null && url != "");
-  }
-
   $scope.fallaJustificada = function(justificado){
     return (justificado == "1");
-  }
-
-  $scope.justificarMasivo = function(){
-    var posConfirm = function(){
-      HistorialService.insertImageinBd(historiales,null,AjaxService.miAjax).then(function(res){
-        $scope.alert('Bien','Falla Justificada');
-        $scope.seleccionarEstudante($scope.estudanteSeleccionado);
-      }, function(a){
-        $scope.alert('Error_Red');
-      });
-    }
-
-    if(historiales.length == 0)
-      $scope.alert('Predet','No se ha seleccionado ninguna falla');
-    else
-      $scope.confirm("Confirmación","Esta a punto justificar las Fallas Seleccionadas, Esta seguro?",posConfirm);
-  }
-
-  $scope.checkHistorial = function(idFalla){
-    if($('#historial'+idFalla)[0].checked)
-    {
-      historiales.push(idFalla);      
-    }
-    else
-    {
-      var pos = $.inArray(idFalla,historiales);
-      historiales = $.grep(historiales, function( n, i ) {
-        return i != pos;
-      });
-    }
-  }
-
-  $scope.modalNuevaObservacion = function(){
-    $scope.obsevacion = {
-      Acudiente:"",
-      Descripcion:"",
-      Accion:"",
-      Compromiso:"",
-    }
-    swal({  
-      title: "Observador",   
-      html:
-        // '<div class="input-field col s12">'+
-        //   '<i class="mdi-action-account-circle prefix"></i>'+
-        //   '<input id="observadorDocente" type="text" class="validate" required="" aria-required="true">'+
-        //   '<label class="labelsweet" for="observadorDocente">Docente</label>'+
-        // '</div>'+
-        '<div class="input-field col s12">'+
-          '<i class="mdi-action-account-circle prefix"></i>'+
-          '<input ng-model="obsevacion.Acudiente" id="observadorAcudiente" type="text" class="validate" required="" aria-required="true">'+
-          '<label class="labelsweet" for="observadorAcudiente">Acudiente</label>'+
-        '</div>'+
-        '<div class="input-field col s12 m6 l6">'+
-          '<textarea ng-model="obsevacion.Descripcion" id="textareaDescripcion" class="materialize-textarea"></textarea>'+
-          '<label class="labelsweet" for="textareaDescripcion">Descripcion de la situacion</label>'+
-        '</div>' +
-        '<div class="input-field col s12 m6 l6">'+
-          '<textarea ng-model="obsevacion.Accion" id="textareaAccion" class="materialize-textarea"></textarea>'+
-          '<label class="labelsweet" for="textareaAccion">Accion Pedagogica</label>'+
-        '</div>'+
-        '<div class="input-field col s12 m6 l6">'+
-          '<textarea ng-model="obsevacion.Descargo" id="textareaCompromiso" class="materialize-textarea"></textarea>'+
-          '<label class="labelsweet" for="textareaCompromiso">Descargos y compromisos del estudante</label>'+
-        '</div>',
-      onBeforeOpen: function(){
-        const observadorAcudiente = $('#observadorAcudiente')[0];
-        const textareaDescripcion = $('#textareaDescripcion')[0];
-        const textareaAccion = $('#textareaAccion')[0];
-        const textareaCompromiso = $('#textareaCompromiso')[0];
-        observadorAcudiente.addEventListener('input', function(){
-          $scope.obsevacion.Acudiente = this.value;
-        })
-        textareaDescripcion.addEventListener('input', function(){
-          $scope.obsevacion.Descripcion = this.value;
-        })
-        textareaAccion.addEventListener('input', function(){
-          $scope.obsevacion.Accion = this.value;
-        })
-        textareaCompromiso.addEventListener('input', function(){
-          $scope.obsevacion.Compromiso = this.value;
-        })
-      },
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar',
-      }).then((result) => {
-        if (result.value) {
-          agregarObservacion($scope.obsevacion);
-        }
-        else if (result.dismiss === Swal.DismissReason.cancel) {
-        }
-    }).catch((err) => {
-      console.log(err);
-      swal.close();
-    });;
-  }
-
-  var agregarObservacion = function(observacion){
-    HistorialService.insertObservacion(observacion,$scope.estudanteSeleccionado,AjaxService.miAjax).then(function(a){
-      $scope.alert('Bien','Observacion Guardada');
-      $scope.seleccionarEstudante($scope.estudanteSeleccionado);
-    }, function(a){
-      $scope.alert('Error_Red');
-    });
   }
 
   $scope.chamadas = [{"Nome":"Ausencia","Alias":"Aus","Id":"1"},{"Nome":"Retardo","Alias":"Ret","Id":"2"}];

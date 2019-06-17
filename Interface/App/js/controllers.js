@@ -107,117 +107,43 @@ controllers
     window.location.href = "../Login/";
 
   $scope.mostrarAsistencia = function(){
-    if(DashService.role() == USER_ROL.profesor){
-      return false;
-    }
-    if(DashService.role() == USER_ROL.promocion){
-      return false;
-    }
-    return true;
-  }
-
-  $scope.mostrarNotificaciones = function(){
-    if(DashService.role() == USER_ROL.profesor){
-      return false;
-    }
-    if(DashService.role() == USER_ROL.promocion){
-      return false;
-    }
-    return true;
-  }
-
-  $scope.mostrarHistorial = function(){
-    if(DashService.role() == USER_ROL.promocion){
-      return false;
-    }
-    return true;
-  }
-
-  $scope.mostrarHistorialDiario = function(){
-    if(DashService.role() == USER_ROL.profesor){
-      return false;
-    }
-    if(DashService.role() == USER_ROL.promocion){
-      return false;
-    }
-    return true;
-  }
-
-  $scope.mostrarHistorialEstudiante = function(){
-    if(DashService.role() == USER_ROL.promocion){
-      return false;
-    }
-    return true;
-  }
-
-  $scope.mostrarHistorialGrafica = function(){
-    if(DashService.role() == USER_ROL.profesor){
-      return false;
-    }
-    if(DashService.role() == USER_ROL.promocion){
-      return false;
-    }
-    return true;
-  }
-
-  $scope.mostrarReportes = function(){
-    if(DashService.role() == USER_ROL.promocion){
-      return false;
-    }
-    return true;
-  }
-
-  $scope.mostrarGraficas = function(){
-    if(DashService.role() == USER_ROL.promocion){
-      return false;
-    }
-    return true;
-  }
-
-  $scope.mostrarHerramientas = function(){
-    if(DashService.role() == USER_ROL.promocion){
-      return false;
-    }
-    return true;
-  }
-
-  $scope.mostrarPromocion = function(){
-    if(DashService.role() == USER_ROL.promocion){
+    if(DashService.role() == "Funcionario"){
       return true;
     }
     return false;
   }
 
-  $scope.mostrarEditarEstudiante = function(){
-    if(DashService.role() == USER_ROL.profesor){
-      return false;
+  $scope.mostrarNotificaciones = function(){
+    if(DashService.role() == "Funcionario"){
+      return true;
     }
-    if(DashService.role() == USER_ROL.promocion){
-      return false;
-    }
-    return true;
+    return false;
   }
 
-  $scope.mostrarBorrar = function(){
-    var valid = false;
-    if(DashService.role() != USER_ROL.nada && DashService.role() != USER_ROL.profesor)
-      valid = true;
-    return valid;
+  $scope.mostrarHistorial = function(){
+    if(DashService.role() == "Funcionario"){
+      return true;
+    }
+    return false;
+  }
+
+  $scope.mostrarNotas = function(){
+    if(DashService.role() == "Professor"){
+      return true;
+    }
+    return false;
+  }
+
+  $scope.mostrarReporte = function(){
+    if(DashService.role() == "Funcionario"){
+      return true;
+    }
+    return false;
   }
 
   $scope.clickSalir = function(){
     sessionStorage.clear();
     window.location.href = "../Login/";
-  }
-
-  $scope.cargarCursos = function(callback){
-    DashService.getCursos(AjaxService.miAjax).then(function(cursos){
-      $scope.cursos = cursos;
-      if(callback != undefined)
-        callback();
-    }, function(a){
-      //console.log(a);
-    });
   }
 
   $scope.setClickedCurso = function(a){

@@ -40,14 +40,11 @@
 			      				<div class="row">
 				      				<div class="col s12 m6 l6" style="padding: 0px">
 				      					<div class="col s12 grey-text darken-1" style="padding-left: 0px;"><i class="mdi-image-timer-auto"></i> Responsavel</div>
-				      					{{estudanteSeleccionado.Responsavel.Nome <br> {{estudanteSeleccionado.Responsavel.Cel}} <br> {{estudanteSeleccionado.Responsavel.RG}}
+				      					{{estudanteSeleccionado.Responsavel.Nome}} <br> {{estudanteSeleccionado.Responsavel.Cel}} <br> {{estudanteSeleccionado.Responsavel.RG}}
 				      				</div>
 				      				<div class="col s12 m6 l6 right">
-		                  	<button id="generarPdf" ng-click="modalgenerarPdf()" class="waves-effect waves-light green lighten-2 btn right"><i class="mdi-image-navigate-next right"></i>Criar Informe</button>
-			                </div>
-			                <div class="col s12 m6 l6 right" style="margin-top: 1rem">
-		                  	<button id="nuevaObservacion" ng-click="modalNovaObservacao()" class="waves-effect waves-light blue lighten-2 btn right"><i class="mdi-image-navigate-next right"></i>Nova Observação</button>
-			                </div>
+		                  				<button id="generarPdf" ng-click="modalgenerarPdf()" class="waves-effect waves-light green lighten-2 btn right"><i class="mdi-image-navigate-next right"></i>Criar Informe</button>
+			                		</div>
 			      				</div>
 			      			</li>
 			      			<!-- s<li class="collection-item">Fixed IE and Firefox support issues</li> -->
@@ -97,21 +94,8 @@
 			                      	</td>
 			                      	<td ng-repeat="chamada in chamadas">{{getLlamada(chamada.Id,historia.Tipo)}}</td>
 			                        <td style="text-align: center">
-					                    	<input class="with-gap" ng-click="checkHistorial(historia.IdFalla)" name="{{'historial'+historia.IdFalla}}" type="checkbox" id="{{'historial'+historia.IdFalla}}"/>
-                                <label ng-show="!fallaJustificada(historia.Justificado)" for="{{'historial'+historia.IdFalla}}" style="padding-left: 20px;"></label>
-					                    	<br>
 					                    	<em ng-show="fallaJustificada(historia.Justificado)">Justificado</em>
 					                    	<em ng-show="!fallaJustificada(historia.Justificado)">No Justificado</em>
-			                        </td>
-			                        <!-- <td style="text-align: center">{{getRetardo(historia.Tipo)}}</td> -->
-			                      </tr>
-			                      <tr>
-			                      	<td></td>
-			                      	<td ng-repeat="chamada in chamadas"></td>
-			                        <td style="text-align: center">
-					                    	<a ng-click="justificarMasivo()" class="btn-floating waves-effect waves-light green lighten-1"><i class="mdi-action-done"></i></a>
-					                    	<br>
-					                    	<em>Justificar</em>
 			                        </td>
 			                      </tr>
 			                    </tbody>

@@ -65,7 +65,16 @@ class nuevoPDO
           array_push($arrayOptions,'dia','mensaje','idUser');
           break;
 
-
+        case 'notas':
+          $this->querySql['query'] = '';
+          for ($i=0; $i < count($_POST['estudantes']); $i++) { 
+            $documento = $_POST['estudantes'][$i]["Documento"];
+            $situacao = $_POST['estudantes'][$i]["Situacao"];
+            $nota = $_POST['estudantes'][$i]["Nota"];
+            $this->querySql['query'] .= "UPDATE inscrição_inscrito SET Nota=$nota,Situação='$situacao' WHERE fk_Professores_fk_Usuários_RG=:idUser and fk_Estudante_RG='$documento' and fk_Disciplina_Id=:idDisciplina;";
+          }
+          array_push($arrayOptions,'idUser','idDisciplina');
+          break;
 
 
 

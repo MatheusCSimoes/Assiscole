@@ -30,6 +30,7 @@ class nuevoPDO
       $arrayOptions = array();
 
       switch ($_POST['get']) {
+        //Falta que pertence a escola
         case 'cursos':
           $this->querySql['query'] = 'SELECT c.Id,c.Nome,COUNT(pe.fk_Curso_Id) AS Estudiantes FROM Curso as c left JOIN Pertence as pe ON (c.Id = pe.fk_Curso_Id and pe.Ano = :ano) GROUP BY c.Id ORDER by Id';  
           // ORDER by Nombre + 0
@@ -49,11 +50,10 @@ class nuevoPDO
             break;
 
         case 'todoslosCursos':
-          $this->querySql['query'] = 'SELECT c.Id,c.Nome,COUNT(pe.fk_Curso_Id) AS Estudiantes FROM Curso as c left JOIN Pertence as pe ON (c.Id = pe.fk_Curso_Id and pe.Ano = :ano) where EXISTS (SELECT fk_Estudante_RG FROM Pertence as p WHERE c.Id = p.fk_Curso_Id) GROUP BY c.Id ORDER by Id';  
+          $this->querySql['query'] = 'SELECT c.Id,c.Nome,COUNT(pe.fk_Curso_Id) AS Estudiantes FROM Curso as c left JOIN Pertence as pe ON (c.Id = pe.fk_Curso_Id and pe.Ano = :ano) left join Possui as po on pe.fk_Estudante_RG = po.fk_Estudante_RG left join Responsaveis as r on r.RG = po.fk_Responsaveis_RG where EXISTS (SELECT fk_Estudante_RG FROM Pertence as p WHERE c.Id = p.fk_Curso_Id) GROUP BY c.Id ORDER by Id';  
           // ORDER by Nombre + 0
             array_push($arrayOptions,"ano");
           break;
-
 
         case 'estudantesMuchosCursos':
           $this->querySql['query'] = "SELECT e.RG as IdEstudiante,e.Nome as Estudante,c.* from Estudante as e inner join Possui as ce on e.RG = ce.fk_Estudante_RG inner join Responsaveis as c on c.RG = ce.fk_Responsaveis_RG inner join Pertence as epc on (e.RG = epc.fk_Estudante_RG and epc.Ano = $this->ano) where epc.fk_Curso_Id in (";
@@ -71,6 +71,25 @@ class nuevoPDO
           // }
           $this->querySql['query'] .= ') and e.Ativo = 1 Group by e.RG ORDER BY Estudante asc, c.RG';
           break;
+
+        case 'cursoProfessor':
+          $this->querySql['query'] = 'SELECT d.Id, d.Nome From Disciplina as d inner join Lecionam as l on d.Id = l.fk_Disciplina_Id inner join Professores as p on p.fk_Usuários_RG = l.fk_Professores_fk_Usuários_RG where p.fk_Usuários_RG = :idUser';  
+          // ORDER by Nombre + 0
+            array_push($arrayOptions,"idUser" );
+          break;
+
+        case 'estudantesDiscplina':
+          $this->querySql['query'] = 'SELECT e.Nome, e.RG, ii.Nota From disciplina as d inner join inscrição_inscrito as ii on d.Id = ii.fk_Disciplina_Id inner join estudante as e on ii.fk_Estudante_RG = e.RG where d.Id = :idDisciplina';
+          array_push($arrayOptions,"idDisciplina");
+          break;
+          
+        case 'estudantesIndiciplinados':
+          $this->querySql['query'] = 'SELECT count(*) as Cantidade,e.RG as IdEstudante, e.Nome as NomeEstudante from estudante as e inner join (select p1.fk_Estudante_RG from presenca as p1 inner join chamadas as c on p1.Tipo = c.Id GROUP by p1.fk_Estudante_RG, c.Id) as p2 on e.RG = p2.fk_Estudante_RG inner join pertence as p on e.RG = p.fk_Estudante_RG where p.fk_Curso_Id = :idCurso GROUP by e.RG HAVING COUNT(*) = (select COUNT(*) from chamadas)';
+          array_push($arrayOptions,"idCurso");
+          break;
+
+
+
 
             ///////////////////////////////////
         //----------DashService----------//
@@ -565,7 +584,6 @@ class nuevoPDO
                   );
               }
               break;
-
             case 'historialEstudanteId':
               $arreglo[]=array(
                 "Falla" => array(),
@@ -604,7 +622,6 @@ class nuevoPDO
                 }
               }
               break;
-
             case 'estudantesMuchosCursos':
               while ($row=$stmt->fetch()) {
                 $arreglo[] = array(
@@ -627,15 +644,35 @@ class nuevoPDO
                 );
               }
               break;
+            case 'cursoProfessor':
+              while ($row=$stmt->fetch()) {
+                $arreglo[]=array(
+                  "Id" => $row['Id'],
+                  "Nome" => $row['Nome'],
+                  );
+              }
+              break;
+
+            case 'estudantesDiscplina':
+              while ($row=$stmt->fetch()) {
+                $arreglo[] = array(
+                "Documento" => $row['RG'],
+                "Nome" => $row['Nome'],
+                "Nota" => $row['Nota'],
+                );
+              }
+              break;
 
 
-
-
-
-
-
-
-  
+            case 'estudantesIndiciplinados':
+              while ($row=$stmt->fetch()) {
+                $arreglo[] = array(
+                "Documento" => $row['IdEstudante'],
+                "Nome" => $row['NomeEstudante'],
+                );
+              }
+              break;
+    
 
             ///////////////////////////////////
             //----------DashService----------//
@@ -1135,3 +1172,4 @@ $respuesta = array(
 echo json_encode($respuesta);
 
 ?>
+

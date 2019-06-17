@@ -50,37 +50,15 @@
 
     <script src="js/Cursos/Cursos.js?version=<?php echo $version; ?>"></script>
     <script src="js/Cursos/Estudante.js?version=<?php echo $version; ?>"></script>
+    <script src="js/Cursos/CursoProfessor.js?version=<?php echo $version; ?>"></script>
+    <script src="js/Cursos/EstudanteProfessor.js?version=<?php echo $version; ?>"></script>
 
     <script src="js/Notificacion/Estudantes.js?version=<?php echo $version; ?>"></script>
     <script src="js/Notificacion/Curso.js?version=<?php echo $version; ?>"></script>
 
-    <script src="js/Historial/Diario.js?version=<?php echo $version; ?>"></script>
     <script src="js/Historial/Estudante.js?version=<?php echo $version; ?>"></script>   
-    
-    <!-- <script src="js/Notificacion/Cursos.js?version=<?php echo $version; ?>"></script>
-    <script src="js/Notificacion/EstudiantesCurso.js?version=<?php echo $version; ?>"></script>
-    <script src="js/Notificacion/Grupos.js?version=<?php echo $version; ?>"></script>
-    <script src="js/Notificacion/Miembros.js?version=<?php echo $version; ?>"></script>
-    <script src="js/Notificacion/Estudiantes.js?version=<?php echo $version; ?>"></script>
-    <script src="js/Notificacion/Archivo.js?version=<?php echo $version; ?>"></script>
 
-    <script src="js/Historial/Diario.js?version=<?php echo $version; ?>"></script>
-    <script src="js/Historial/Estudiante.js?version=<?php echo $version; ?>"></script>    
-
-    <script src="js/Reportes/Auxilio.js?version=<?php echo $version; ?>"></script>
-    <script src="js/Reportes/Cursos.js?version=<?php echo $version; ?>"></script>
-    <script src="js/Reportes/EstudianteCurso.js?version=<?php echo $version; ?>"></script>
-
-    <script src="js/Graficas/Ausencias.js?version=<?php echo $version; ?>"></script>
-    <script src="js/Graficas/Mensajes.js?version=<?php echo $version; ?>"></script>
-
-    <script src="js/Herramientas/DatosIncompletos.js?version=<?php echo $version; ?>"></script>
-    <script src="js/Herramientas/EditarEstudiante.js?version=<?php echo $version; ?>"></script>
-    <script src="js/Herramientas/DatosEstudiantes.js?version=<?php echo $version; ?>"></script>
-
-    <script src="js/Promocion/Cursos.js?version=<?php echo $version; ?>"></script>
-    <script src="js/Promocion/CursosNuevos.js?version=<?php echo $version; ?>"></script>
-    <script src="js/Promocion/Estudiante.js?version=<?php echo $version; ?>"></script> -->
+    <script src="js/Reportes/Estudante.js?version=<?php echo $version; ?>"></script>
 
   </head>
 

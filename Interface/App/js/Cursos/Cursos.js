@@ -15,7 +15,7 @@ myApp
 
 controllers
 
-.controller('CursosCtrl',function($scope,$state,$timeout,CursosService,AjaxService){
+.controller('CursosCtrl',function($scope,$state,$timeout,CursosService,AjaxService,DashService){
   
   $scope.clickCurso = function(curso){    
     $scope.setClickedCurso(curso);
@@ -42,5 +42,8 @@ controllers
     });
   }
 
-  carregarCursos();
+  if(DashService.role() == "Professor")
+    $state.go('app.cursoProfessor'); 
+  else
+    carregarCursos();
 })

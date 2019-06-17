@@ -81,15 +81,13 @@
                                 </div>
                             </li>
                             <li class="bold" ng-if="mostrarHistorial()">
-                                <a class="collapsible-header  waves-effect waves-blue"><i class="mdi-action-history"></i>Historial</a>
-                                <div class="collapsible-body">
-                                    <ul>
-                                        <li ng-if="mostrarHistorialDiario()" class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('diarioHistorial')">Diario</a>
-                                        </li>
-                                        <li ng-if="mostrarHistorialEstudiante()" class="bold"><a class="waves-effect waves-blue" ng-click="clickModulo('estudanteHistorial')">Estudante</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <a ng-click="clickModulo('estudanteHistorial')" class="collapsible-header waves-effect waves-blue"><i class="mdi-action-assignment-ind"></i> Historico</a>
+                            </li>
+                            <li class="bold" ng-if="mostrarReporte()">
+                                <a ng-click="clickModulo('reporteEstudante')" class="collapsible-header waves-effect waves-blue"><i class="mdi-action-assignment-ind"></i> Reporte</a>
+                            </li>
+                            <li class="bold" ng-if="mostrarNotas()">
+                                <a ng-click="clickModulo('cursoProfessor')" class="collapsible-header waves-effect waves-blue"><i class="mdi-action-assignment-ind"></i> Notas</a>
                             </li>
                             <!-- <li class="bold" ng-repeat="Modulo in Modulos" ng-if="modulosExtra">
                                 <a class="collapsible-header  waves-effect waves-blue"><i class="{{Modulo.Icono}}"></i>{{Modulo.Nombre}}</a>

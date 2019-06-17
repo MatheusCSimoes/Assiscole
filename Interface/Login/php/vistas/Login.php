@@ -36,7 +36,8 @@ class nuevoPDO
             array_push($arrayOptions,"user");
             break;
           case 'loginPass':
-            $this->querySql['query'] = 'SELECT s.Usuario, s.Ativo, s.Nome, s.RG FROM Usuarios as s WHERE s.Usuario = :user and s.Senha = :pass Limit 1;';
+            $this->querySql['query'] = 'SELECT s.Usuario, s.Ativo, s.Nome, s.RG, p.fk_Usuários_RG as Professor, f.fk_Usuários_RG as Funcionario FROM Usuarios as s left join funcionarios as f on s.RG = f.fk_Usuários_RG left join professores as p on s.RG = p.fk_Usuários_RG WHERE s.Usuario = :user and s.Senha = :pass Limit 1
+';
             array_push($arrayOptions, "user", "pass");
             break;
           default:
@@ -82,6 +83,8 @@ class nuevoPDO
                     "Ativo" => $row['Ativo'],
                     "Nome" => $row['Nome'],
                     "RG" => $row['RG'],
+                    "Professor" => $row['Professor'],
+                    "Funcionario" => $row['Funcionario'],
                   );
                 }
                 break;

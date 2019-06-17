@@ -15,6 +15,6 @@ var myApp = angular.module('starter', ['ui.router', 'starter.controllers', 'data
 
   $urlRouterProvider.otherwise(function ($injector, $location) {
     var $state = $injector.get("$state");
-    $state.go("app.cursos");
+    $state.go("app.cursoProfessor");
   });
 })
