@@ -46,7 +46,6 @@
     <script src="js/app.js?version=<?php echo $version; ?>"></script>
     <script src="js/controllers.js?version=<?php echo $version; ?>"></script>
     <script src="js/services.js?version=<?php echo $version; ?>"></script>
-    <script src="js/constants.js?version=<?php echo $version; ?>"></script>
 
     <script src="js/Cursos/Cursos.js?version=<?php echo $version; ?>"></script>
     <script src="js/Cursos/Estudante.js?version=<?php echo $version; ?>"></script>
