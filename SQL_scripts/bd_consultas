@@ -4,12 +4,14 @@
     3) Daniel Fernando Jimenez Sepúlveda        117028769
     4) Tomás Bizet de Barros                    116183736
     5) Caio Silva de Freitas                    117032792
-    6) Miguel Angelo Santos Bicudo		116033119
+    6) Miguel Angelo Santos Bicudo		        116033119
     Disciplina: Banco de dados 1
     Turma: 2019.1
     Trabalho Prático 1
-    Script de Inserção
+    Script de Consultas
 */
+
+//FALTA FAZER UMA CONSULTA DE DIVISÃO E MAIS 6 SOBRE 3 TABELAS OU MAIS
 
 //Retorna uma tabela de alunos cujos nomes começam com a letra 'p' ou com a letra 's' (consulta que envolve a operação de conjunto UNION).
 select nome from estudante where nome like 'p%' union select nome from estudante where nome like 's%'
