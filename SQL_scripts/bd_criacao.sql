@@ -1,10 +1,10 @@
-/* ALUNOS:                                     DRE:
+/* ALUNOS:                                  DRE:
     1) Matheus Cunha Simões                     117091021
     2) Rodrigo Carvalho de Figueiredo           117053497
     3) Daniel Fernando Jimenez Sepúlveda        117028769
     4) Tomás Bizet de Barros                    116183736
     5) Caio Silva de Freitas                    117032792
-    6) Miguel Angelo Santos Bicudo              116033119
+    6) Miguel Angelo Santos Bicudo		116033119
 
     Disciplina: Banco de dados 1
     Turma: 2019.1
@@ -18,6 +18,14 @@ SET NAMES utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS Chamadas;
 
+/* Nome da tabela: Chamadas */
+/* Objetivo: armazenar os possiveis estados negativos de um aluno
+em uma chamada referente a presença em sala de aula (Atraso e falta). */
+/* Estrutura: cada tupla possui os seguintes atributos:
+'Id' do tipo INT(11) (chave primária), 
+'Nome' não nulo do tipo VARCHAR(30) e 
+'Alias' não nulo do tipo VARCHAR(30). */
+
 CREATE TABLE Chamadas (
   Id int(11) PRIMARY KEY,
   Nome varchar(30) NOT NULL,
@@ -26,6 +34,13 @@ CREATE TABLE Chamadas (
 
 DROP TABLE IF EXISTS Estudante;
 
+/* Nome da tabela: Estudante */
+/* Objetivo: armazenar os dados básicos dos estudantes de uma escola. */
+/* Estrutura: cada tupla possui os seguintes atributos:
+'Nome' não nulo do tipo VARCHAR(40), 
+'CPF' do tipo VARCHAR(11) (chave primária) e 
+'Ativo' não nulo do tipo INT(2) com valor padrão igual a '1'. */
+
 CREATE TABLE Estudante (
     Nome VARCHAR (40) NOT NULL,
     CPF VARCHAR (11) PRIMARY KEY,
@@ -33,6 +48,15 @@ CREATE TABLE Estudante (
 ) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Escola;
+
+/* Nome da tabela: Escola */
+/* Objetivo: armazenar os dados básicos de uma escola coberta por nosso sistema. */
+/* Estrutura: cada tupla possui os seguintes atributos:
+'Id' do tipo int (chave primária),
+'fk_Filial_Filial_PK' do tipo INT (chave estrangeira p/ Filial), 
+'Nome' não nulo do tipo VARCHAR(40), 
+'Endereco' não nulo do tipo VARCHAR(40) e 
+'Telefone' não nulo do tipo VARCHAR(15). */
 
 CREATE TABLE Escola (
     Id INT PRIMARY KEY,
@@ -44,6 +68,15 @@ CREATE TABLE Escola (
 
 DROP TABLE IF EXISTS Contrato;
 
+/* Nome da tabela: Contrato */
+/* Objetivo: armazenar os contratos firmados entre nossa empresa e as escolas contratantes. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'Id' do tipo INT (chave primária),
+'Data_Final' não nulo do tipo DATE,
+'Data_Inicial' não nulo do tipo DATE,
+'fk_Escola_Id do tipo INT (chave estrangeira p/ Escola) e
+'Valor' não nulo do tipo INT. */
+
 CREATE TABLE Contrato (
     Id INT PRIMARY KEY,
     Data_Final DATE NOT NULL,
@@ -54,11 +87,21 @@ CREATE TABLE Contrato (
 
 DROP TABLE IF EXISTS Funcionarios;
 
+/* Nome da tabela: Funcionarios */
+/* Objetivo: armazenar os funcionários das escolas contratantes. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'fk_Usuarios_CPF' do tipo VARCHAR(11) (chave primária e chave estrangeira p/ Usuarios). */
+
 CREATE TABLE Funcionarios (
     fk_Usuarios_CPF VARCHAR (11) PRIMARY KEY
 ) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Professores;
+
+/* Nome da tabela: Professores */
+/* Objetivo: armazenar os professores das escola contratantes. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'fk_Usuarios_CPF' do tipo VARCHAR(11) (chave primária e chave estrangeira p/ Usuarios). */
 
 CREATE TABLE Professores (
     fk_Usuarios_CPF VARCHAR (11) PRIMARY KEY
@@ -66,12 +109,25 @@ CREATE TABLE Professores (
 
 DROP TABLE IF EXISTS Disciplina;
 
+/* Nome da tabela: Disciplina */
+/* Objetivo: armazenar os dados das disciplinas oferecidas pelas escolas contratantes. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'Id' do tipo INT (chave primária) e
+'Nome' não nulo do tipo VARCHAR(40). */
+
 CREATE TABLE Disciplina (
     Id INT PRIMARY KEY,
     Nome VARCHAR (40) NOT NULL
 ) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Curso;
+
+/* Nome da tabela: Curso */
+/* Objetivo: armazenar os dados dos cursos oferecidos pelas escolas contratantes. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'Id' do tipo INT (chave primária),
+'Nome' não nulo do tipo VARCHAR(40) e
+'fk_Escola_Id' não nulo do tipo INT (chave estrangeira p/ Escola). */
 
 CREATE TABLE Curso (
     Id INT PRIMARY KEY,
@@ -81,6 +137,13 @@ CREATE TABLE Curso (
 
 DROP TABLE IF EXISTS Notificacoes;
 
+/* Nome da tabela: Notificacoes */
+/* Objetivo: armazenar as notificacoes que deverao ser enviadas aos responsaveis de um aluno. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'Mensagem' do tipo VARCHAR(200),
+'Id' do tipo INT (chave primária) e
+'Data' não nulo do tipo DATETIME. */
+
 CREATE TABLE Notificacoes (
     Mensagem VARCHAR (200),
     Id INT PRIMARY KEY,
@@ -89,6 +152,13 @@ CREATE TABLE Notificacoes (
 
 DROP TABLE IF EXISTS Justificativas;
 
+/* Nome da tabela: Justificativas */
+/* Objetivo: armazenar as justificativas enviadas pelos responsaveis para explicar a ausencia ou falta de um aluno. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'Texto' do tipo VARCHAR(200),
+'Id' do tipo INT (chave primária) e
+'fk_Presenca_Id' do tipo INT (chave estrangeira p/ Presenca). */
+
 CREATE TABLE Justificativas (
     Texto VARCHAR (200),
     Id INT PRIMARY KEY,
@@ -96,6 +166,17 @@ CREATE TABLE Justificativas (
 ) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Usuarios;
+
+/* Nome da tabela: Usuarios */
+/* Objetivo: armazenar os dados dos usuarios do BD, que podem ser funcionarios ou professores das escolas contratantes. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'CPF' do tipo VARCHAR(11) (chave primária),
+'Nome' não nulo do tipo VARCHAR(40),
+'Telefone' não nulo do tipo VARCHAR(15),
+'Usuario' não nulo do tipo VARCHAR(40),
+'Senha' não nulo do tipo VARCHAR(40),
+'Ativo' não nulo do tipo INT(2) com valor padrão = '1' e
+'fk_Escola_Id' do tipo INT (chave estrangeira p/ Escola). */
 
 CREATE TABLE Usuarios (
     CPF VARCHAR (11) PRIMARY KEY,
@@ -109,6 +190,14 @@ CREATE TABLE Usuarios (
 
 DROP TABLE IF EXISTS Presenca;
 
+/* Nome da tabela: Presenca */
+/* Objetivo: armazenar os relatorios de presenca diarios dos alunos de acordo com as chamadas feitas em aula. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'Tipo' do tipo INT(11),
+'Dia' não nulo do tipo DATE,
+'Id' do tipo INT (chave primária) e
+'fk_Estudante_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Estudante). */
+
 CREATE TABLE Presenca (
     Tipo INT (11),
     Dia DATE NOT NULL,
@@ -118,6 +207,14 @@ CREATE TABLE Presenca (
 
 DROP TABLE IF EXISTS Observacoes;
 
+/* Nome da tabela: Observacoes */
+/* Objetivo: armazenar as observacoes feitas por professores a serem informadas aos responsaveis dos estudantes,
+juntamente com as recomendacoes(acordos) requeridos pelos professores para esses alunos que devem ser aceitas pelos responsaveis. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'Id' do tipo INT (chave primária),
+'Observacao' não nulo do tipo VARCHAR(200) e
+'Acordo' não nulo do tipo VARCHAR(200). */
+
 CREATE TABLE Observacoes (
     Id INT PRIMARY KEY,
     Observacao VARCHAR (200) NOT NULL,
@@ -125,6 +222,13 @@ CREATE TABLE Observacoes (
 ) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Modulos;
+
+/* Nome da tabela: Modulos */
+/* Objetivo: armazenar os modulos(funcionalidades) que compoe o contrato, de acordo com os servicos contratados pela escola. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'Id' do tipo INT (chave primária),
+'Nome' não nulo do tipo VARCHAR(40) e
+'Descricao' do tipo VARCHAR(200). */
 
 CREATE TABLE Modulos (
     Id INT PRIMARY KEY,
@@ -134,6 +238,13 @@ CREATE TABLE Modulos (
 
 DROP TABLE IF EXISTS Responsaveis;
 
+/* Nome da tabela: Responsaveis */
+/* Objetivo: armazenar os dados básicos dos responsaveis para permitir contato posterior. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'Nome' não nulo do tipo VARCHAR(40),
+'CPF' do tipo VARCHAR(11) (chave primária) e
+'Telefone' não nulo do tipo VARCHAR(15). */
+
 CREATE TABLE Responsaveis (
     Nome VARCHAR (40) NOT NULL,
     CPF VARCHAR (11) PRIMARY KEY,
@@ -141,6 +252,15 @@ CREATE TABLE Responsaveis (
 ) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Inscricao_inscrito;
+
+/* Nome da tabela: Inscricao_inscrito */
+/* Objetivo: armazenar a situacao final de estudantes em disciplinas nas quais eles foram inscritos. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'Nota' não nulo do tipo DOUBLE,
+'Situacao' não nulo do tipo VARCHAR(40),
+'fk_Professores_fk_Usuarios_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Professores),
+'fk_Estudante_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Estudante) e
+'fk_Disciplina_Id do tipo INT (chave estrangeira p/ Disciplina). */
 
 CREATE TABLE Inscricao_inscrito (
     Nota DOUBLE NOT NULL,
@@ -152,12 +272,24 @@ CREATE TABLE Inscricao_inscrito (
 
 DROP TABLE IF EXISTS Filial;
 
+/* Nome da tabela: Filial */
+/* Objetivo: armazenar as filiais de cada escola contratante. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'Filial_PK' do tipo INT (chave primária) e
+'Filial' não nulo do tipo VARCHAR(40) (nome da filial). */
+
 CREATE TABLE Filial (
     Filial_PK INT NOT NULL PRIMARY KEY,
     Filial VARCHAR (40) NOT NULL
 ) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Lecionam;
+
+/* Nome da tabela: Lecionam */
+/* Objetivo: armazenar a relacao entre os professores e as disciplinas lecionados por cada um deles. */
+/* Estrutura: cada tupla possui os seguintes atributos:
+'fk_Disciplina_Id' do tipo INT (chave primária) e
+'fk_Professores_fk_Usuarios_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Professores). */
 
 CREATE TABLE Lecionam (
     fk_Disciplina_Id INT,
@@ -166,12 +298,25 @@ CREATE TABLE Lecionam (
 
 DROP TABLE IF EXISTS Contem;
 
+/* Nome da tabela: Contem */
+/* Objetivo: armazenar a relacao entre os cursos e as disciplinas oferecidas por cada um deles. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'fk_Curso_Id' do tipo INT (chave estrangeira p/ Curso) e 
+'fk_Disciplina_Id' do tipo INT (chave estrangeira p/ Disciplina). */
+
 CREATE TABLE Contem (
     fk_Curso_Id INT,
     fk_Disciplina_Id INT
 ) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Pertence;
+
+/* Nome da tabela: Pertence */
+/* Objetivo: armazenar a relacao entre os cursos e os estudantes pertencentes a cada um deles. */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'fk_Curso_Id' do tipo INT (chave estrangeira p/ Curso),
+'fk_Estudante_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Estudante) e
+'Ano' do tipo INT. */
 
 CREATE TABLE Pertence (
     fk_Curso_Id INT,
@@ -181,6 +326,14 @@ CREATE TABLE Pertence (
 
 DROP TABLE IF EXISTS Informa_Funcionarios_Notificacoes_Estudante;
 
+/* Nome da tabela: Informa_Funcionarios_Notificacoes_Estudante */
+/* Objetivo: armazenar a relacao entre os funcionarios, notificacoes e estudantes
+(um funcionario informa uma notificacao a um estudante). */
+/* Estrutura: cada tupla possui os seguintes atributos:
+'fk_Funcionarios_fk_Usuarios_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Funcionarios),
+'fk_Notificacoes' do tipo INT (chave estrangeira p/ Notificacoes) e
+'fk_Estudante_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Estudante). */
+
 CREATE TABLE Informa_Funcionarios_Notificacoes_Estudante (
     fk_Funcionarios_fk_Usuarios_CPF VARCHAR (11),
     fk_Notificacoes_Id INT,
@@ -188,6 +341,14 @@ CREATE TABLE Informa_Funcionarios_Notificacoes_Estudante (
 ) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Informa_Funcionarios_Estudante_Observacoes;
+
+/* Nome da tabela: Informa_Funcionarios_Estudante_Observacoes */
+/* Objetivo: armazenar a relacao entre os funcionarios, observacoes e estudantes
+(um funcionario informa uma observacao a um estudante). */
+/* Estrutura: cada tupla possui os seguintes atributos:
+'fk_Funcionarios_fk_Usuarios_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Funcionarios),
+'fk_Estudante_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Estudante) e
+'fk_Observacoes_Id' do tipo INT (chave estrangeira p/ Observacoes). */
 
 CREATE TABLE Informa_Funcionarios_Estudante_Observacoes (
     fk_Funcionarios_fk_Usuarios_CPF VARCHAR (11),
@@ -197,12 +358,24 @@ CREATE TABLE Informa_Funcionarios_Estudante_Observacoes (
 
 DROP TABLE IF EXISTS Tem;
 
+/* Nome da tabela: Tem */
+/* Objetivo: armazenar a relacao entre os contratos e os modulos pertencentes a cada um. */
+/* Estrutura: cada tupla possui os seguintes atributos:
+'fk_Contrato_Id' do tipo INT (chave estrangeira p/ Contrato) e
+'fk_Modulos_Id' do tipo INT (chave estrangeira p/ Modulos). */
+
 CREATE TABLE Tem (
     fk_Contrato_Id INT,
     fk_Modulos_Id INT
 ) DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS Possui;
+
+/* Nome da tabela: Possui */
+/* Objetivo: armazenar a relacao entre os estudantes e seus responsaveis. */
+/* Estrutura: cada tupla possui os seguintes atributos:
+'fk_Estudante_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Estudante) e
+'fk_Responsaveis_CPF do tipo VARCHAR(11) (chave estrangeira p/ Responsaveis). */
 
 CREATE TABLE Possui (
     fk_Estudante_CPF VARCHAR (11),

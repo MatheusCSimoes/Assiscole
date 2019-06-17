@@ -1,10 +1,10 @@
-/* ALUNOS:                                     DRE:
+/* ALUNOS:                                  DRE:
     1) Matheus Cunha Simões                     117091021
     2) Rodrigo Carvalho de Figueiredo           117053497
     3) Daniel Fernando Jimenez Sepúlveda        117028769
     4) Tomás Bizet de Barros                    116183736
     5) Caio Silva de Freitas                    117032792
-    6) Miguel Angelo Santos Bicudo              116033119
+    6) Miguel Angelo Santos Bicudo		116033119
 
     Disciplina: Banco de dados 1
     Turma: 2019.1
@@ -50,9 +50,21 @@ ALTER TABLE Observacoes AUTO_INCREMENT=0;
 ALTER TABLE Modulos AUTO_INCREMENT=0;
 ALTER TABLE Chamadas AUTO_INCREMENT=0;
 
+/* Nome da tabela: Chamadas */
+/* Estrutura:
+'Id' do tipo INT(11) (chave primária), 
+'Nome' não nulo do tipo VARCHAR(30) e 
+'Alias' não nulo do tipo VARCHAR(30). */
+
 INSERT INTO Chamadas (Id, Nome, Alias) VALUES
 (1, 'Ausencia', 'Aus'),
 (2, 'Retardo', 'Ret');
+
+/* Nome da tabela: Estudante */
+/* Estrutura:
+'Nome' não nulo do tipo VARCHAR(40), 
+'CPF' do tipo VARCHAR(11) (chave primária) e 
+'Ativo' não nulo do tipo INT(2) com valor padrão igual a '1'. */
 
 INSERT INTO Estudante (Nome, CPF, Ativo) VALUES
 ('JIMENEZ RODRIGUEZ', '12345670110', 1),
@@ -140,18 +152,45 @@ INSERT INTO Estudante (Nome, CPF, Ativo) VALUES
 ('DIAZ PIZA', '12345679810', 1),
 ('GALAN SEBASTIAN', '12345679910', 0);
 
+/* Nome da tabela: Filial */
+/* Estrutura:
+'Filial_PK' do tipo INT (chave primária) e
+'Filial' não nulo do tipo VARCHAR(40) (nome da filial). */
+
 INSERT INTO Filial (Filial_PK, Filial) VALUES
 (1, 'Novo Leblon'),
 (2, 'Leblon'),
 (3, 'Alfabarra');
 
+/* Nome da tabela: Escola */
+/* Estrutura:
+'Id' do tipo int (chave primária),
+'fk_Filial_Filial_PK' do tipo INT (chave estrangeira p/ Filial), 
+'Nome' não nulo do tipo VARCHAR(40), 
+'Endereco' não nulo do tipo VARCHAR(40) e 
+'Telefone' não nulo do tipo VARCHAR(15). */
+
 INSERT INTO Escola (Id, fk_Filial_Filial_PK, Nome, Endereco, Telefone) VALUES
 (1, 3, 'PH', 'endereço 1', '12345601'),
 (2, 1, 'Santo Agostinho', 'endereço 2', '12345602');
 
+/* Nome da tabela: Contrato */
+/* Estrutura:
+'Id' do tipo INT (chave primária),
+'Data_Final' não nulo do tipo DATE,
+'Data_Inicial' não nulo do tipo DATE,
+'fk_Escola_Id do tipo INT (chave estrangeira p/ Escola) e
+'Valor' não nulo do tipo INT. */
+
 INSERT INTO Contrato (Id,fk_Escola_Id, Valor, Data_Inicial, Data_Final) VALUES
 (1, 1, 1001, STR_TO_DATE('2019-01-01','%Y-%m-%d'), STR_TO_DATE('2019-12-31','%Y-%m-%d')),
 (2, 2, 1002, STR_TO_DATE('2018-11-24','%Y-%m-%d'), STR_TO_DATE('2019-11-29','%Y-%m-%d'));
+
+/* Nome da tabela: Curso */
+/* Estrutura:
+'Id' do tipo INT (chave primária),
+'Nome' não nulo do tipo VARCHAR(40) e
+'fk_Escola_Id' não nulo do tipo INT (chave estrangeira p/ Escola). */
 
 INSERT INTO Curso (Id, Nome, fk_Escola_Id) VALUES
 (1, '101', 1),
@@ -163,6 +202,12 @@ INSERT INTO Curso (Id, Nome, fk_Escola_Id) VALUES
 (7, '1101', 2),
 (8, '901', 1),
 (9, '1001', 2);
+
+/* Nome da tabela: Notificacoes */
+/* Estrutura:
+'Mensagem' do tipo VARCHAR(200),
+'Id' do tipo INT (chave primária) e
+'Data' não nulo do tipo DATETIME. */
 
 INSERT INTO Notificacoes (Id, Mensagem, Data) VALUES
 (1, 'este es el primer mensaje de prueba', STR_TO_DATE('2017-07-12 21:53:11','%Y-%m-%d %H:%i:%s')),
@@ -212,6 +257,16 @@ INSERT INTO Notificacoes (Id, Mensagem, Data) VALUES
 (55, 'señor padre de familia su hijo se enfermo. favor acercarse', STR_TO_DATE('2019-05-28 11:03:19','%Y-%m-%d %H:%i:%s')),
 (56, 'SENOR PADRE DE FAMILIA FAVOR ACERCARSE AL COLEGIO', STR_TO_DATE('2019-06-04 11:49:17','%Y-%m-%d %H:%i:%s'));
 
+/* Nome da tabela: Usuarios */
+/* Estrutura:
+'CPF' do tipo VARCHAR(11) (chave primária),
+'Nome' não nulo do tipo VARCHAR(40),
+'Telefone' não nulo do tipo VARCHAR(15),
+'Usuario' não nulo do tipo VARCHAR(40),
+'Senha' não nulo do tipo VARCHAR(40),
+'Ativo' não nulo do tipo INT(2) com valor padrão = '1' e
+'fk_Escola_Id' do tipo INT (chave estrangeira p/ Escola). */
+
 INSERT INTO Usuarios (CPF, Usuario, Senha, Ativo, fk_Escola_Id, Nome, Telefone) VALUES
 ('12345678911', '1', '1', 1, 1, 'DanielAdmin', 11234501),
 ('22345678910', '2', '2', 1, 1, 'DemoColegio', 11234502),
@@ -222,10 +277,18 @@ INSERT INTO Usuarios (CPF, Usuario, Senha, Ativo, fk_Escola_Id, Nome, Telefone) 
 ('72345678910', '7', '7', 1, 2, 'YanethCastillo', 11234507),
 ('12345678910', '10', '10', 1, 2, 'DemoToscana', 11234510);
 
+/* Nome da tabela: Funcionarios */
+/* Estrutura:
+'fk_Usuarios_CPF' do tipo VARCHAR(11) (chave primária e chave estrangeira p/ Usuarios). */
+
 INSERT INTO Funcionarios (fk_Usuarios_CPF) VALUES
 ('12345678911'),
 ('22345678910'),
 ('12345678910');
+
+/* Nome da tabela: Professores */
+/* Estrutura: cada tupla possui os seguintes atributos: 
+'fk_Usuarios_CPF' do tipo VARCHAR(11) (chave primária e chave estrangeira p/ Usuarios). */
 
 INSERT INTO Professores (fk_Usuarios_CPF) VALUES
 ('32345678910'),
@@ -233,6 +296,13 @@ INSERT INTO Professores (fk_Usuarios_CPF) VALUES
 ('52345678910'),
 ('62345678910'),
 ('72345678910');
+
+/* Nome da tabela: Presenca */
+/* Estrutura:
+'Tipo' do tipo INT(11),
+'Dia' não nulo do tipo DATE,
+'Id' do tipo INT (chave primária) e
+'fk_Estudante_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Estudante). */
 
 INSERT INTO Presenca (Id, fk_Estudante_CPF, Tipo, Dia) VALUES
 (1, '12345670410', 1, STR_TO_DATE('2018-07-09','%Y-%m-%d')),
@@ -246,11 +316,23 @@ INSERT INTO Presenca (Id, fk_Estudante_CPF, Tipo, Dia) VALUES
 (11, '12345671910', 2, STR_TO_DATE('2018-01-14','%Y-%m-%d')),
 (12, '12345671810', 1, STR_TO_DATE('2018-01-14','%Y-%m-%d'));
 
+/* Nome da tabela: Modulos */
+/* Estrutura:
+'Id' do tipo INT (chave primária),
+'Nome' não nulo do tipo VARCHAR(40) e
+'Descricao' do tipo VARCHAR(200). */
+
 INSERT INTO Modulos (Id, Nome, Descricao) VALUES
 (1, 'Modulo 1', 'Minha descrição do modulo 1'),
 (2, 'Modulo 2', 'Minha descrição do modulo 2'),
 (3, 'Modulo 3', 'Minha descrição do modulo 3'),
 (4, 'Modulo 4', 'Minha descrição do modulo 4');
+
+/* Nome da tabela: Responsaveis */
+/* Estrutura:
+'Nome' não nulo do tipo VARCHAR(40),
+'CPF' do tipo VARCHAR(11) (chave primária) e
+'Telefone' não nulo do tipo VARCHAR(15). */
 
 INSERT INTO Responsaveis (CPF, Nome, Telefone) VALUES
 ('22345671943', 'Daniel Fernadno', '30065131'),
@@ -335,6 +417,11 @@ INSERT INTO Responsaveis (CPF, Nome, Telefone) VALUES
 ('12345679643', 'ALEXANDRA PIZA', '30056170'),
 ('12345679743', 'JHON ALEJO', '31839825');
 
+/* Nome da tabela: Disciplina */
+/* Estrutura:
+'Id' do tipo INT (chave primária) e
+'Nome' não nulo do tipo VARCHAR(40). */
+
 INSERT INTO Disciplina (Id, Nome) VALUES
 (1, 'Matemática'),
 (2, 'História'),
@@ -346,11 +433,25 @@ INSERT INTO Disciplina (Id, Nome) VALUES
 (8, 'Inglês'),
 (9, 'Informática');
 
+/* Nome da tabela: Justificativas */
+/* Estrutura:
+'Texto' do tipo VARCHAR(200),
+'Id' do tipo INT (chave primária) e
+'fk_Presenca_Id' do tipo INT (chave estrangeira p/ Presenca). */
+
 INSERT INTO Justificativas (Texto, Id, fk_Presenca_Id) VALUES
 ('Perdeu o onibus', 1, 1),
 ('Acidente de carro', 2, 4),
 ('Transito', 3, 6),
 ('Pais se responsabilizaram', 4, 12);
+
+/* Nome da tabela: Inscricao_inscrito */
+/* Estrutura: 
+'Nota' não nulo do tipo DOUBLE,
+'Situacao' não nulo do tipo VARCHAR(40),
+'fk_Professores_fk_Usuarios_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Professores),
+'fk_Estudante_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Estudante) e
+'fk_Disciplina_Id do tipo INT (chave estrangeira p/ Disciplina). */
 
 INSERT INTO Inscricao_inscrito (Nota, Situacao, fk_Professores_fk_Usuarios_CPF, fk_Estudante_CPF, fk_Disciplina_Id) VALUES
 (5.5, 'Reprovado', '52345678910', '12345670210', 3),
@@ -369,6 +470,11 @@ INSERT INTO Inscricao_inscrito (Nota, Situacao, fk_Professores_fk_Usuarios_CPF, 
 (7, 'Aprovado', '52345678910', '12345672310', 1),
 (8.5, 'Aprovado', '52345678910', '12345672310', 2);
 
+/* Nome da tabela: Lecionam */
+/* Estrutura:
+'fk_Disciplina_Id' do tipo INT (chave primária) e
+'fk_Professores_fk_Usuarios_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Professores). */
+
 INSERT INTO Lecionam (fk_Disciplina_Id, fk_Professores_fk_Usuarios_CPF) VALUES
 (1, '52345678910'),
 (2, '52345678910'),
@@ -379,6 +485,11 @@ INSERT INTO Lecionam (fk_Disciplina_Id, fk_Professores_fk_Usuarios_CPF) VALUES
 (7, '42345678910'),
 (8, '32345678910'),
 (9, '72345678910');
+
+/* Nome da tabela: Contem */
+/* Estrutura:
+'fk_Curso_Id' do tipo INT (chave estrangeira p/ Curso) e 
+'fk_Disciplina_Id' do tipo INT (chave estrangeira p/ Disciplina). */
 
 INSERT INTO Contem (fk_Curso_Id, fk_Disciplina_Id) VALUES
 (1, 1),
@@ -463,6 +574,12 @@ INSERT INTO Contem (fk_Curso_Id, fk_Disciplina_Id) VALUES
 (9, 8),
 (9, 9);
 
+/* Nome da tabela: Pertence */
+/* Estrutura:
+'fk_Curso_Id' do tipo INT (chave estrangeira p/ Curso),
+'fk_Estudante_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Estudante) e
+'Ano' do tipo INT. */
+
 INSERT INTO Pertence (fk_Curso_Id, fk_Estudante_CPF, Ano) VALUES
 (1, '12345670210', 2019),
 (1, '12345670410', 2019),
@@ -492,9 +609,21 @@ INSERT INTO Pertence (fk_Curso_Id, fk_Estudante_CPF, Ano) VALUES
 (8, '12345679810', 2019),
 (9, '12345679910', 2019);
 
+/* Nome da tabela: Observacoes */
+/* Estrutura:
+'Id' do tipo INT (chave primária),
+'Observacao' não nulo do tipo VARCHAR(200) e
+'Acordo' não nulo do tipo VARCHAR(200). */
+
 INSERT INTO Observacoes (Id, Observacao, Acordo) VALUES
 (1, 'O seu filho se envolveu em uma briga', 'Frequentar sessões com o psicologo da escola'),
 (2, 'O seu filho atrapalhou o andamento da aula gritando com a professora', 'Próxima ocorrência, os pais da criança serão obrigados a comparecer a coordenação da escola');
+
+/* Nome da tabela: Informa_Funcionarios_Notificacoes_Estudante */
+/* Estrutura:
+'fk_Funcionarios_fk_Usuarios_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Funcionarios),
+'fk_Notificacoes' do tipo INT (chave estrangeira p/ Notificacoes) e
+'fk_Estudante_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Estudante). */
 
 INSERT INTO Informa_Funcionarios_Notificacoes_Estudante (fk_Funcionarios_fk_Usuarios_CPF, fk_Notificacoes_Id, fk_Estudante_CPF) VALUES
 ('12345678911', 1, '12345670210'),
@@ -510,15 +639,31 @@ INSERT INTO Informa_Funcionarios_Notificacoes_Estudante (fk_Funcionarios_fk_Usua
 ('22345678910', 11, '12345671910'),
 ('12345678910', 12, '12345679310');
 
+/* Nome da tabela: Informa_Funcionarios_Estudante_Observacoes */
+/* Estrutura:
+'fk_Funcionarios_fk_Usuarios_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Funcionarios),
+'fk_Estudante_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Estudante) e
+'fk_Observacoes_Id' do tipo INT (chave estrangeira p/ Observacoes). */
+
 INSERT INTO Informa_Funcionarios_Estudante_Observacoes (fk_Funcionarios_fk_Usuarios_CPF, fk_Estudante_CPF, fk_Observacoes_Id) VALUES
 ('22345678910', '12345670710', 1),
 ('12345678910', '12345671810', 2);
+
+/* Nome da tabela: Tem */
+/* Estrutura:
+'fk_Contrato_Id' do tipo INT (chave estrangeira p/ Contrato) e
+'fk_Modulos_Id' do tipo INT (chave estrangeira p/ Modulos). */
 
 INSERT INTO Tem (fk_Contrato_Id, fk_Modulos_Id) VALUES
 (1, 1),
 (1, 2),
 (2, 3),
 (2, 4);
+
+/* Nome da tabela: Possui */
+/* Estrutura:
+'fk_Estudante_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Estudante) e
+'fk_Responsaveis_CPF do tipo VARCHAR(11) (chave estrangeira p/ Responsaveis). */
 
 INSERT INTO Possui (fk_Estudante_CPF, fk_Responsaveis_CPF) VALUES
 ('12345670210', '22345671943'),
@@ -533,4 +678,3 @@ INSERT INTO Possui (fk_Estudante_CPF, fk_Responsaveis_CPF) VALUES
 ('12345671810', '22345671243'),
 ('12345671910', '22345671343'),
 ('12345679310', '22345671443');
-
