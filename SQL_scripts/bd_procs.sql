@@ -115,3 +115,36 @@ BEGIN
     
 END $$
 DELIMITER ;
+
+
+--Procedimento que desconta 10% do valor do contrato.
+
+delimiter $$
+create procedure desconto_contrato(in Id_contrato INT)
+	BEGIN
+	START TRANSACTION;
+	UPDATE Contrato SET Valor = Valor-Valor/10 WHERE Id = Id_contrato;
+	COMMIT;
+	END $$
+delimiter ;
+
+/* Antes do procedimento:
+
+select * from contrato where Id = 1;
+
++----+------------+--------------+--------------+-------+
+| Id | Data_Final | Data_Inicial | fk_Escola_Id | Valor |
++----+------------+--------------+--------------+-------+
+|  1 | 2019-12-31 | 2019-01-01   |            1 |   1001|
++----+------------+--------------+--------------+-------+
+
+Depois do procedimento:
+
+select * from contrato where Id = 1;
+
++----+------------+--------------+--------------+-------+
+| Id | Data_Final | Data_Inicial | fk_Escola_Id | Valor |
++----+------------+--------------+--------------+-------+
+|  1 | 2019-12-31 | 2019-01-01   |            1 |   901 |
++----+------------+--------------+--------------+-------+
+*/
