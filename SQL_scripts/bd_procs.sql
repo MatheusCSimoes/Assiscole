@@ -170,3 +170,47 @@ CREATE PROCEDURE atualizar_situacao( IN id_disciplina INT )
     
 END $$
 DELIMITER ;
+
+/*
+select * from Inscricao_inscrito;
+Antes: 
++------+-----------+
+| Nota | Situacao  |
++------+-----------+
+|  5.5 |           |
+|  6.5 |           |
+|    6 |           |
+|    7 |           |
+|  8.5 |           |
+|  5.5 |           |
+|  6.5 |           |
+|    6 |           |
+|    7 |           |
+|  8.5 |           |
+|  5.5 |           |
+|  6.5 |           |
+|    6 |           |
+|    7 |           |
+|  8.5 |           |
++------+-----------+
+Depois: 
++------+-----------+
+| Nota | Situacao  |
++------+-----------+
+|  5.5 | Reprovado |
+|  6.5 | Reprovado |
+|    6 | Reprovado |
+|    7 | Aprovado  |
+|  8.5 | Aprovado  |
+|  5.5 | Reprovado |
+|  6.5 | Reprovado |
+|    6 | Reprovado |
+|    7 | Aprovado  |
+|  8.5 | Aprovado  |
+|  5.5 | Reprovado |
+|  6.5 | Reprovado |
+|    6 | Reprovado |
+|    7 | Aprovado  |
+|  8.5 | Aprovado  |
++------+-----------+
+*/ 
