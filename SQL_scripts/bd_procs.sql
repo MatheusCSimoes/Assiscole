@@ -148,3 +148,25 @@ select * from contrato where Id = 1;
 |  1 | 2019-12-31 | 2019-01-01   |            1 |   901 |
 +----+------------+--------------+--------------+-------+
 */
+
+-- Procedimento para atualizar situação de alunos para uma dada disciplina.
+-- No final do curso, se os alunos tiverem nota menor que 7 serao reprovados.
+
+DELIMITER $$
+
+CREATE PROCEDURE atualizar_situacao( IN id_disciplina INT )
+    BEGIN
+    START TRANSACTION;
+
+    UPDATE Inscricao_inscrito SET
+        Situacao = 'Reprovado.'
+    WHERE fk_Disciplina_Id = id_disciplina AND Nota < 7;
+
+    UPDATE Inscricao_inscrito SET
+        Situacao = 'Aprovado.'
+    WHERE fk_Disciplina_Id = id_disciplina AND Nota >= 7;
+
+    COMMIT;
+    
+END $$
+DELIMITER ;
