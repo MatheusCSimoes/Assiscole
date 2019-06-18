@@ -16,7 +16,7 @@
 
 -- criando views
 CREATE VIEW inscricoes AS
-    SELECT insc.fk_Estudante_CPF, ins.Nota, ins.Situacao FROM Inscricao_inscrito ins;
+    SELECT ins.fk_Estudante_CPF, ins.Nota, ins.Situacao FROM Inscricao_inscrito ins;
 
 CREATE VIEW estudante AS
     SELECT e.Nome, e.CPF FROM Estudante e;
