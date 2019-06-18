@@ -64,7 +64,10 @@ INSERT INTO Chamadas (Id, Nome, Alias) VALUES
 /* Estrutura:
 'Nome' não nulo do tipo VARCHAR(40), 
 'CPF' do tipo VARCHAR(11) (chave primária) e 
-'Ativo' não nulo do tipo INT(2) com valor padrão igual a '1'. */
+'Ativo' não nulo do tipo INT(2) com valor padrão igual a '1'.
+  1 = ativo
+  0 = inativo
+*/
 
 INSERT INTO Estudante (Nome, CPF, Ativo) VALUES
 ('JIMENEZ RODRIGUEZ', '12345670110', 1),

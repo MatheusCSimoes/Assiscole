@@ -60,13 +60,13 @@ BEGIN
             VALUES (justificativa, presenca_id);
             
             ok = TRUE;
-            msg = "Status de presença do aluno(a) redefinido como ausente.";
+            msg = 'Status de presença do aluno(a) redefinido como ausente.';
             
             
         ELSE
         
             ok = FALSE;
-            msg = "Status de presença do aluno(a) já está definido.";
+            msg = 'Status de presença do aluno(a) já está definido.';
         
         END IF;
     ELSEIF EXISTS (
@@ -89,12 +89,12 @@ BEGIN
             WHERE fk_Presenca_Id = presenca_id;
             
             ok = TRUE;
-            msg = "Status de presença do aluno(a) ausente com nova justificativa.";
+            msg = 'Status de presença do aluno(a) ausente com nova justificativa.';
             
         ELSE
         
             ok = FALSE;
-            msg = "Status de presença do aluno(a) já está definido.";
+            msg = 'Status de presença do aluno(a) já está definido.';
         
         END IF;
     ELSE
@@ -107,11 +107,14 @@ BEGIN
         (justificativa, LAST_INSERT_ID());
         
         ok = TRUE;
-        msg = "Status de presença do aluno(a) definido como ausente.";
+        msg = 'Status de presença do aluno(a) definido como ausente.';
         
     END IF;
     
     COMMIT;
+    
+    -- retornando o set (status, mensagem)
+    SELECT ok as status, msg as mensagem;
     
 END $$
 DELIMITER ;
@@ -159,11 +162,11 @@ CREATE PROCEDURE atualizar_situacao( IN id_disciplina INT )
     START TRANSACTION;
 
     UPDATE Inscricao_inscrito SET
-        Situacao = 'Reprovado.'
+        Situacao = 'Reprovado'
     WHERE fk_Disciplina_Id = id_disciplina AND Nota < 7;
 
     UPDATE Inscricao_inscrito SET
-        Situacao = 'Aprovado.'
+        Situacao = 'Aprovado'
     WHERE fk_Disciplina_Id = id_disciplina AND Nota >= 7;
 
     COMMIT;
@@ -214,3 +217,55 @@ Depois:
 |  8.5 | Aprovado  |
 +------+-----------+
 */ 
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                                             *
+ *    RELATÓRIOS                                               *
+ *                                                             *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+-- report: alunos_aprovados_reprovados_por_disciplina
+-- Indica a quantidade de alunos aprovados e reprovados por disciplina.
+DELIMITER $$
+CREATE PROCEDURE alunos_aprovados_reprovados_por_disciplina(  )
+BEGIN
+
+    SELECT D.Id AS Id,
+           D.Nome AS Nome,
+           SUM(IF(I.Situacao = 'Aprovado', 1, 0)) as Aprovados,
+           SUM(IF(I.Situacao = 'Reprovado', 1, 0)) as Reprovados
+    FROM
+        Estudante as E,
+        Disciplina as D,
+        Inscricao_inscrito as I
+    WHERE E.CPF = I.fk_Estudante_CPF
+      AND I.fk_Disciplina_Id = D.Id
+      AND E.Ativo = 1
+    GROUP BY D.Id, D.Nome
+    ;
+
+END $$
+DELIMITER ;
+
+-- report: alunos_com_desempenho_para_receber_bolsa
+-- Indica quais alunos podem receber bolsa de acordo com os seus desempenhos.
+DELIMITER $$
+CREATE PROCEDURE alunos_com_desempenho_para_receber_bolsa(  )
+BEGIN
+
+    SELECT E.CPF,
+           E.Nome,
+           AVG(I.Nota) AS Media_Notas,
+           IF(AVG(I.Nota) > 9.5, '100%', '35%') AS Desconto_Autorizado
+    FROM
+        Estudante as E,
+        Inscricao_inscrito as I
+    GROUP BY E.CPF, E.Nome
+    HAVING AVG(I.Nota) > 8
+    ;
+    
+END $$
+DELIMITER ;
+
