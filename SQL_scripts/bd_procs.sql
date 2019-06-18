@@ -228,8 +228,9 @@ Depois:
 
 -- report: alunos_aprovados_reprovados_por_disciplina
 -- Indica a quantidade de alunos aprovados e reprovados por disciplina.
+-- (somente leva em conta os alunos com inscrição ativa)
 DELIMITER $$
-CREATE PROCEDURE alunos_aprovados_reprovados_por_disciplina(  )
+CREATE PROCEDURE alunos_aprovados_reprovados_por_disciplina( )
 BEGIN
 
     SELECT D.Id AS Id,
@@ -251,6 +252,7 @@ DELIMITER ;
 
 -- report: alunos_com_desempenho_para_receber_bolsa
 -- Indica quais alunos podem receber bolsa de acordo com os seus desempenhos.
+-- (somente para os alunos com inscrição ativa)
 DELIMITER $$
 CREATE PROCEDURE alunos_com_desempenho_para_receber_bolsa(  )
 BEGIN
@@ -262,6 +264,7 @@ BEGIN
     FROM
         Estudante as E,
         Inscricao_inscrito as I
+    WHERE E.Ativo = 1
     GROUP BY E.CPF, E.Nome
     HAVING AVG(I.Nota) > 8
     ;
