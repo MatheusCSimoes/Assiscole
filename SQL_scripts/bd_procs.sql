@@ -14,6 +14,7 @@
     Script de Views e Papéis
 */
 
+DROP PROCEDURE IF EXISTS definir_falta_com_justificativa;
 DELIMITER $$
 -- Procedimento definir_falta_com_justificativa
 -- Define que o aluno faltou a uma aula e adiciona uma justificativa.
@@ -23,13 +24,13 @@ DELIMITER $$
 -- Retorno:
 --    ok - indica se o status do aluno foi definido com sucesso
 --    msg - indica uma mensagem de sucesso ou de erro que pode ser lida por um humano
- CREATE PROCEDURE definir_falta_com_justificativa(
+ CREATE PROCEDURE definir_falta_com_justificativa (
     IN cpf_estudante VARCHAR(11),
     IN dia_da_falta DATE,
     IN justificativa VARCHAR(200),
     IN sobrescrever BOOLEAN,
     OUT ok BOOLEAN,
-    OUT error VARCHAR(32)
+    OUT msg VARCHAR(64)
 )
 BEGIN
     -- verificando se o aluno já possui falta no dia indicado
@@ -42,7 +43,6 @@ BEGIN
     
     IF EXISTS (
             SELECT Id
-            INTO presenca_id
             FROM Presenca AS p
             WHERE p.fk_Estudante_CPF = cpf_estudante AND p.Tipo = 2
             LIMIT 1
@@ -51,6 +51,12 @@ BEGIN
             -- aluno foi dado como presente, mas agora vamos alterar para ausente
             -- e adicionar uma justificativa
             
+			SELECT Id
+			INTO presenca_id
+			FROM Presenca AS p
+			WHERE p.fk_Estudante_CPF = cpf_estudante AND p.Tipo = 2
+			LIMIT 1;
+
             UPDATE Presenca SET
                 Tipo = 1,
                 Dia = dia_da_falta
@@ -59,19 +65,18 @@ BEGIN
             INSERT INTO Justificativas (Texto, fk_Presenca_Id)
             VALUES (justificativa, presenca_id);
             
-            ok = TRUE;
-            msg = 'Status de presença do aluno(a) redefinido como ausente.';
+            SET ok = TRUE;
+            SET msg = 'Status de presença do aluno(a) redefinido como ausente.';
             
             
         ELSE
         
-            ok = FALSE;
-            msg = 'Status de presença do aluno(a) já está definido.';
+            SET ok = FALSE;
+            SET msg = 'Status de presença do aluno(a) já está definido.';
         
         END IF;
     ELSEIF EXISTS (
             SELECT Id
-            INTO presenca_id
             FROM Presenca AS p
             WHERE p.fk_Estudante_CPF = cpf_estudante AND p.Tipo = 1
             LIMIT 1
@@ -79,6 +84,12 @@ BEGIN
         IF sobrescrever THEN
             -- aluno foi dado como ausente, então vamos alterar a justificativa apenas
             
+            SELECT Id
+            INTO presenca_id
+            FROM Presenca AS p
+            WHERE p.fk_Estudante_CPF = cpf_estudante AND p.Tipo = 1
+            LIMIT 1;
+
             UPDATE Presenca SET
                 Tipo = 1,
                 Dia = dia_da_falta
@@ -88,13 +99,13 @@ BEGIN
                 Texto = justificativa
             WHERE fk_Presenca_Id = presenca_id;
             
-            ok = TRUE;
-            msg = 'Status de presença do aluno(a) ausente com nova justificativa.';
+            SET ok = TRUE;
+            SET msg = 'Status de presença do aluno(a) ausente com nova justificativa.';
             
         ELSE
         
-            ok = FALSE;
-            msg = 'Status de presença do aluno(a) já está definido.';
+            SET ok = FALSE;
+            SET msg = 'Status de presença do aluno(a) já está definido.';
         
         END IF;
     ELSE
@@ -106,8 +117,8 @@ BEGIN
         INSERT INTO Justificativas (Texto, fk_Presenca_Id) VALUES
         (justificativa, LAST_INSERT_ID());
         
-        ok = TRUE;
-        msg = 'Status de presença do aluno(a) definido como ausente.';
+        SET ok = TRUE;
+        SET msg = 'Status de presença do aluno(a) definido como ausente.';
         
     END IF;
     
@@ -120,8 +131,9 @@ END $$
 DELIMITER ;
 
 
---Procedimento que desconta 10% do valor do contrato.
+-- Procedimento que desconta 10% do valor do contrato.
 
+DROP PROCEDURE IF EXISTS desconto_contrato;
 delimiter $$
 create procedure desconto_contrato(in Id_contrato INT)
 	BEGIN
@@ -155,6 +167,7 @@ select * from contrato where Id = 1;
 -- Procedimento para atualizar situação de alunos para uma dada disciplina.
 -- No final do curso, se os alunos tiverem nota menor que 7 serao reprovados.
 
+DROP PROCEDURE IF EXISTS atualizar_situacao;
 DELIMITER $$
 
 CREATE PROCEDURE atualizar_situacao( IN id_disciplina INT )
@@ -229,6 +242,7 @@ Depois:
 -- report: alunos_aprovados_reprovados_por_disciplina
 -- Indica a quantidade de alunos aprovados e reprovados por disciplina.
 -- (somente leva em conta os alunos com inscrição ativa)
+DROP PROCEDURE IF EXISTS alunos_aprovados_reprovados_por_disciplina;
 DELIMITER $$
 CREATE PROCEDURE alunos_aprovados_reprovados_por_disciplina( )
 BEGIN
@@ -253,6 +267,7 @@ DELIMITER ;
 -- report: alunos_com_desempenho_para_receber_bolsa
 -- Indica quais alunos podem receber bolsa de acordo com os seus desempenhos.
 -- (somente para os alunos com inscrição ativa)
+DROP PROCEDURE IF EXISTS alunos_com_desempenho_para_receber_bolsa;
 DELIMITER $$
 CREATE PROCEDURE alunos_com_desempenho_para_receber_bolsa(  )
 BEGIN
@@ -264,10 +279,9 @@ BEGIN
     FROM
         Estudante as E,
         Inscricao_inscrito as I
-    WHERE E.Ativo = 1
+    WHERE E.Ativo = 1 AND E.cpf = I.fk_estudante_cpf
     GROUP BY E.CPF, E.Nome
-    HAVING AVG(I.Nota) > 8
-    ;
+    HAVING AVG(I.Nota) > 8;
     
 END $$
 DELIMITER ;
