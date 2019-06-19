@@ -4,7 +4,7 @@
     3) Daniel Fernando Jimenez Sepúlveda        117028769
     4) Tomás Bizet de Barros                    116183736
     5) Caio Silva de Freitas                    117032792
-    6) Miguel Angelo Santos Bicudo				116033119
+    6) Miguel Angelo Santos Bicudo		116033119
 
     Disciplina: Banco de dados 1
     Turma: 2019.1
@@ -956,6 +956,7 @@ CREATE ROLE IF NOT EXISTS professor;
 CREATE ROLE IF NOT EXISTS funcionario;
 
 -- dando privilegios sobres as views para os papéis
+/*
 GRANT SELECT ON inscricoes TO professor;
 GRANT UPDATE ON inscricoes TO professor;
 GRANT INSERT ON inscricoes TO professor;
@@ -1009,7 +1010,7 @@ SET old_passwords = 0;
 SET PASSWORD FOR 'professor_01'@'%' = PASSWORD('12345');
 GRANT USAGE ON *.* TO 'professor_01'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
 GRANT professor TO 'professor_01'@'%';
-
+*/
 /* ALUNOS:                                  DRE:
     1) Matheus Cunha Simões                     117091021
     2) Rodrigo Carvalho de Figueiredo           117053497
@@ -1031,10 +1032,10 @@ SELECT c.Id,c.Nome FROM Curso as c left JOIN Pertence as pe ON (c.Id = pe.fk_Cur
 
 -- Escolhe os estudantes de um curso com seus responsaveis, o ultimo dia da chamada e o tipo da chamada
 -- Função Group by
-SELECT e.CPF as IdEstudante,e.Nome as NomeEstudante,r.*, max(pr.Dia) as Dia, pr.Tipo from Estudante as e left join Possui as po on e.CPF = po.fk_Estudante_CPF left join Responsaveis as r on r.CPF = po.fk_Responsaveis_CPF inner join Pertence as pe on pe.fk_Estudante_CPF = e.CPF and pe.Ano = '2019' left join Presenca as pr on e.CPF = pr.fk_Estudante_CPF where pe.fk_Curso_Id = '1' and e.Ativo = 1 GROUP by e.CPF ORDER BY e.Nome asc;
+SELECT e.CPF as IdEstudante,e.Nome as NomeEstudante,r.*, max(pr.Dia) as Dia, pr.Tipo from Estudante as e left join Possui as po on e.CPF = po.fk_Estudante_CPF left join Responsaveis as r on r.CPF = po.fk_Responsaveis_CPF inner join Pertence as pe on pe.fk_Estudante_CPF = e.CPF and pe.Ano = '2019' left join Presenca as pr on e.CPF = pr.fk_Estudante_CPF where pe.fk_Curso_Id = '1' and e.Ativo = 1 GROUP by e.CPF, e.Nome, pr.Tipo, r.Nome, r.CPF ORDER BY e.Nome asc;
 
 -- Procura um estudante pelo nome e tras seu curso e seu responsavel
-SELECT e.CPF as IdEstudiante, e.Nome as NomeEstudante, c.Nome as Curso, co.* FROM Estudante as e inner join Pertence as epc on (epc.fk_Estudante_CPF = e.CPF and epc.Ano = 2019) inner join Curso as c on c.Id = epc.fk_Curso_Id left join Possui as ce on e.CPF = ce.fk_Estudante_CPF left join Responsaveis as co on co.CPF = ce.fk_Responsaveis_CPF WHERE e.Nome LIKE '%sepulveda%' and e.Ativo = 1 group by e.CPF ORDER by e.Nome asc, co.CPF;
+SELECT e.CPF as IdEstudiante, e.Nome as NomeEstudante, c.Nome as Curso, co.* FROM Estudante as e inner join Pertence as epc on (epc.fk_Estudante_CPF = e.CPF and epc.Ano = 2019) inner join Curso as c on c.Id = epc.fk_Curso_Id left join Possui as ce on e.CPF = ce.fk_Estudante_CPF left join Responsaveis as co on co.CPF = ce.fk_Responsaveis_CPF WHERE e.Nome LIKE '%sepulveda%' and e.Ativo = 1 group by e.CPF, c.Nome, co.Nome, co.CPF ORDER by e.Nome asc, co.CPF;
 
 -- Traz as observações, notificações e chamadas do aluno procurado pelo RG
 -- Função UNION
@@ -1046,7 +1047,7 @@ SELECT c.Id,c.Nome,COUNT(pe.fk_Curso_Id) AS Estudiantes FROM Curso as c left JOI
 
 -- Traz todos os estudantes dos cursos especificos
 -- Função IN
-SELECT e.CPF as IdEstudiante,e.Nome as Estudante,c.* from Estudante as e inner join Possui as ce on e.CPF = ce.fk_Estudante_CPF inner join Responsaveis as c on c.CPF = ce.fk_Responsaveis_CPF inner join Pertence as epc on (e.CPF = epc.fk_Estudante_CPF and epc.Ano = 2019) where epc.fk_Curso_Id in (1,2,6) and e.Ativo = 1 Group by e.CPF ORDER BY Estudante asc, c.CPF;
+SELECT e.CPF as IdEstudiante,e.Nome as Estudante,c.* from Estudante as e inner join Possui as ce on e.CPF = ce.fk_Estudante_CPF inner join Responsaveis as c on c.CPF = ce.fk_Responsaveis_CPF inner join Pertence as epc on (e.CPF = epc.fk_Estudante_CPF and epc.Ano = 2019) where epc.fk_Curso_Id in (1,2,6) and e.Ativo = 1 Group by e.CPF, c.Nome, c.CPF ORDER BY Estudante asc, c.CPF;
 
 -- Traz as disciplinas de um professor
 SELECT d.Id, d.Nome From Disciplina as d inner join Lecionam as l on d.Id = l.fk_Disciplina_Id inner join Professores as p on p.fk_Usuarios_CPF = l.fk_Professores_fk_Usuarios_CPF where p.fk_Usuarios_CPF = '52345678910';
