@@ -1249,7 +1249,7 @@ INSERT INTO Possui (fk_Estudante_CPF, fk_Responsaveis_CPF) VALUES
 
 -- criando views
 DROP VIEW IF EXISTS inscricoes;
-DROP VIEW IF EXISTS estudante;
+DROP VIEW IF EXISTS estudantes;
 DROP VIEW IF EXISTS responsaveisEstudantes;
 DROP VIEW IF EXISTS listaPresenca;
 DROP VIEW IF EXISTS notificacoes;
@@ -1257,7 +1257,7 @@ DROP VIEW IF EXISTS notificacoes;
 CREATE VIEW inscricoes AS
     SELECT ins.fk_Estudante_CPF, ins.Nota, ins.Situacao FROM Inscricao_inscrito ins;
 
-CREATE VIEW estudante AS
+CREATE VIEW estudantes AS
     SELECT e.Nome, e.CPF FROM Estudante e;
 
 CREATE VIEW responsaveisEstudantes AS
