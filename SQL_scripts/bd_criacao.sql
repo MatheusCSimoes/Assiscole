@@ -16,6 +16,29 @@
 
 SET NAMES utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS Possui;
+DROP TABLE IF EXISTS Tem;
+DROP TABLE IF EXISTS Informa_Funcionarios_Estudante_Observacoes;
+DROP TABLE IF EXISTS Informa_Funcionarios_Notificacoes_Estudante;
+DROP TABLE IF EXISTS Observacoes;
+DROP TABLE IF EXISTS Pertence;
+DROP TABLE IF EXISTS Contem;
+DROP TABLE IF EXISTS Lecionam;
+DROP TABLE IF EXISTS Inscricao_inscrito;
+DROP TABLE IF EXISTS Justificativas;
+DROP TABLE IF EXISTS Disciplina;
+DROP TABLE IF EXISTS Responsaveis;
+DROP TABLE IF EXISTS Modulos;
+DROP TABLE IF EXISTS Presenca;
+DROP TABLE IF EXISTS Professores;
+DROP TABLE IF EXISTS Funcionarios;
+DROP TABLE IF EXISTS Usuarios;
+DROP TABLE IF EXISTS Notificacoes;
+DROP TABLE IF EXISTS Curso;
+DROP TABLE IF EXISTS Contrato;
+DROP TABLE IF EXISTS Escola;
+DROP TABLE IF EXISTS Filial;
+DROP TABLE IF EXISTS Estudante;
 DROP TABLE IF EXISTS Chamadas;
 
 /* Nome da tabela: Chamadas */
@@ -32,8 +55,6 @@ CREATE TABLE Chamadas (
   Alias varchar(30) NOT NULL
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Estudante;
-
 /* Nome da tabela: Estudante */
 /* Objetivo: armazenar os dados básicos dos estudantes de uma escola. */
 /* Estrutura: cada tupla possui os seguintes atributos:
@@ -46,8 +67,6 @@ CREATE TABLE Estudante (
     CPF VARCHAR (11) PRIMARY KEY,
     Ativo INT (2) NOT NULL DEFAULT '1'
 ) DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS Escola;
 
 /* Nome da tabela: Escola */
 /* Objetivo: armazenar os dados básicos de uma escola coberta por nosso sistema. */
@@ -66,8 +85,6 @@ CREATE TABLE Escola (
     Telefone VARCHAR (15) NOT NULL
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Contrato;
-
 /* Nome da tabela: Contrato */
 /* Objetivo: armazenar os contratos firmados entre nossa empresa e as escolas contratantes. */
 /* Estrutura: cada tupla possui os seguintes atributos: 
@@ -85,8 +102,6 @@ CREATE TABLE Contrato (
     Valor INT NOT NULL
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Funcionarios;
-
 /* Nome da tabela: Funcionarios */
 /* Objetivo: armazenar os funcionários das escolas contratantes. */
 /* Estrutura: cada tupla possui os seguintes atributos: 
@@ -96,8 +111,6 @@ CREATE TABLE Funcionarios (
     fk_Usuarios_CPF VARCHAR (11) PRIMARY KEY
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Professores;
-
 /* Nome da tabela: Professores */
 /* Objetivo: armazenar os professores das escola contratantes. */
 /* Estrutura: cada tupla possui os seguintes atributos: 
@@ -106,8 +119,6 @@ DROP TABLE IF EXISTS Professores;
 CREATE TABLE Professores (
     fk_Usuarios_CPF VARCHAR (11) PRIMARY KEY
 ) DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS Disciplina;
 
 /* Nome da tabela: Disciplina */
 /* Objetivo: armazenar os dados das disciplinas oferecidas pelas escolas contratantes. */
@@ -119,8 +130,6 @@ CREATE TABLE Disciplina (
     Id INT PRIMARY KEY,
     Nome VARCHAR (40) NOT NULL
 ) DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS Curso;
 
 /* Nome da tabela: Curso */
 /* Objetivo: armazenar os dados dos cursos oferecidos pelas escolas contratantes. */
@@ -135,8 +144,6 @@ CREATE TABLE Curso (
     fk_Escola_Id INT NOT NULL
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Notificacoes;
-
 /* Nome da tabela: Notificacoes */
 /* Objetivo: armazenar as notificacoes que deverao ser enviadas aos responsaveis de um aluno. */
 /* Estrutura: cada tupla possui os seguintes atributos: 
@@ -150,8 +157,6 @@ CREATE TABLE Notificacoes (
     Data datetime NOT NULL
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Justificativas;
-
 /* Nome da tabela: Justificativas */
 /* Objetivo: armazenar as justificativas enviadas pelos responsaveis para explicar a ausencia ou falta de um aluno. */
 /* Estrutura: cada tupla possui os seguintes atributos: 
@@ -164,8 +169,6 @@ CREATE TABLE Justificativas (
     Id INT PRIMARY KEY,
     fk_Presenca_Id INT
 ) DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS Usuarios;
 
 /* Nome da tabela: Usuarios */
 /* Objetivo: armazenar os dados dos usuarios do BD, que podem ser funcionarios ou professores das escolas contratantes. */
@@ -188,8 +191,6 @@ CREATE TABLE Usuarios (
     fk_Escola_Id INT
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Presenca;
-
 /* Nome da tabela: Presenca */
 /* Objetivo: armazenar os relatorios de presenca diarios dos alunos de acordo com as chamadas feitas em aula. */
 /* Estrutura: cada tupla possui os seguintes atributos: 
@@ -205,8 +206,6 @@ CREATE TABLE Presenca (
     fk_Estudante_CPF VARCHAR (11)
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Observacoes;
-
 /* Nome da tabela: Observacoes */
 /* Objetivo: armazenar as observacoes feitas por professores a serem informadas aos responsaveis dos estudantes,
 juntamente com as recomendacoes(acordos) requeridos pelos professores para esses alunos que devem ser aceitas pelos responsaveis. */
@@ -221,8 +220,6 @@ CREATE TABLE Observacoes (
     Acordo VARCHAR (200) NOT NULL
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Modulos;
-
 /* Nome da tabela: Modulos */
 /* Objetivo: armazenar os modulos(funcionalidades) que compoe o contrato, de acordo com os servicos contratados pela escola. */
 /* Estrutura: cada tupla possui os seguintes atributos: 
@@ -236,8 +233,6 @@ CREATE TABLE Modulos (
     Descricao VARCHAR (200)
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Responsaveis;
-
 /* Nome da tabela: Responsaveis */
 /* Objetivo: armazenar os dados básicos dos responsaveis para permitir contato posterior. */
 /* Estrutura: cada tupla possui os seguintes atributos: 
@@ -250,8 +245,6 @@ CREATE TABLE Responsaveis (
     CPF VARCHAR (11) PRIMARY KEY,
     Telefone VARCHAR (15) NOT NULL
 ) DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS Inscricao_inscrito;
 
 /* Nome da tabela: Inscricao_inscrito */
 /* Objetivo: armazenar a situacao final de estudantes em disciplinas nas quais eles foram inscritos. */
@@ -270,8 +263,6 @@ CREATE TABLE Inscricao_inscrito (
     fk_Disciplina_Id INT
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Filial;
-
 /* Nome da tabela: Filial */
 /* Objetivo: armazenar as filiais de cada escola contratante. */
 /* Estrutura: cada tupla possui os seguintes atributos: 
@@ -282,8 +273,6 @@ CREATE TABLE Filial (
     Filial_PK INT NOT NULL PRIMARY KEY,
     Filial VARCHAR (40) NOT NULL
 ) DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS Lecionam;
 
 /* Nome da tabela: Lecionam */
 /* Objetivo: armazenar a relacao entre os professores e as disciplinas lecionados por cada um deles. */
@@ -296,8 +285,6 @@ CREATE TABLE Lecionam (
     fk_Professores_fk_Usuarios_CPF VARCHAR (11)
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Contem;
-
 /* Nome da tabela: Contem */
 /* Objetivo: armazenar a relacao entre os cursos e as disciplinas oferecidas por cada um deles. */
 /* Estrutura: cada tupla possui os seguintes atributos: 
@@ -308,8 +295,6 @@ CREATE TABLE Contem (
     fk_Curso_Id INT,
     fk_Disciplina_Id INT
 ) DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS Pertence;
 
 /* Nome da tabela: Pertence */
 /* Objetivo: armazenar a relacao entre os cursos e os estudantes pertencentes a cada um deles. */
@@ -323,8 +308,6 @@ CREATE TABLE Pertence (
     fk_Estudante_CPF VARCHAR (11),
     Ano INT
 ) DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS Informa_Funcionarios_Notificacoes_Estudante;
 
 /* Nome da tabela: Informa_Funcionarios_Notificacoes_Estudante */
 /* Objetivo: armazenar a relacao entre os funcionarios, notificacoes e estudantes
@@ -340,8 +323,6 @@ CREATE TABLE Informa_Funcionarios_Notificacoes_Estudante (
     fk_Estudante_CPF VARCHAR (11)
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Informa_Funcionarios_Estudante_Observacoes;
-
 /* Nome da tabela: Informa_Funcionarios_Estudante_Observacoes */
 /* Objetivo: armazenar a relacao entre os funcionarios, observacoes e estudantes
 (um funcionario informa uma observacao a um estudante). */
@@ -356,8 +337,6 @@ CREATE TABLE Informa_Funcionarios_Estudante_Observacoes (
     fk_Observacoes_Id INT
 ) DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS Tem;
-
 /* Nome da tabela: Tem */
 /* Objetivo: armazenar a relacao entre os contratos e os modulos pertencentes a cada um. */
 /* Estrutura: cada tupla possui os seguintes atributos:
@@ -368,8 +347,6 @@ CREATE TABLE Tem (
     fk_Contrato_Id INT,
     fk_Modulos_Id INT
 ) DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS Possui;
 
 /* Nome da tabela: Possui */
 /* Objetivo: armazenar a relacao entre os estudantes e seus responsaveis. */

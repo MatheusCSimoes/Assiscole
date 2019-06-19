@@ -15,6 +15,12 @@
 */
 
 -- criando views
+DROP VIEW IF EXISTS inscricoes;
+DROP VIEW IF EXISTS estudante;
+DROP VIEW IF EXISTS responsaveisEstudantes;
+DROP VIEW IF EXISTS listaPresenca;
+DROP VIEW IF EXISTS notificacoes;
+
 CREATE VIEW inscricoes AS
     SELECT ins.fk_Estudante_CPF, ins.Nota, ins.Situacao FROM Inscricao_inscrito ins;
 
@@ -31,8 +37,11 @@ CREATE VIEW notificacoes AS
     SELECT n.Data, n.Mensagem FROM Notificacoes n;
 
 -- criando papéis
-CREATE ROLE professor;
-CREATE ROLE funcionario;
+DROP ROLE IF EXISTS 'professor';
+DROP ROLE IF EXISTS 'funcionario';
+
+CREATE ROLE IF NOT EXISTS professor;
+CREATE ROLE IF NOT EXISTS funcionario;
 
 -- dando privilegios sobres as views para os papéis
 GRANT SELECT ON inscricoes TO professor;
@@ -59,23 +68,33 @@ GRANT SELECT ON notificacoes TO funcionario;
 GRANT UPDATE ON notificacoes TO funcionario;
 GRANT INSERT ON notificacoes TO funcionario;
 
-CREATE USER 'Admin'@'%' IDENTIFIED VIA mysql_native_password USING '***';
+CREATE USER IF NOT EXISTS 'Admin'@'%' IDENTIFIED WITH mysql_native_password;
+SET old_passwords = 0;
+SET PASSWORD FOR 'Admin'@'%' = PASSWORD('admin');
 GRANT ALL PRIVILEGES ON *.* TO 'Admin'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
 GRANT ALL PRIVILEGES ON `assiscole`.* TO 'Admin'@'%';
 
-CREATE USER 'Matheus'@'%' IDENTIFIED VIA mysql_native_password USING '***';
+CREATE USER IF NOT EXISTS 'Matheus'@'%' IDENTIFIED WITH mysql_native_password;
+SET old_passwords = 0;
+SET PASSWORD FOR 'Matheus'@'%' = PASSWORD('matheus');
 GRANT SELECT, INSERT, UPDATE ON *.* TO 'Matheus'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
 GRANT ALL PRIVILEGES ON `assiscole`.* TO 'Matheus'@'%';
 
-CREATE USER 'Daniel'@'%' IDENTIFIED VIA mysql_native_password USING '***';
+CREATE USER IF NOT EXISTS 'Daniel'@'%' IDENTIFIED WITH mysql_native_password;
+SET old_passwords = 0;
+SET PASSWORD FOR 'Daniel'@'%' = PASSWORD('troll');
 GRANT SELECT, INSERT, UPDATE, DELETE, FILE ON *.* TO 'Daniel'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
 GRANT ALL PRIVILEGES ON `assiscole`.* TO 'Daniel'@'%';
 
-CREATE USER 'funcionario_01'@'%' IDENTIFIED VIA mysql_native_password USING '***';
+CREATE USER IF NOT EXISTS 'funcionario_01'@'%' IDENTIFIED WITH mysql_native_password;
+SET old_passwords = 0;
+SET PASSWORD FOR 'funcionario_01'@'%' = PASSWORD('12345');
 GRANT USAGE ON *.* TO 'funcionario_01'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
 GRANT funcionario TO 'funcionario_01'@'%';
 
-CREATE USER 'professor_01'@'%' IDENTIFIED VIA mysql_native_password USING '***';
+CREATE USER IF NOT EXISTS 'professor_01'@'%' IDENTIFIED WITH mysql_native_password;
+SET old_passwords = 0;
+SET PASSWORD FOR 'professor_01'@'%' = PASSWORD('12345');
 GRANT USAGE ON *.* TO 'professor_01'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
 GRANT professor TO 'professor_01'@'%';
 
