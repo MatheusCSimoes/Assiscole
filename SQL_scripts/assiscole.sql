@@ -956,7 +956,7 @@ CREATE ROLE IF NOT EXISTS professor;
 CREATE ROLE IF NOT EXISTS funcionario;
 
 -- dando privilegios sobres as views para os papéis
-/*
+
 GRANT SELECT ON inscricoes TO professor;
 GRANT UPDATE ON inscricoes TO professor;
 GRANT INSERT ON inscricoes TO professor;
@@ -1010,7 +1010,7 @@ SET old_passwords = 0;
 SET PASSWORD FOR 'professor_01'@'%' = PASSWORD('12345');
 GRANT USAGE ON *.* TO 'professor_01'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
 GRANT professor TO 'professor_01'@'%';
-*/
+
 /* ALUNOS:                                  DRE:
     1) Matheus Cunha Simões                     117091021
     2) Rodrigo Carvalho de Figueiredo           117053497
