@@ -44,7 +44,7 @@ BEGIN
     IF EXISTS (
             SELECT Id
             FROM Presenca AS p
-            WHERE p.fk_Estudante_CPF = cpf_estudante AND p.Tipo = 2
+            WHERE p.fk_Estudante_CPF = cpf_estudante AND p.Dia = dia_da_falta AND p.Tipo = 2
             LIMIT 1
         ) THEN
         IF sobrescrever THEN
@@ -54,20 +54,18 @@ BEGIN
 			SELECT Id
 			INTO presenca_id
 			FROM Presenca AS p
-			WHERE p.fk_Estudante_CPF = cpf_estudante AND p.Tipo = 2
+			WHERE p.fk_Estudante_CPF = cpf_estudante AND p.Dia = dia_da_falta AND p.Tipo = 2
 			LIMIT 1;
 
             UPDATE Presenca SET
-                Tipo = 1,
-                Dia = dia_da_falta
-            WHERE fk_Estudante_CPF = cpf_estudante;
+                Tipo = 1
+            WHERE Id = presenca_id AND fk_Estudante_CPF = cpf_estudante AND Dia = dia_da_falta;
             
             INSERT INTO Justificativas (Texto, fk_Presenca_Id)
             VALUES (justificativa, presenca_id);
             
             SET ok = TRUE;
             SET msg = 'Status de presença do aluno(a) redefinido como ausente.';
-            
             
         ELSE
         
@@ -78,7 +76,7 @@ BEGIN
     ELSEIF EXISTS (
             SELECT Id
             FROM Presenca AS p
-            WHERE p.fk_Estudante_CPF = cpf_estudante AND p.Tipo = 1
+            WHERE p.fk_Estudante_CPF = cpf_estudante AND p.Dia = dia_da_falta AND p.Tipo = 1
             LIMIT 1
         ) THEN
         IF sobrescrever THEN
@@ -87,14 +85,9 @@ BEGIN
             SELECT Id
             INTO presenca_id
             FROM Presenca AS p
-            WHERE p.fk_Estudante_CPF = cpf_estudante AND p.Tipo = 1
+            WHERE p.fk_Estudante_CPF = cpf_estudante AND p.Dia = dia_da_falta AND p.Tipo = 1
             LIMIT 1;
 
-            UPDATE Presenca SET
-                Tipo = 1,
-                Dia = dia_da_falta
-            WHERE fk_Estudante_CPF = cpf_estudante;
-            
             UPDATE Justificativas SET
                 Texto = justificativa
             WHERE fk_Presenca_Id = presenca_id;
