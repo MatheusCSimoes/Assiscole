@@ -1391,10 +1391,24 @@ SELECT s.Usuario, s.Ativo, s.Nome, s.CPF, p.fk_Usuarios_CPF as Professor, f.fk_U
 
     Trabalho Prático 1
 
-    Script de Views e Papéis
+    Script de Procedimentos e Relatórios
 */
 
 DROP PROCEDURE IF EXISTS definir_falta_com_justificativa;
+DROP PROCEDURE IF EXISTS desconto_contrato;
+DROP PROCEDURE IF EXISTS atualizar_situacao;
+DROP PROCEDURE IF EXISTS alunos_aprovados_reprovados_por_disciplina;
+DROP PROCEDURE IF EXISTS alunos_com_desempenho_para_receber_bolsa;
+DROP FUNCTION IF EXISTS percentage;
+DROP PROCEDURE IF EXISTS alunos_aprovados_por_professor;
+DROP PROCEDURE IF EXISTS increver_aluno_na_disciplina_do_curso;
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                                             *
+ *    PROCEDURES DE MANIPULAÇÃO                                *
+ *                                                             *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 DELIMITER $$
 -- Procedimento definir_falta_com_justificativa
 -- Define que o aluno faltou a uma aula e adiciona uma justificativa.
@@ -1505,8 +1519,6 @@ DELIMITER ;
 
 
 -- Procedimento que desconta 10% do valor do contrato.
-
-DROP PROCEDURE IF EXISTS desconto_contrato;
 delimiter $$
 create procedure desconto_contrato(in Id_contrato INT)
 	BEGIN
@@ -1515,6 +1527,112 @@ create procedure desconto_contrato(in Id_contrato INT)
 	COMMIT;
 	END $$
 delimiter ;
+
+delimiter $$
+-- inscreve um aluno em uma disciplina do curso que ele esteja cadastrado
+create procedure increver_aluno_na_disciplina_do_curso(
+	in cpf_estudante varchar(11),
+    in nome_disciplina varchar(40),
+    in ano int,
+    in cpf_professor varchar(11),
+    OUT ok BOOLEAN,
+    OUT msg VARCHAR(64)
+)
+BEGIN
+	declare disciplina_id int;
+    
+	START TRANSACTION;
+	
+    -- se aluno inativo gerar erro
+    if exists ( select * from estudante where cpf = cpf_estudante and Ativo = 0 )
+    then
+		
+        set ok = false;
+        set msg = 'Aluno inativo não pode se inscrever em disciplina';
+	
+    -- se aluno esta em 2 cursos no mesmo ano, retornar erro
+    elseif ( select count(*) from Pertence P where cpf_estudante = fk_estudante_cpf and P.ano = ano ) > 1
+    then
+		
+        set ok = false;
+        set msg = 'Aluno cadastrado em mais de um curso neste ano';
+	
+    else
+
+		-- verificar se a disciplina está no curso que o aluno pertence
+		set @cnt_disciplina = (
+			select Count(*)
+			from
+				Pertence EC,
+				Contem CD,
+				disciplina D
+			where
+				cpf_estudante = EC.fk_estudante_cpf and
+				EC.fk_curso_id = CD.fk_curso_id and
+				CD.fk_disciplina_id = D.id and
+				D.nome = nome_disciplina and
+				EC.ano = ano
+		);
+		
+		if @cnt_disciplina = 1 then
+        
+			select D.Id
+            into disciplina_id
+			from
+				Pertence EC,
+				Contem CD,
+				disciplina D
+			where
+				cpf_estudante = EC.fk_estudante_cpf and
+				EC.fk_curso_id = CD.fk_curso_id and
+				CD.fk_disciplina_id = D.id and
+				D.nome = nome_disciplina and
+				EC.ano = ano
+			;
+			
+			-- se o aluno já possui inscrição com situação pendente na disciplina, retorna mensagem dizendo que aluno já está inscrito
+			if exists (
+				select *
+				from
+					inscricao_inscrito I
+				where
+					disciplina_id = I.fk_Disciplina_Id and
+					cpf_estudante = I.fk_Estudante_CPF and
+					I.Situacao = ''
+				)
+			then
+				
+				set ok = true;
+				set msg = 'Já está inscrito nesta disciplina!';
+			
+            else
+            			
+				-- criar a inscrição e definir a situação como pendente
+				INSERT INTO Inscricao_inscrito
+                (Nota, Situacao, fk_Professores_fk_Usuarios_CPF, fk_Estudante_CPF, fk_Disciplina_Id)
+                VALUES (0, '', cpf_professor, cpf_estudante, disciplina_id);
+				
+				set ok = true;
+				set msg = 'Aluno inscrito na disciplina com sucesso!';
+
+			end if;
+		else
+		
+			set ok = false;
+			set msg = 'Disciplina não encontrada para o curso ao qual o aluno pertence';
+        
+		end if;
+    
+    end if;
+    
+	COMMIT;
+    
+    -- retornando o set (status, mensagem)
+    SELECT ok as status, msg as mensagem;
+
+END $$
+delimiter ;
+
 
 /* Antes do procedimento:
 
@@ -1540,7 +1658,6 @@ select * from contrato where Id = 1;
 -- Procedimento para atualizar situação de alunos para uma dada disciplina.
 -- No final do curso, se os alunos tiverem nota menor que 7 serao reprovados.
 
-DROP PROCEDURE IF EXISTS atualizar_situacao;
 DELIMITER $$
 
 CREATE PROCEDURE atualizar_situacao( IN id_disciplina INT )
@@ -1604,6 +1721,12 @@ Depois:
 +------+-----------+
 */ 
 
+delimiter $$
+CREATE FUNCTION percentage( val real, digits int )
+returns varchar(32) deterministic
+return concat(round(val*100, digits), '%')
+$$
+delimiter ;
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -1615,7 +1738,6 @@ Depois:
 -- report: alunos_aprovados_reprovados_por_disciplina
 -- Indica a quantidade de alunos aprovados e reprovados por disciplina.
 -- (somente leva em conta os alunos com inscrição ativa)
-DROP PROCEDURE IF EXISTS alunos_aprovados_reprovados_por_disciplina;
 DELIMITER $$
 CREATE PROCEDURE alunos_aprovados_reprovados_por_disciplina( )
 BEGIN
@@ -1640,7 +1762,6 @@ DELIMITER ;
 -- report: alunos_com_desempenho_para_receber_bolsa
 -- Indica quais alunos podem receber bolsa de acordo com os seus desempenhos.
 -- (somente para os alunos com inscrição ativa)
-DROP PROCEDURE IF EXISTS alunos_com_desempenho_para_receber_bolsa;
 DELIMITER $$
 CREATE PROCEDURE alunos_com_desempenho_para_receber_bolsa(  )
 BEGIN
@@ -1658,6 +1779,35 @@ BEGIN
     
 END $$
 DELIMITER ;
+
+-- report: alunos_aprovados_por_professor
+-- Indica o desempenho dos professores em termos de aprovação de alunos
+DELIMITER $$
+CREATE PROCEDURE alunos_aprovados_por_professor( )
+BEGIN
+
+	SELECT *,
+	   percentage(Aprovados / Total, 0) As Taxa_Aprovacao
+    FROM (
+		SELECT U.CPF,
+			   U.Nome,
+			   SUM(IF(I.Situacao = 'Aprovado', 1, 0)) AS Aprovados,
+			   SUM(IF(I.Situacao = 'Reprovado', 1, 0)) AS Reprovados,
+			   SUM(IF(I.Situacao = '', 1, 0)) AS Pendente,
+			   COUNT(*) AS Total
+		FROM
+			professores as P,
+			usuarios as U,
+			Inscricao_inscrito as I
+		WHERE P.fk_Usuarios_CPF = I.fk_Professores_fk_Usuarios_CPF AND P.fk_Usuarios_CPF = U.cpf
+			AND U.Ativo = 1
+		GROUP BY U.CPF, U.Nome
+	) as T
+    ;
+    
+END $$
+DELIMITER ;
+
 
 /* ALUNOS:                                     DRE:
     1) Matheus Cunha Simões                     117091021
@@ -1702,3 +1852,55 @@ SELECT * FROM inscricao_inscrito WHERE fk_Disciplina_Id = @id_matematica;
 CALL atualizar_situacao( @id_matematica );
 
 SELECT * FROM inscricao_inscrito WHERE fk_Disciplina_Id = @id_matematica;
+
+
+-- professores e taxas de aprovação dos alunos
+CALL alunos_aprovados_por_professor( );
+
+-- query para achar um estudante que esteja em algum curso
+select * from estudante, pertence ec, contem cd, disciplina d
+where fk_estudante_cpf = cpf and ec.fk_Curso_Id = cd.fk_Curso_Id and cd.fk_Disciplina_Id = d.id
+	and ativo = 1;
+    
+select * from professores;
+
+CALL increver_aluno_na_disciplina_do_curso(
+	'12345670810',
+    'Biologia',
+    2019,
+    '42345678910',
+    @ok,
+    @msg
+);
+
+-- repetindo a operação com os mesmos parâmetros irá retornar erro
+CALL increver_aluno_na_disciplina_do_curso(
+	'12345670810',
+    'Biologia',
+    2019,
+    '42345678910',
+    @ok,
+    @msg
+);
+
+-- repetindo a operação com outra disciplina deve funcionar
+CALL increver_aluno_na_disciplina_do_curso(
+	'12345670810',
+    'Matemática',
+    2019,
+    '42345678910',
+    @ok,
+    @msg
+);
+
+select * from estudante, pertence ec, contem cd, disciplina d
+where fk_estudante_cpf = cpf and ec.fk_Curso_Id = cd.fk_Curso_Id and cd.fk_Disciplina_Id = d.id
+	and ativo = 0;
+CALL increver_aluno_na_disciplina_do_curso(
+	'12345679910',
+    'Geografia',
+    2019,
+    '42345678910',
+    @ok,
+    @msg
+);

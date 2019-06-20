@@ -41,3 +41,55 @@ SELECT * FROM inscricao_inscrito WHERE fk_Disciplina_Id = @id_matematica;
 CALL atualizar_situacao( @id_matematica );
 
 SELECT * FROM inscricao_inscrito WHERE fk_Disciplina_Id = @id_matematica;
+
+
+-- professores e taxas de aprovação dos alunos
+CALL alunos_aprovados_por_professor( );
+
+-- query para achar um estudante que esteja em algum curso
+select * from estudante, pertence ec, contem cd, disciplina d
+where fk_estudante_cpf = cpf and ec.fk_Curso_Id = cd.fk_Curso_Id and cd.fk_Disciplina_Id = d.id
+	and ativo = 1;
+    
+select * from professores;
+
+CALL increver_aluno_na_disciplina_do_curso(
+	'12345670810',
+    'Biologia',
+    2019,
+    '42345678910',
+    @ok,
+    @msg
+);
+
+-- repetindo a operação com os mesmos parâmetros irá retornar erro
+CALL increver_aluno_na_disciplina_do_curso(
+	'12345670810',
+    'Biologia',
+    2019,
+    '42345678910',
+    @ok,
+    @msg
+);
+
+-- repetindo a operação com outra disciplina deve funcionar
+CALL increver_aluno_na_disciplina_do_curso(
+	'12345670810',
+    'Matemática',
+    2019,
+    '42345678910',
+    @ok,
+    @msg
+);
+
+select * from estudante, pertence ec, contem cd, disciplina d
+where fk_estudante_cpf = cpf and ec.fk_Curso_Id = cd.fk_Curso_Id and cd.fk_Disciplina_Id = d.id
+	and ativo = 0;
+CALL increver_aluno_na_disciplina_do_curso(
+	'12345679910',
+    'Geografia',
+    2019,
+    '42345678910',
+    @ok,
+    @msg
+);

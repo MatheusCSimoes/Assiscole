@@ -1,10 +1,10 @@
-/* ALUNOS:                                  DRE:
+/* ALUNOS:                                     DRE:
     1) Matheus Cunha Simões                     117091021
     2) Rodrigo Carvalho de Figueiredo           117053497
     3) Daniel Fernando Jimenez Sepúlveda        117028769
     4) Tomás Bizet de Barros                    116183736
     5) Caio Silva de Freitas                    117032792
-    6) Miguel Angelo Santos Bicudo		116033119
+    6) Miguel Angelo Santos Bicudo              116033119
 
     Disciplina: Banco de dados 1
     Turma: 2019.1
