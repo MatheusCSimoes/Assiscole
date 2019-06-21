@@ -1544,7 +1544,7 @@ BEGIN
 	START TRANSACTION;
 
     -- se aluno inativo gerar erro
-    if exists ( select * from estudante where cpf = cpf_estudante and Ativo = 0 )
+    if exists ( select * from Estudante where cpf = cpf_estudante and Ativo = 0 )
     then
 
         set ok = false;
@@ -1565,7 +1565,7 @@ BEGIN
 			from
 				Pertence EC,
 				Contem CD,
-				disciplina D
+				Disciplina D
 			where
 				cpf_estudante = EC.fk_estudante_cpf and
 				EC.fk_curso_id = CD.fk_curso_id and
@@ -1581,7 +1581,7 @@ BEGIN
 			from
 				Pertence EC,
 				Contem CD,
-				disciplina D
+				Disciplina D
 			where
 				cpf_estudante = EC.fk_estudante_cpf and
 				EC.fk_curso_id = CD.fk_curso_id and
@@ -1594,7 +1594,7 @@ BEGIN
 			if exists (
 				select *
 				from
-					inscricao_inscrito I
+					Inscricao_inscrito I
 				where
 					disciplina_id = I.fk_Disciplina_Id and
 					cpf_estudante = I.fk_Estudante_CPF and
@@ -1796,8 +1796,8 @@ BEGIN
 			   SUM(IF(I.Situacao = '', 1, 0)) AS Pendente,
 			   COUNT(*) AS Total
 		FROM
-			professores as P,
-			usuarios as U,
+			Professores as P,
+			Usuarios as U,
 			Inscricao_inscrito as I
 		WHERE P.fk_Usuarios_CPF = I.fk_Professores_fk_Usuarios_CPF AND P.fk_Usuarios_CPF = U.cpf
 			AND U.Ativo = 1
@@ -1834,7 +1834,7 @@ CALL definir_falta_com_justificativa('12345671110', '2015-07-21', 'Traficante do
 -- tentando definir uma outra falta para o mesmo aluno em outro dia diferente
 CALL definir_falta_com_justificativa('12345671110', '2015-07-30', 'Guerra do tráfico', FALSE, @ok, @msg);
 -- visualizando as alterações anteriores
-SELECT * FROM Justificativas AS J, Presenca AS P, estudante AS E
+SELECT * FROM Justificativas AS J, Presenca AS P, Estudante AS E
 WHERE P.id = J.fk_presenca_id and E.cpf = P.fk_estudante_cpf
 	and E.cpf = '12345671110';
 
@@ -1844,25 +1844,25 @@ CALL alunos_aprovados_reprovados_por_disciplina( );
 
 -- testando atualizar_situacao, passando o id da disciplina de matemática
 -- primeiro limpo os valores para depois chamar a procedure que irá repopular com os valores corretos
-SET @id_matematica = (SELECT Id FROM disciplina WHERE Nome = 'Matemática' LIMIT 1);
+SET @id_matematica = (SELECT Id FROM Disciplina WHERE Nome = 'Matemática' LIMIT 1);
 SELECT @id_matematica;
-UPDATE inscricao_inscrito SET Situacao = '' WHERE fk_Disciplina_Id = @id_matematica;
-SELECT * FROM inscricao_inscrito WHERE fk_Disciplina_Id = @id_matematica;
+UPDATE Inscricao_inscrito SET Situacao = '' WHERE fk_Disciplina_Id = @id_matematica;
+SELECT * FROM Inscricao_inscrito WHERE fk_Disciplina_Id = @id_matematica;
 
 CALL atualizar_situacao( @id_matematica );
 
-SELECT * FROM inscricao_inscrito WHERE fk_Disciplina_Id = @id_matematica;
+SELECT * FROM Inscricao_inscrito WHERE fk_Disciplina_Id = @id_matematica;
 
 
 -- professores e taxas de aprovação dos alunos
 CALL alunos_aprovados_por_professor( );
 
 -- query para achar um estudante que esteja em algum curso
-select * from estudante, pertence ec, contem cd, disciplina d
+select * from Estudante, Pertence ec, Contem cd, Disciplina d
 where fk_estudante_cpf = cpf and ec.fk_Curso_Id = cd.fk_Curso_Id and cd.fk_Disciplina_Id = d.id
 	and ativo = 1;
 
-select * from professores;
+select * from Professores;
 
 CALL increver_aluno_na_disciplina_do_curso(
 	'12345670810',
@@ -1893,7 +1893,7 @@ CALL increver_aluno_na_disciplina_do_curso(
     @msg
 );
 
-select * from estudante, pertence ec, contem cd, disciplina d
+select * from Estudante, Pertence ec, Contem cd, Disciplina d
 where fk_estudante_cpf = cpf and ec.fk_Curso_Id = cd.fk_Curso_Id and cd.fk_Disciplina_Id = d.id
 	and ativo = 0;
 CALL increver_aluno_na_disciplina_do_curso(
