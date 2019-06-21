@@ -45,8 +45,8 @@ DROP TABLE IF EXISTS Chamadas;
 /* Objetivo: armazenar os possiveis estados negativos de um aluno
 em uma chamada referente a presença em sala de aula (Atraso e falta). */
 /* Estrutura: cada tupla possui os seguintes atributos:
-'Id' do tipo INT(11) (chave primária), 
-'Nome' não nulo do tipo VARCHAR(30) e 
+'Id' do tipo INT(11) (chave primária),
+'Nome' não nulo do tipo VARCHAR(30) e
 'Alias' não nulo do tipo VARCHAR(30). */
 
 CREATE TABLE Chamadas (
@@ -58,8 +58,8 @@ CREATE TABLE Chamadas (
 /* Nome da tabela: Estudante */
 /* Objetivo: armazenar os dados básicos dos estudantes de uma escola. */
 /* Estrutura: cada tupla possui os seguintes atributos:
-'Nome' não nulo do tipo VARCHAR(40), 
-'CPF' do tipo VARCHAR(11) (chave primária) e 
+'Nome' não nulo do tipo VARCHAR(40),
+'CPF' do tipo VARCHAR(11) (chave primária) e
 'Ativo' não nulo do tipo INT(2) com valor padrão igual a '1'. */
 
 CREATE TABLE Estudante (
@@ -72,9 +72,9 @@ CREATE TABLE Estudante (
 /* Objetivo: armazenar os dados básicos de uma escola coberta por nosso sistema. */
 /* Estrutura: cada tupla possui os seguintes atributos:
 'Id' do tipo int (chave primária),
-'fk_Filial_Filial_PK' do tipo INT (chave estrangeira p/ Filial), 
-'Nome' não nulo do tipo VARCHAR(40), 
-'Endereco' não nulo do tipo VARCHAR(40) e 
+'fk_Filial_Filial_PK' do tipo INT (chave estrangeira p/ Filial),
+'Nome' não nulo do tipo VARCHAR(40),
+'Endereco' não nulo do tipo VARCHAR(40) e
 'Telefone' não nulo do tipo VARCHAR(15). */
 
 CREATE TABLE Escola (
@@ -87,7 +87,7 @@ CREATE TABLE Escola (
 
 /* Nome da tabela: Contrato */
 /* Objetivo: armazenar os contratos firmados entre nossa empresa e as escolas contratantes. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'Id' do tipo INT (chave primária),
 'Data_Final' não nulo do tipo DATE,
 'Data_Inicial' não nulo do tipo DATE,
@@ -104,7 +104,7 @@ CREATE TABLE Contrato (
 
 /* Nome da tabela: Funcionarios */
 /* Objetivo: armazenar os funcionários das escolas contratantes. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'fk_Usuarios_CPF' do tipo VARCHAR(11) (chave primária e chave estrangeira p/ Usuarios). */
 
 CREATE TABLE Funcionarios (
@@ -113,7 +113,7 @@ CREATE TABLE Funcionarios (
 
 /* Nome da tabela: Professores */
 /* Objetivo: armazenar os professores das escola contratantes. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'fk_Usuarios_CPF' do tipo VARCHAR(11) (chave primária e chave estrangeira p/ Usuarios). */
 
 CREATE TABLE Professores (
@@ -122,7 +122,7 @@ CREATE TABLE Professores (
 
 /* Nome da tabela: Disciplina */
 /* Objetivo: armazenar os dados das disciplinas oferecidas pelas escolas contratantes. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'Id' do tipo INT (chave primária) e
 'Nome' não nulo do tipo VARCHAR(40). */
 
@@ -133,7 +133,7 @@ CREATE TABLE Disciplina (
 
 /* Nome da tabela: Curso */
 /* Objetivo: armazenar os dados dos cursos oferecidos pelas escolas contratantes. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'Id' do tipo INT (chave primária),
 'Nome' não nulo do tipo VARCHAR(40) e
 'fk_Escola_Id' não nulo do tipo INT (chave estrangeira p/ Escola). */
@@ -146,7 +146,7 @@ CREATE TABLE Curso (
 
 /* Nome da tabela: Notificacoes */
 /* Objetivo: armazenar as notificacoes que deverao ser enviadas aos responsaveis de um aluno. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'Mensagem' do tipo VARCHAR(200),
 'Id' do tipo INT (chave primária) e
 'Data' não nulo do tipo DATETIME. */
@@ -159,7 +159,7 @@ CREATE TABLE Notificacoes (
 
 /* Nome da tabela: Justificativas */
 /* Objetivo: armazenar as justificativas enviadas pelos responsaveis para explicar a ausencia ou falta de um aluno. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'Texto' do tipo VARCHAR(200),
 'Id' do tipo INT (chave primária) e
 'fk_Presenca_Id' do tipo INT (chave estrangeira p/ Presenca). */
@@ -172,7 +172,7 @@ CREATE TABLE Justificativas (
 
 /* Nome da tabela: Usuarios */
 /* Objetivo: armazenar os dados dos usuarios do BD, que podem ser funcionarios ou professores das escolas contratantes. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'CPF' do tipo VARCHAR(11) (chave primária),
 'Nome' não nulo do tipo VARCHAR(40),
 'Telefone' não nulo do tipo VARCHAR(15),
@@ -193,7 +193,7 @@ CREATE TABLE Usuarios (
 
 /* Nome da tabela: Presenca */
 /* Objetivo: armazenar os relatorios de presenca diarios dos alunos de acordo com as chamadas feitas em aula. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'Tipo' do tipo INT(11),
 'Dia' não nulo do tipo DATE,
 'Id' do tipo INT (chave primária) e
@@ -209,7 +209,7 @@ CREATE TABLE Presenca (
 /* Nome da tabela: Observacoes */
 /* Objetivo: armazenar as observacoes feitas por professores a serem informadas aos responsaveis dos estudantes,
 juntamente com as recomendacoes(acordos) requeridos pelos professores para esses alunos que devem ser aceitas pelos responsaveis. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'Id' do tipo INT (chave primária),
 'Observacao' não nulo do tipo VARCHAR(200) e
 'Acordo' não nulo do tipo VARCHAR(200). */
@@ -222,7 +222,7 @@ CREATE TABLE Observacoes (
 
 /* Nome da tabela: Modulos */
 /* Objetivo: armazenar os modulos(funcionalidades) que compoe o contrato, de acordo com os servicos contratados pela escola. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'Id' do tipo INT (chave primária),
 'Nome' não nulo do tipo VARCHAR(40) e
 'Descricao' do tipo VARCHAR(200). */
@@ -235,7 +235,7 @@ CREATE TABLE Modulos (
 
 /* Nome da tabela: Responsaveis */
 /* Objetivo: armazenar os dados básicos dos responsaveis para permitir contato posterior. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'Nome' não nulo do tipo VARCHAR(40),
 'CPF' do tipo VARCHAR(11) (chave primária) e
 'Telefone' não nulo do tipo VARCHAR(15). */
@@ -248,7 +248,7 @@ CREATE TABLE Responsaveis (
 
 /* Nome da tabela: Inscricao_inscrito */
 /* Objetivo: armazenar a situacao final de estudantes em disciplinas nas quais eles foram inscritos. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'Nota' não nulo do tipo DOUBLE,
 'Situacao' não nulo do tipo VARCHAR(40),
 'fk_Professores_fk_Usuarios_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Professores),
@@ -265,7 +265,7 @@ CREATE TABLE Inscricao_inscrito (
 
 /* Nome da tabela: Filial */
 /* Objetivo: armazenar as filiais de cada escola contratante. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'Filial_PK' do tipo INT (chave primária) e
 'Filial' não nulo do tipo VARCHAR(40) (nome da filial). */
 
@@ -287,8 +287,8 @@ CREATE TABLE Lecionam (
 
 /* Nome da tabela: Contem */
 /* Objetivo: armazenar a relacao entre os cursos e as disciplinas oferecidas por cada um deles. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
-'fk_Curso_Id' do tipo INT (chave estrangeira p/ Curso) e 
+/* Estrutura: cada tupla possui os seguintes atributos:
+'fk_Curso_Id' do tipo INT (chave estrangeira p/ Curso) e
 'fk_Disciplina_Id' do tipo INT (chave estrangeira p/ Disciplina). */
 
 CREATE TABLE Contem (
@@ -298,7 +298,7 @@ CREATE TABLE Contem (
 
 /* Nome da tabela: Pertence */
 /* Objetivo: armazenar a relacao entre os cursos e os estudantes pertencentes a cada um deles. */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'fk_Curso_Id' do tipo INT (chave estrangeira p/ Curso),
 'fk_Estudante_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Estudante) e
 'Ano' do tipo INT. */
@@ -388,13 +388,13 @@ ALTER TABLE Observacoes
 
 ALTER TABLE Modulos
   MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-  
+
 ALTER TABLE Chamadas
   MODIFY Id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
-ALTER TABLE Presenca ADD CONSTRAINT FK_Presenca_3 
-    FOREIGN KEY (Tipo) 
-    REFERENCES Chamadas(Id) 
+ALTER TABLE Presenca ADD CONSTRAINT FK_Presenca_3
+    FOREIGN KEY (Tipo)
+    REFERENCES Chamadas(Id)
     ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE Escola ADD CONSTRAINT FK_Escola_2
@@ -601,8 +601,8 @@ ALTER TABLE Chamadas AUTO_INCREMENT=0;
 
 /* Nome da tabela: Chamadas */
 /* Estrutura:
-'Id' do tipo INT(11) (chave primária), 
-'Nome' não nulo do tipo VARCHAR(30) e 
+'Id' do tipo INT(11) (chave primária),
+'Nome' não nulo do tipo VARCHAR(30) e
 'Alias' não nulo do tipo VARCHAR(30). */
 
 INSERT INTO Chamadas (Id, Nome, Alias) VALUES
@@ -611,8 +611,8 @@ INSERT INTO Chamadas (Id, Nome, Alias) VALUES
 
 /* Nome da tabela: Estudante */
 /* Estrutura:
-'Nome' não nulo do tipo VARCHAR(40), 
-'CPF' do tipo VARCHAR(11) (chave primária) e 
+'Nome' não nulo do tipo VARCHAR(40),
+'CPF' do tipo VARCHAR(11) (chave primária) e
 'Ativo' não nulo do tipo INT(2) com valor padrão igual a '1'.
   1 = ativo
   0 = inativo
@@ -717,9 +717,9 @@ INSERT INTO Filial (Filial_PK, Filial) VALUES
 /* Nome da tabela: Escola */
 /* Estrutura:
 'Id' do tipo int (chave primária),
-'fk_Filial_Filial_PK' do tipo INT (chave estrangeira p/ Filial), 
-'Nome' não nulo do tipo VARCHAR(40), 
-'Endereco' não nulo do tipo VARCHAR(40) e 
+'fk_Filial_Filial_PK' do tipo INT (chave estrangeira p/ Filial),
+'Nome' não nulo do tipo VARCHAR(40),
+'Endereco' não nulo do tipo VARCHAR(40) e
 'Telefone' não nulo do tipo VARCHAR(15). */
 
 INSERT INTO Escola (Id, fk_Filial_Filial_PK, Nome, Endereco, Telefone) VALUES
@@ -839,7 +839,7 @@ INSERT INTO Funcionarios (fk_Usuarios_CPF) VALUES
 ('12345678910');
 
 /* Nome da tabela: Professores */
-/* Estrutura: cada tupla possui os seguintes atributos: 
+/* Estrutura: cada tupla possui os seguintes atributos:
 'fk_Usuarios_CPF' do tipo VARCHAR(11) (chave primária e chave estrangeira p/ Usuarios). */
 
 INSERT INTO Professores (fk_Usuarios_CPF) VALUES
@@ -998,7 +998,7 @@ INSERT INTO Justificativas (Texto, Id, fk_Presenca_Id) VALUES
 ('Pais se responsabilizaram', 4, 12);
 
 /* Nome da tabela: Inscricao_inscrito */
-/* Estrutura: 
+/* Estrutura:
 'Nota' não nulo do tipo DOUBLE,
 'Situacao' não nulo do tipo VARCHAR(40),
 'fk_Professores_fk_Usuarios_CPF' do tipo VARCHAR(11) (chave estrangeira p/ Professores),
@@ -1040,7 +1040,7 @@ INSERT INTO Lecionam (fk_Disciplina_Id, fk_Professores_fk_Usuarios_CPF) VALUES
 
 /* Nome da tabela: Contem */
 /* Estrutura:
-'fk_Curso_Id' do tipo INT (chave estrangeira p/ Curso) e 
+'fk_Curso_Id' do tipo INT (chave estrangeira p/ Curso) e
 'fk_Disciplina_Id' do tipo INT (chave estrangeira p/ Disciplina). */
 
 INSERT INTO Contem (fk_Curso_Id, fk_Disciplina_Id) VALUES
@@ -1282,48 +1282,48 @@ GRANT SELECT ON inscricoes TO professor;
 GRANT UPDATE ON inscricoes TO professor;
 GRANT INSERT ON inscricoes TO professor;
 
-GRANT SELECT ON estudante TO professor;
-GRANT UPDATE ON estudante TO professor;
-GRANT INSERT ON estudante TO professor;
+GRANT SELECT ON estudantes TO professor;
+GRANT UPDATE ON estudantes TO professor;
+GRANT INSERT ON estudantes TO professor;
 
 GRANT SELECT ON listaPresenca TO professor;
 GRANT UPDATE ON listaPresenca TO professor;
 GRANT INSERT ON listaPresenca TO professor;
 
-GRANT SELECT ON estudante TO funcionario;
-GRANT UPDATE ON estudante TO funcionario;
-GRANT INSERT ON estudante TO funcionario;
+GRANT SELECT ON estudantes TO funcionario;
+GRANT UPDATE ON estudantes TO funcionario;
+GRANT INSERT ON estudantes TO funcionario;
 
 GRANT SELECT ON responsaveisEstudantes TO funcionario;
 GRANT UPDATE ON responsaveisEstudantes TO funcionario;
 GRANT INSERT ON responsaveisEstudantes TO funcionario;
 
-GRANT SELECT ON notificacoes TO funcionario;
-GRANT UPDATE ON notificacoes TO funcionario;
-GRANT INSERT ON notificacoes TO funcionario;
+GRANT SELECT ON notificacoes2 TO funcionario;
+GRANT UPDATE ON notificacoes2 TO funcionario;
+GRANT INSERT ON notificacoes2 TO funcionario;
 
 CREATE USER IF NOT EXISTS 'Admin'@'%' IDENTIFIED WITH mysql_native_password;
-SET PASSWORD FOR 'Admin'@'%' = 'admin';
+SET PASSWORD FOR 'Admin'@'%' = PASSWORD('admin');
 GRANT ALL PRIVILEGES ON *.* TO 'Admin'@'%';
 GRANT ALL PRIVILEGES ON `assiscole`.* TO 'Admin'@'%';
 
 CREATE USER IF NOT EXISTS 'Matheus'@'%' IDENTIFIED WITH mysql_native_password;
-SET PASSWORD FOR 'Matheus'@'%' = 'matheus';
+SET PASSWORD FOR 'Matheus'@'%' = PASSWORD('matheus');
 GRANT SELECT, INSERT, UPDATE ON *.* TO 'Matheus'@'%';
 GRANT ALL PRIVILEGES ON `assiscole`.* TO 'Matheus'@'%';
 
 CREATE USER IF NOT EXISTS 'Daniel'@'%' IDENTIFIED WITH mysql_native_password;
-SET PASSWORD FOR 'Daniel'@'%' = 'troll';
+SET PASSWORD FOR 'Daniel'@'%' = PASSWORD('colombia');
 GRANT SELECT, INSERT, UPDATE, DELETE, FILE ON *.* TO 'Daniel'@'%';
 GRANT ALL PRIVILEGES ON `assiscole`.* TO 'Daniel'@'%';
 
 CREATE USER IF NOT EXISTS 'funcionario_01'@'%' IDENTIFIED WITH mysql_native_password;
-SET PASSWORD FOR 'funcionario_01'@'%' = '12345';
+SET PASSWORD FOR 'funcionario_01'@'%' = PASSWORD('12345');
 GRANT USAGE ON *.* TO 'funcionario_01'@'%';
 GRANT funcionario TO 'funcionario_01'@'%';
 
 CREATE USER IF NOT EXISTS 'professor_01'@'%' IDENTIFIED WITH mysql_native_password;
-SET PASSWORD FOR 'professor_01'@'%' = '12345';
+SET PASSWORD FOR 'professor_01'@'%' = PASSWORD('12345');
 GRANT USAGE ON *.* TO 'professor_01'@'%';
 GRANT professor TO 'professor_01'@'%';
 
@@ -1430,11 +1430,11 @@ BEGIN
     -- verificando se o aluno já possui falta no dia indicado
     -- Tipo 1 = Ausente
     -- Tipo 2 = Presente
-    
+
     DECLARE presenca_id INT;
-    
+
     START TRANSACTION;
-    
+
     IF EXISTS (
             SELECT Id
             FROM Presenca AS p
@@ -1444,7 +1444,7 @@ BEGIN
         IF sobrescrever THEN
             -- aluno foi dado como presente, mas agora vamos alterar para ausente
             -- e adicionar uma justificativa
-            
+
 			SELECT Id
 			INTO presenca_id
 			FROM Presenca AS p
@@ -1454,18 +1454,18 @@ BEGIN
             UPDATE Presenca SET
                 Tipo = 1
             WHERE Id = presenca_id AND fk_Estudante_CPF = cpf_estudante AND Dia = dia_da_falta;
-            
+
             INSERT INTO Justificativas (Texto, fk_Presenca_Id)
             VALUES (justificativa, presenca_id);
-            
+
             SET ok = TRUE;
             SET msg = 'Status de presença do aluno(a) redefinido como ausente.';
-            
+
         ELSE
-        
+
             SET ok = FALSE;
             SET msg = 'Status de presença do aluno(a) já está definido.';
-        
+
         END IF;
     ELSEIF EXISTS (
             SELECT Id
@@ -1475,7 +1475,7 @@ BEGIN
         ) THEN
         IF sobrescrever THEN
             -- aluno foi dado como ausente, então vamos alterar a justificativa apenas
-            
+
             SELECT Id
             INTO presenca_id
             FROM Presenca AS p
@@ -1485,35 +1485,35 @@ BEGIN
             UPDATE Justificativas SET
                 Texto = justificativa
             WHERE fk_Presenca_Id = presenca_id;
-            
+
             SET ok = TRUE;
             SET msg = 'Status de presença do aluno(a) ausente com nova justificativa.';
-            
+
         ELSE
-        
+
             SET ok = FALSE;
             SET msg = 'Status de presença do aluno(a) já está definido.';
-        
+
         END IF;
     ELSE
         -- aluno não possui status de presença, temos que adicionar a ausência e a justificativa
-        
+
         INSERT INTO Presenca (fk_Estudante_CPF, Tipo, Dia) VALUES
         (cpf_estudante, 1, dia_da_falta);
-        
+
         INSERT INTO Justificativas (Texto, fk_Presenca_Id) VALUES
         (justificativa, LAST_INSERT_ID());
-        
+
         SET ok = TRUE;
         SET msg = 'Status de presença do aluno(a) definido como ausente.';
-        
+
     END IF;
-    
+
     COMMIT;
-    
+
     -- retornando o set (status, mensagem)
     SELECT ok as status, msg as mensagem;
-    
+
 END $$
 DELIMITER ;
 
@@ -1540,23 +1540,23 @@ create procedure increver_aluno_na_disciplina_do_curso(
 )
 BEGIN
 	declare disciplina_id int;
-    
+
 	START TRANSACTION;
-	
+
     -- se aluno inativo gerar erro
     if exists ( select * from estudante where cpf = cpf_estudante and Ativo = 0 )
     then
-		
+
         set ok = false;
         set msg = 'Aluno inativo não pode se inscrever em disciplina';
-	
+
     -- se aluno esta em 2 cursos no mesmo ano, retornar erro
     elseif ( select count(*) from Pertence P where cpf_estudante = fk_estudante_cpf and P.ano = ano ) > 1
     then
-		
+
         set ok = false;
         set msg = 'Aluno cadastrado em mais de um curso neste ano';
-	
+
     else
 
 		-- verificar se a disciplina está no curso que o aluno pertence
@@ -1573,9 +1573,9 @@ BEGIN
 				D.nome = nome_disciplina and
 				EC.ano = ano
 		);
-		
+
 		if @cnt_disciplina = 1 then
-        
+
 			select D.Id
             into disciplina_id
 			from
@@ -1589,7 +1589,7 @@ BEGIN
 				D.nome = nome_disciplina and
 				EC.ano = ano
 			;
-			
+
 			-- se o aluno já possui inscrição com situação pendente na disciplina, retorna mensagem dizendo que aluno já está inscrito
 			if exists (
 				select *
@@ -1601,32 +1601,32 @@ BEGIN
 					I.Situacao = ''
 				)
 			then
-				
+
 				set ok = true;
 				set msg = 'Já está inscrito nesta disciplina!';
-			
+
             else
-            			
+
 				-- criar a inscrição e definir a situação como pendente
 				INSERT INTO Inscricao_inscrito
                 (Nota, Situacao, fk_Professores_fk_Usuarios_CPF, fk_Estudante_CPF, fk_Disciplina_Id)
                 VALUES (0, '', cpf_professor, cpf_estudante, disciplina_id);
-				
+
 				set ok = true;
 				set msg = 'Aluno inscrito na disciplina com sucesso!';
 
 			end if;
 		else
-		
+
 			set ok = false;
 			set msg = 'Disciplina não encontrada para o curso ao qual o aluno pertence';
-        
+
 		end if;
-    
+
     end if;
-    
+
 	COMMIT;
-    
+
     -- retornando o set (status, mensagem)
     SELECT ok as status, msg as mensagem;
 
@@ -1673,13 +1673,13 @@ CREATE PROCEDURE atualizar_situacao( IN id_disciplina INT )
     WHERE fk_Disciplina_Id = id_disciplina AND Nota >= 7;
 
     COMMIT;
-    
+
 END $$
 DELIMITER ;
 
 /*
 select * from Inscricao_inscrito;
-Antes: 
+Antes:
 +------+-----------+
 | Nota | Situacao  |
 +------+-----------+
@@ -1699,7 +1699,7 @@ Antes:
 |    7 |           |
 |  8.5 |           |
 +------+-----------+
-Depois: 
+Depois:
 +------+-----------+
 | Nota | Situacao  |
 +------+-----------+
@@ -1719,7 +1719,7 @@ Depois:
 |    7 | Aprovado  |
 |  8.5 | Aprovado  |
 +------+-----------+
-*/ 
+*/
 
 delimiter $$
 CREATE FUNCTION percentage( val real, digits int )
@@ -1776,7 +1776,7 @@ BEGIN
     WHERE E.Ativo = 1 AND E.cpf = I.fk_estudante_cpf
     GROUP BY E.CPF, E.Nome
     HAVING AVG(I.Nota) > 8;
-    
+
 END $$
 DELIMITER ;
 
@@ -1804,7 +1804,7 @@ BEGIN
 		GROUP BY U.CPF, U.Nome
 	) as T
     ;
-    
+
 END $$
 DELIMITER ;
 
@@ -1861,7 +1861,7 @@ CALL alunos_aprovados_por_professor( );
 select * from estudante, pertence ec, contem cd, disciplina d
 where fk_estudante_cpf = cpf and ec.fk_Curso_Id = cd.fk_Curso_Id and cd.fk_Disciplina_Id = d.id
 	and ativo = 1;
-    
+
 select * from professores;
 
 CALL increver_aluno_na_disciplina_do_curso(
